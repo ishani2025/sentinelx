@@ -1,5 +1,556 @@
 [
   {
+    "uuid": "a1b2c3d4-1022",
+    "published": "2026-07-30T07:01:16Z",
+    "eventType": "user.account.update_password",
+    "displayMessage": "User Account Update_Password",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u0000022",
+      "type": "User",
+      "alternateId": "tjones@acme.com",
+      "displayName": "Tara Jones"
+    },
+    "client": {
+      "ipAddress": "198.51.100.57",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Austin",
+        "state": "Texas"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-1000",
+    "published": "2026-07-30T07:15:45Z",
+    "eventType": "policy.rule.update",
+    "displayMessage": "Policy Rule Update",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u0000000",
+      "type": "User",
+      "alternateId": "svc-updater@acme.com",
+      "displayName": "svc-updater"
+    },
+    "client": {
+      "ipAddress": "198.51.100.114",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Denver",
+        "state": "Colorado"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-1016",
+    "published": "2026-07-30T07:18:05Z",
+    "eventType": "user.account.update_password",
+    "displayMessage": "User Account Update_Password",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u0000016",
+      "type": "User",
+      "alternateId": "rsingh@acme.com",
+      "displayName": "Ravi Singh"
+    },
+    "client": {
+      "ipAddress": "198.51.100.197",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Austin",
+        "state": "Texas"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-1018",
+    "published": "2026-07-30T07:26:03Z",
+    "eventType": "app.oauth2.token.grant",
+    "displayMessage": "App Oauth2 Token Grant",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u0000018",
+      "type": "User",
+      "alternateId": "kpatel@acme.com",
+      "displayName": "Kiran Patel"
+    },
+    "client": {
+      "ipAddress": "198.51.100.103",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Seattle",
+        "state": "Washington"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-1009",
+    "published": "2026-07-30T07:32:49Z",
+    "eventType": "user.session.start",
+    "displayMessage": "User Session Start",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u0000009",
+      "type": "User",
+      "alternateId": "kpatel@acme.com",
+      "displayName": "Kiran Patel"
+    },
+    "client": {
+      "ipAddress": "198.51.100.140",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Seattle",
+        "state": "Washington"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-1003",
+    "published": "2026-07-30T07:35:43Z",
+    "eventType": "user.session.start",
+    "displayMessage": "User Session Start",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u0000003",
+      "type": "User",
+      "alternateId": "rsingh@acme.com",
+      "displayName": "Ravi Singh"
+    },
+    "client": {
+      "ipAddress": "198.51.100.100",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Seattle",
+        "state": "Washington"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-1023",
+    "published": "2026-07-30T07:49:18Z",
+    "eventType": "user.account.update_password",
+    "displayMessage": "User Account Update_Password",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u0000023",
+      "type": "User",
+      "alternateId": "kpatel@acme.com",
+      "displayName": "Kiran Patel"
+    },
+    "client": {
+      "ipAddress": "198.51.100.62",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Chicago",
+        "state": "Illinois"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-1002",
+    "published": "2026-07-30T07:50:40Z",
+    "eventType": "app.oauth2.token.grant",
+    "displayMessage": "App Oauth2 Token Grant",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u0000002",
+      "type": "User",
+      "alternateId": "tjones@acme.com",
+      "displayName": "Tara Jones"
+    },
+    "client": {
+      "ipAddress": "198.51.100.167",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Seattle",
+        "state": "Washington"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-1025",
+    "published": "2026-07-30T07:53:57Z",
+    "eventType": "app.oauth2.token.grant",
+    "displayMessage": "App Oauth2 Token Grant",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u0000025",
+      "type": "User",
+      "alternateId": "svc-updater@acme.com",
+      "displayName": "svc-updater"
+    },
+    "client": {
+      "ipAddress": "198.51.100.129",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Austin",
+        "state": "Texas"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-0000",
+    "published": "2026-07-30T08:05:03Z",
+    "eventType": "user.session.start",
+    "displayMessage": "User login to Okta",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u1a2b3c4",
+      "type": "User",
+      "alternateId": "jsmith@acme.com",
+      "displayName": "Jane Smith"
+    },
+    "client": {
+      "ipAddress": "198.51.100.10",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Austin",
+        "state": "Texas"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-1024",
+    "published": "2026-07-30T08:26:40Z",
+    "eventType": "user.session.start",
+    "displayMessage": "User Session Start",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u0000024",
+      "type": "User",
+      "alternateId": "rsingh@acme.com",
+      "displayName": "Ravi Singh"
+    },
+    "client": {
+      "ipAddress": "198.51.100.205",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Austin",
+        "state": "Texas"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-1027",
+    "published": "2026-07-30T08:36:26Z",
+    "eventType": "user.session.start",
+    "displayMessage": "User Session Start",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u0000027",
+      "type": "User",
+      "alternateId": "tjones@acme.com",
+      "displayName": "Tara Jones"
+    },
+    "client": {
+      "ipAddress": "198.51.100.49",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Seattle",
+        "state": "Washington"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-1010",
+    "published": "2026-07-30T08:38:24Z",
+    "eventType": "user.session.start",
+    "displayMessage": "User Session Start",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u0000010",
+      "type": "User",
+      "alternateId": "svc-updater@acme.com",
+      "displayName": "svc-updater"
+    },
+    "client": {
+      "ipAddress": "198.51.100.41",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Seattle",
+        "state": "Washington"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-1026",
+    "published": "2026-07-30T08:45:09Z",
+    "eventType": "user.account.update_password",
+    "displayMessage": "User Account Update_Password",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u0000026",
+      "type": "User",
+      "alternateId": "svc-updater@acme.com",
+      "displayName": "svc-updater"
+    },
+    "client": {
+      "ipAddress": "198.51.100.76",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Austin",
+        "state": "Texas"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-1021",
+    "published": "2026-07-30T08:48:45Z",
+    "eventType": "user.mfa.factor.activate",
+    "displayMessage": "User Mfa Factor Activate",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u0000021",
+      "type": "User",
+      "alternateId": "mchen@acme.com",
+      "displayName": "Marcus Chen"
+    },
+    "client": {
+      "ipAddress": "198.51.100.122",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Chicago",
+        "state": "Illinois"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-1017",
+    "published": "2026-07-30T08:53:27Z",
+    "eventType": "user.mfa.factor.activate",
+    "displayMessage": "User Mfa Factor Activate",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u0000017",
+      "type": "User",
+      "alternateId": "kpatel@acme.com",
+      "displayName": "Kiran Patel"
+    },
+    "client": {
+      "ipAddress": "198.51.100.25",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Chicago",
+        "state": "Illinois"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-1007",
+    "published": "2026-07-30T09:01:23Z",
+    "eventType": "user.session.start",
+    "displayMessage": "User Session Start",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u0000007",
+      "type": "User",
+      "alternateId": "svc-updater@acme.com",
+      "displayName": "svc-updater"
+    },
+    "client": {
+      "ipAddress": "198.51.100.81",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Chicago",
+        "state": "Illinois"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-1015",
+    "published": "2026-07-30T09:03:41Z",
+    "eventType": "user.authentication.sso",
+    "displayMessage": "User Authentication Sso",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u0000015",
+      "type": "User",
+      "alternateId": "kpatel@acme.com",
+      "displayName": "Kiran Patel"
+    },
+    "client": {
+      "ipAddress": "198.51.100.125",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Denver",
+        "state": "Colorado"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-1004",
+    "published": "2026-07-30T09:05:37Z",
+    "eventType": "user.mfa.factor.activate",
+    "displayMessage": "User Mfa Factor Activate",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u0000004",
+      "type": "User",
+      "alternateId": "rsingh@acme.com",
+      "displayName": "Ravi Singh"
+    },
+    "client": {
+      "ipAddress": "198.51.100.171",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Denver",
+        "state": "Colorado"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
     "uuid": "a1b2c3d4-0001",
     "published": "2026-07-30T09:12:44Z",
     "eventType": "user.session.start",
@@ -44,26 +595,287 @@
     }
   },
   {
-    "uuid": "a1b2c3d4-0000",
-    "published": "2026-07-30T08:05:03Z",
-    "eventType": "user.session.start",
-    "displayMessage": "User login to Okta",
+    "uuid": "a1b2c3d4-1001",
+    "published": "2026-07-30T09:23:58Z",
+    "eventType": "user.account.update_password",
+    "displayMessage": "User Account Update_Password",
     "severity": "INFO",
     "outcome": {
       "result": "SUCCESS"
     },
     "actor": {
-      "id": "00u1a2b3c4",
+      "id": "00u0000001",
       "type": "User",
-      "alternateId": "jsmith@acme.com",
-      "displayName": "Jane Smith"
+      "alternateId": "tjones@acme.com",
+      "displayName": "Tara Jones"
     },
     "client": {
-      "ipAddress": "198.51.100.10",
+      "ipAddress": "198.51.100.74",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Denver",
+        "state": "Colorado"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-1013",
+    "published": "2026-07-30T09:43:36Z",
+    "eventType": "app.oauth2.token.grant",
+    "displayMessage": "App Oauth2 Token Grant",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u0000013",
+      "type": "User",
+      "alternateId": "rsingh@acme.com",
+      "displayName": "Ravi Singh"
+    },
+    "client": {
+      "ipAddress": "198.51.100.254",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Denver",
+        "state": "Colorado"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-1020",
+    "published": "2026-07-30T09:50:09Z",
+    "eventType": "user.mfa.factor.activate",
+    "displayMessage": "User Mfa Factor Activate",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u0000020",
+      "type": "User",
+      "alternateId": "mchen@acme.com",
+      "displayName": "Marcus Chen"
+    },
+    "client": {
+      "ipAddress": "198.51.100.37",
       "geographicalContext": {
         "country": "United States",
         "city": "Austin",
         "state": "Texas"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-1006",
+    "published": "2026-07-30T09:52:08Z",
+    "eventType": "user.mfa.factor.activate",
+    "displayMessage": "User Mfa Factor Activate",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u0000006",
+      "type": "User",
+      "alternateId": "mchen@acme.com",
+      "displayName": "Marcus Chen"
+    },
+    "client": {
+      "ipAddress": "198.51.100.173",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Chicago",
+        "state": "Illinois"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-1011",
+    "published": "2026-07-30T10:02:26Z",
+    "eventType": "user.authentication.sso",
+    "displayMessage": "User Authentication Sso",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u0000011",
+      "type": "User",
+      "alternateId": "kpatel@acme.com",
+      "displayName": "Kiran Patel"
+    },
+    "client": {
+      "ipAddress": "198.51.100.95",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Denver",
+        "state": "Colorado"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-1019",
+    "published": "2026-07-30T10:05:23Z",
+    "eventType": "user.mfa.factor.activate",
+    "displayMessage": "User Mfa Factor Activate",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u0000019",
+      "type": "User",
+      "alternateId": "svc-updater@acme.com",
+      "displayName": "svc-updater"
+    },
+    "client": {
+      "ipAddress": "198.51.100.59",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Denver",
+        "state": "Colorado"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-1005",
+    "published": "2026-07-30T10:08:38Z",
+    "eventType": "user.mfa.factor.activate",
+    "displayMessage": "User Mfa Factor Activate",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u0000005",
+      "type": "User",
+      "alternateId": "kpatel@acme.com",
+      "displayName": "Kiran Patel"
+    },
+    "client": {
+      "ipAddress": "198.51.100.183",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Seattle",
+        "state": "Washington"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-1008",
+    "published": "2026-07-30T10:12:14Z",
+    "eventType": "user.authentication.sso",
+    "displayMessage": "User Authentication Sso",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u0000008",
+      "type": "User",
+      "alternateId": "kpatel@acme.com",
+      "displayName": "Kiran Patel"
+    },
+    "client": {
+      "ipAddress": "198.51.100.37",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Seattle",
+        "state": "Washington"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-1012",
+    "published": "2026-07-30T10:14:34Z",
+    "eventType": "app.oauth2.token.grant",
+    "displayMessage": "App Oauth2 Token Grant",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u0000012",
+      "type": "User",
+      "alternateId": "kpatel@acme.com",
+      "displayName": "Kiran Patel"
+    },
+    "client": {
+      "ipAddress": "198.51.100.63",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Seattle",
+        "state": "Washington"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-1014",
+    "published": "2026-07-30T10:32:33Z",
+    "eventType": "app.oauth2.token.grant",
+    "displayMessage": "App Oauth2 Token Grant",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u0000014",
+      "type": "User",
+      "alternateId": "tjones@acme.com",
+      "displayName": "Tara Jones"
+    },
+    "client": {
+      "ipAddress": "198.51.100.109",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Seattle",
+        "state": "Washington"
       }
     },
     "debugContext": {

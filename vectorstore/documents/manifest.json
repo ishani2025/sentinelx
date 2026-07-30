@@ -1,0 +1,67 @@
+{
+  "documents": [
+    {
+      "doc_id": "mitre-credential-access",
+      "file": "mitre_attack_credential_access.md",
+      "title": "MITRE ATT&CK - Credential Access & Initial Access Reference",
+      "doc_type": "mitre_attack",
+      "mitre_techniques": ["T1555.003", "T1078", "T1110"]
+    },
+    {
+      "doc_id": "mitre-persistence",
+      "file": "mitre_attack_persistence.md",
+      "title": "MITRE ATT&CK - Persistence & Defense Evasion Reference",
+      "doc_type": "mitre_attack",
+      "mitre_techniques": ["T1053.005", "T1176", "T1215"]
+    },
+    {
+      "doc_id": "playbook-credential-compromise",
+      "file": "playbook_credential_compromise.md",
+      "title": "Incident Playbook - Credential Compromise",
+      "doc_type": "playbook",
+      "mitre_techniques": ["T1555.003", "T1078"]
+    },
+    {
+      "doc_id": "playbook-impossible-travel",
+      "file": "playbook_impossible_travel.md",
+      "title": "Incident Playbook - Anomalous Login / Impossible Travel",
+      "doc_type": "playbook",
+      "mitre_techniques": ["T1078"]
+    },
+    {
+      "doc_id": "playbook-ransomware",
+      "file": "playbook_ransomware.md",
+      "title": "Incident Playbook - Ransomware / Data Encrypted for Impact",
+      "doc_type": "playbook",
+      "mitre_techniques": ["T1486"]
+    },
+    {
+      "doc_id": "historical-inc-2025-0417",
+      "file": "historical_incident_finance_phishing.md",
+      "title": "Historical Incident INC-2025-0417 - Finance Team Spear-Phishing",
+      "doc_type": "historical_incident",
+      "mitre_techniques": ["T1555.003", "T1078"]
+    },
+    {
+      "doc_id": "thehive-case-summaries",
+      "file": "thehive_case_summaries.md",
+      "title": "TheHive Case Summaries - Identity & Endpoint Cases",
+      "doc_type": "thehive_case",
+      "mitre_techniques": ["T1555.003", "T1078", "T1053.005", "T1215"]
+    },
+    {
+      "doc_id": "threat-intel-credential-stuffing",
+      "file": "threat_intel_credential_stuffing.md",
+      "title": "Threat Intelligence - Credential Stuffing & Infostealer Campaigns Targeting Finance",
+      "doc_type": "threat_intel",
+      "mitre_techniques": ["T1555.003", "T1078"]
+    },
+    {
+      "doc_id": "threat-intel-infostealer-ecosystem",
+      "file": "threat_intel_apt_infostealer.md",
+      "title": "Threat Intelligence - Commodity Infostealer Ecosystem Trends",
+      "doc_type": "threat_intel",
+      "mitre_techniques": ["T1555.003"]
+    }
+  ]
+}

@@ -2,6 +2,363 @@
   "Records": [
     {
       "eventVersion": "1.09",
+      "eventTime": "2026-07-30T07:08:54Z",
+      "eventSource": "s3",
+      "eventName": "GetObject",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.12.55",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "tjones",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/tjones",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012",
+      "requestParameters": {
+        "bucketName": "acme-build-artifacts",
+        "key": "release/build_412.zip"
+      }
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T07:19:25Z",
+      "eventSource": "ec2",
+      "eventName": "DescribeSecurityGroups",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.14.9",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "svc-ci-deploy",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/svc-ci-deploy",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T07:20:59Z",
+      "eventSource": "s3",
+      "eventName": "GetObject",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.13.20",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "mchen",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/mchen",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012",
+      "requestParameters": {
+        "bucketName": "acme-build-artifacts",
+        "key": "release/build_412.zip"
+      }
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T07:22:50Z",
+      "eventSource": "sts",
+      "eventName": "AssumeRole",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.12.55",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "rsingh",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/rsingh",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012",
+      "requestParameters": {
+        "roleArn": "arn:aws:iam::123456789012:role/acme-readonly"
+      }
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T07:28:29Z",
+      "eventSource": "iam",
+      "eventName": "GetRole",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.13.20",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "kpatel",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/kpatel",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012",
+      "requestParameters": {
+        "roleName": "acme-ci-deploy-role"
+      }
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T07:33:09Z",
+      "eventSource": "ec2",
+      "eventName": "DescribeInstances",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.13.20",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "svc-ci-deploy",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/svc-ci-deploy",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T07:35:34Z",
+      "eventSource": "sts",
+      "eventName": "AssumeRole",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.13.20",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "rsingh",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/rsingh",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012",
+      "requestParameters": {
+        "roleArn": "arn:aws:iam::123456789012:role/acme-readonly"
+      }
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T07:40:24Z",
+      "eventSource": "logs",
+      "eventName": "PutLogEvents",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.13.20",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "tjones",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/tjones",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T07:46:55Z",
+      "eventSource": "logs",
+      "eventName": "PutLogEvents",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.13.20",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "rsingh",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/rsingh",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T07:49:37Z",
+      "eventSource": "s3",
+      "eventName": "GetObject",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.13.20",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "rsingh",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/rsingh",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012",
+      "requestParameters": {
+        "bucketName": "acme-build-artifacts",
+        "key": "release/build_412.zip"
+      }
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T07:55:41Z",
+      "eventSource": "iam",
+      "eventName": "GetRole",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.13.20",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "rsingh",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/rsingh",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012",
+      "requestParameters": {
+        "roleName": "acme-ci-deploy-role"
+      }
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T08:15:50Z",
+      "eventSource": "s3",
+      "eventName": "GetObject",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.14.9",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "mchen",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/mchen",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012",
+      "requestParameters": {
+        "bucketName": "acme-build-artifacts",
+        "key": "release/build_412.zip"
+      }
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T08:33:23Z",
+      "eventSource": "rds",
+      "eventName": "DescribeDBInstances",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.14.9",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "mchen",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/mchen",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T08:34:18Z",
+      "eventSource": "lambda",
+      "eventName": "InvokeFunction",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.13.20",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "mchen",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/mchen",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012",
+      "requestParameters": {
+        "functionName": "acme-nightly-report"
+      }
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T08:49:08Z",
+      "eventSource": "kms",
+      "eventName": "Decrypt",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.14.9",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "kpatel",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/kpatel",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T08:50:23Z",
+      "eventSource": "s3",
+      "eventName": "ListBuckets",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.12.71",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "rsingh",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/rsingh",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T09:04:33Z",
+      "eventSource": "kms",
+      "eventName": "Decrypt",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.12.55",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "mchen",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/mchen",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T09:11:31Z",
+      "eventSource": "lambda",
+      "eventName": "InvokeFunction",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.14.9",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "tjones",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/tjones",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012",
+      "requestParameters": {
+        "functionName": "acme-nightly-report"
+      }
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T09:15:07Z",
+      "eventSource": "cloudtrail",
+      "eventName": "LookupEvents",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.12.55",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "rsingh",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/rsingh",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "eventVersion": "1.09",
       "eventTime": "2026-07-30T09:15:10Z",
       "eventSource": "signin",
       "eventName": "ConsoleLogin",
@@ -167,6 +524,23 @@
     },
     {
       "eventVersion": "1.09",
+      "eventTime": "2026-07-30T09:23:24Z",
+      "eventSource": "cloudtrail",
+      "eventName": "LookupEvents",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.12.55",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "kpatel",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/kpatel",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "eventVersion": "1.09",
       "eventTime": "2026-07-30T09:23:35Z",
       "eventSource": "s3",
       "eventName": "GetObject",
@@ -248,6 +622,330 @@
         "bucketName": "acme-customer-pii",
         "key": "customers/records_008.csv"
       }
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T09:27:56Z",
+      "eventSource": "ec2",
+      "eventName": "DescribeSecurityGroups",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.14.9",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "rsingh",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/rsingh",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T09:29:51Z",
+      "eventSource": "iam",
+      "eventName": "GetRole",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.12.71",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "mchen",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/mchen",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012",
+      "requestParameters": {
+        "roleName": "acme-ci-deploy-role"
+      }
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T09:34:21Z",
+      "eventSource": "ec2",
+      "eventName": "DescribeInstances",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.12.71",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "kpatel",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/kpatel",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T09:40:50Z",
+      "eventSource": "lambda",
+      "eventName": "InvokeFunction",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.12.55",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "svc-ci-deploy",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/svc-ci-deploy",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012",
+      "requestParameters": {
+        "functionName": "acme-nightly-report"
+      }
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T09:42:18Z",
+      "eventSource": "ec2",
+      "eventName": "DescribeSecurityGroups",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.13.20",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "mchen",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/mchen",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T09:51:05Z",
+      "eventSource": "kms",
+      "eventName": "Decrypt",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.14.9",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "rsingh",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/rsingh",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T09:59:45Z",
+      "eventSource": "s3",
+      "eventName": "ListBuckets",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.12.71",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "kpatel",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/kpatel",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T10:02:08Z",
+      "eventSource": "s3",
+      "eventName": "ListBuckets",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.12.55",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "mchen",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/mchen",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T10:02:18Z",
+      "eventSource": "sts",
+      "eventName": "AssumeRole",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.12.71",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "mchen",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/mchen",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012",
+      "requestParameters": {
+        "roleArn": "arn:aws:iam::123456789012:role/acme-readonly"
+      }
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T10:05:51Z",
+      "eventSource": "s3",
+      "eventName": "ListBuckets",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.13.20",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "tjones",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/tjones",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T10:10:44Z",
+      "eventSource": "rds",
+      "eventName": "DescribeDBInstances",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.14.9",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "tjones",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/tjones",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T10:13:39Z",
+      "eventSource": "iam",
+      "eventName": "ListUsers",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.13.20",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "rsingh",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/rsingh",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T10:16:02Z",
+      "eventSource": "lambda",
+      "eventName": "InvokeFunction",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.12.71",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "svc-ci-deploy",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/svc-ci-deploy",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012",
+      "requestParameters": {
+        "functionName": "acme-nightly-report"
+      }
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T10:23:23Z",
+      "eventSource": "s3",
+      "eventName": "ListBuckets",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.14.9",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "svc-ci-deploy",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/svc-ci-deploy",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T10:23:32Z",
+      "eventSource": "cloudtrail",
+      "eventName": "LookupEvents",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.12.71",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "mchen",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/mchen",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T10:40:11Z",
+      "eventSource": "sts",
+      "eventName": "AssumeRole",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.12.71",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "tjones",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/tjones",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012",
+      "requestParameters": {
+        "roleArn": "arn:aws:iam::123456789012:role/acme-readonly"
+      }
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T10:52:36Z",
+      "eventSource": "lambda",
+      "eventName": "InvokeFunction",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.12.55",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "svc-ci-deploy",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/svc-ci-deploy",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012",
+      "requestParameters": {
+        "functionName": "acme-nightly-report"
+      }
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T10:58:35Z",
+      "eventSource": "logs",
+      "eventName": "PutLogEvents",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.4.12.55",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "kpatel",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/kpatel",
+        "accessKeyId": "AKIAIOSFODNN7BENIGN0"
+      },
+      "recipientAccountId": "123456789012"
     }
   ]
 }

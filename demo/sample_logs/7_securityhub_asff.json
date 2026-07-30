@@ -1,40 +1,78 @@
 {
-  "Findings": [
-    {
-      "SchemaVersion": "2018-10-08",
-      "Id": "arn:aws:securityhub:us-east-1:123456789012:finding/exfil-jsmith-0730",
-      "ProductArn": "arn:aws:securityhub:us-east-1::product/aws/guardduty",
-      "AwsAccountId": "123456789012",
-      "Types": [
-        "TTPs/Exfiltration/Exfiltration:S3-AnomalousBehavior"
-      ],
-      "CreatedAt": "2026-07-30T09:22:15Z",
-      "UpdatedAt": "2026-07-30T09:22:15Z",
-      "Severity": {
-        "Label": "HIGH",
-        "Normalized": 80
-      },
-      "Title": "Potential data exfiltration from S3 by compromised IAM user jsmith",
-      "Description": "Correlated high-severity activity: IAM user jsmith exfiltrating PII from acme-customer-pii via 203.0.113.77.",
-      "Resources": [
-        {
-          "Type": "AwsIamAccessKey",
-          "Id": "AKIAIOSFODNN7EXAMPLE",
-          "Details": {
-            "AwsIamAccessKey": {
-              "UserName": "jsmith",
-              "Status": "Active"
+  "version": "0",
+  "id": "7a8b9c0d-1e2f-3a4b-5c6d-7e8f9a0b1c2d",
+  "detail-type": "Security Hub Findings - Imported",
+  "source": "aws.securityhub",
+  "account": "123456789012",
+  "time": "2026-07-30T09:22:30Z",
+  "region": "us-east-1",
+  "resources": [
+    "arn:aws:securityhub:us-east-1::product/aws/guardduty",
+    "arn:aws:securityhub:us-east-1::product/aws/macie"
+  ],
+  "detail": {
+    "findings": [
+      {
+        "SchemaVersion": "2018-10-08",
+        "Id": "arn:aws:securityhub:us-east-1:123456789012:finding/exfil-jsmith-0730",
+        "ProductArn": "arn:aws:securityhub:us-east-1::product/aws/guardduty",
+        "ProductName": "GuardDuty",
+        "CompanyName": "AWS",
+        "Region": "us-east-1",
+        "GeneratorId": "guardduty",
+        "AwsAccountId": "123456789012",
+        "Types": [
+          "TTPs/Exfiltration/Exfiltration:S3-AnomalousBehavior",
+          "Sensitive Data Identifications/SensitiveData:S3Object-Personal"
+        ],
+        "CreatedAt": "2026-07-30T09:22:15Z",
+        "UpdatedAt": "2026-07-30T09:22:30Z",
+        "Severity": {
+          "Label": "HIGH",
+          "Normalized": 80
+        },
+        "Title": "Potential data exfiltration from S3 by compromised IAM user jsmith",
+        "Description": "Security Hub correlated a GuardDuty exfiltration finding with a Macie sensitive-data finding: IAM user jsmith used access key AKIAIOSFODNN7EXAMPLE to retrieve PII objects from acme-customer-pii from an anomalous location (Moscow, Russia) via 203.0.113.77.",
+        "Resources": [
+          {
+            "Type": "AwsIamAccessKey",
+            "Id": "AKIAIOSFODNN7EXAMPLE",
+            "Partition": "aws",
+            "Region": "us-east-1",
+            "Details": {
+              "AwsIamAccessKey": {
+                "UserName": "jsmith",
+                "PrincipalId": "AIDAEXAMPLEJSMITH01",
+                "Status": "Active",
+                "CreatedAt": "2026-07-30T09:16:02Z"
+              }
+            }
+          },
+          {
+            "Type": "AwsS3Bucket",
+            "Id": "arn:aws:s3:::acme-customer-pii",
+            "Partition": "aws",
+            "Region": "us-east-1",
+            "Details": {
+              "AwsS3Bucket": {
+                "Name": "acme-customer-pii"
+              }
             }
           }
-        }
-      ],
-      "ProductFields": {
-        "aws/guardduty/service/action/awsApiCallAction/remoteIpDetails/ipAddressV4": "203.0.113.77"
-      },
-      "RecordState": "ACTIVE",
-      "Workflow": {
-        "Status": "NEW"
+        ],
+        "ProductFields": {
+          "aws/guardduty/service/action/awsApiCallAction/remoteIpDetails/ipAddressV4": "203.0.113.77",
+          "aws/guardduty/service/action/awsApiCallAction/remoteIpDetails/country": "Russia",
+          "aws/guardduty/service/action/awsApiCallAction/remoteIpDetails/city": "Moscow",
+          "aws/guardduty/service/count": "12",
+          "aws/macie/classificationDetails/result/sensitiveData/category": "PERSONAL_INFORMATION",
+          "aws/macie/resourcesAffected/s3Object/key": "customers/records_001.csv"
+        },
+        "Workflow": {
+          "Status": "NEW"
+        },
+        "RecordState": "ACTIVE"
       }
-    }
-  ]
+    ]
+  }
 }

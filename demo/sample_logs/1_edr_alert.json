@@ -1,22 +1,442 @@
-{
-  "meta": {
-    "version": "1.0",
-    "vendor": "CrowdStrike Falcon"
+[
+  {
+    "meta": {
+      "version": "1.0",
+      "vendor": "CrowdStrike Falcon"
+    },
+    "event": {
+      "DetectName": "USB Mass Storage Device Connected",
+      "DetectDescription": "A removable USB storage device was connected.",
+      "Severity": 2,
+      "SeverityName": "Informational",
+      "Tactic": "Collection",
+      "Technique": "T1052.001 Exfiltration over USB",
+      "Timestamp": "2026-07-30T07:27:54Z",
+      "ComputerName": "DC02",
+      "UserName": "acme\\tjones",
+      "FileName": "explorer.exe",
+      "SHA256": "1661db3c1a83c5fa21422c1fa799aeaf5f577ac9517054af1969fb0e9398f7cd",
+      "LocalIP": "10.4.14.23",
+      "ExternalIP": null,
+      "ParentProcess": "explorer.exe"
+    }
   },
-  "event": {
-    "DetectName": "Credential Theft via Infostealer",
-    "DetectDescription": "Process accessed browser credential stores and exfiltrated data.",
-    "Severity": 8,
-    "SeverityName": "High",
-    "Tactic": "Credential Access",
-    "Technique": "T1555.003 Credentials from Web Browsers",
-    "Timestamp": "2026-07-30T09:00:12Z",
-    "ComputerName": "LAPTOP-JSMITH01",
-    "UserName": "acme\\jsmith",
-    "FileName": "update_helper.exe",
-    "SHA256": "9f2b7c1a4e8d3f60ab5c9d2e7f1a4b8c6d0e3f5a7b9c1d2e4f6a8b0c2d4e6f8a",
-    "LocalIP": "10.4.12.55",
-    "ExternalIP": "203.0.113.77",
-    "ParentProcess": "chrome.exe"
+  {
+    "meta": {
+      "version": "1.0",
+      "vendor": "CrowdStrike Falcon"
+    },
+    "event": {
+      "DetectName": "Application Whitelisting Policy Violation",
+      "DetectDescription": "An unapproved application attempted to execute.",
+      "Severity": 3,
+      "SeverityName": "Low",
+      "Tactic": "Execution",
+      "Technique": "T1204.002 Malicious File",
+      "Timestamp": "2026-07-30T07:54:21Z",
+      "ComputerName": "WKSTN-RSINGH04",
+      "UserName": "acme\\rsingh",
+      "FileName": "unapproved_app.exe",
+      "SHA256": "dd65bcd01aefb61ad7be0c45289c21d93e27440cea2759a64d367399f4fa49ab",
+      "LocalIP": "10.4.12.235",
+      "ExternalIP": null,
+      "ParentProcess": "explorer.exe"
+    }
+  },
+  {
+    "meta": {
+      "version": "1.0",
+      "vendor": "CrowdStrike Falcon"
+    },
+    "event": {
+      "DetectName": "Suspicious PowerShell Encoded Command",
+      "DetectDescription": "Process executed a base64-encoded PowerShell command line.",
+      "Severity": 4,
+      "SeverityName": "Low",
+      "Tactic": "Execution",
+      "Technique": "T1059.001 PowerShell",
+      "Timestamp": "2026-07-30T08:17:27Z",
+      "ComputerName": "DC02",
+      "UserName": "acme\\kpatel",
+      "FileName": "powershell.exe",
+      "SHA256": "76acbdef8e9a16d24575e4f6d7b0f31f003d9371f7459fbc249e9e6f39d3b4ac",
+      "LocalIP": "10.4.14.202",
+      "ExternalIP": null,
+      "ParentProcess": "explorer.exe"
+    }
+  },
+  {
+    "meta": {
+      "version": "1.0",
+      "vendor": "CrowdStrike Falcon"
+    },
+    "event": {
+      "DetectName": "Unsigned Driver Loaded",
+      "DetectDescription": "An unsigned kernel driver was loaded.",
+      "Severity": 5,
+      "SeverityName": "Medium",
+      "Tactic": "Defense Evasion",
+      "Technique": "T1215 Kernel Modules",
+      "Timestamp": "2026-07-30T08:19:35Z",
+      "ComputerName": "WKSTN-MCHEN02",
+      "UserName": "acme\\mchen",
+      "FileName": "drvinst.exe",
+      "SHA256": "063d1fa2e4b6777239b21cd5c40bd9ad775c6edf36d657e6fca2f2f51d1e02df",
+      "LocalIP": "10.4.12.122",
+      "ExternalIP": null,
+      "ParentProcess": "services.exe"
+    }
+  },
+  {
+    "meta": {
+      "version": "1.0",
+      "vendor": "CrowdStrike Falcon"
+    },
+    "event": {
+      "DetectName": "Outdated Software Version Detected",
+      "DetectDescription": "Software with a known vulnerable version was observed running.",
+      "Severity": 2,
+      "SeverityName": "Informational",
+      "Tactic": "N/A",
+      "Technique": "N/A Software Inventory",
+      "Timestamp": "2026-07-30T08:38:51Z",
+      "ComputerName": "DC02",
+      "UserName": "acme\\tjones",
+      "FileName": "java.exe",
+      "SHA256": "5a9abadaea479b14b228f8ed4d7cb51f2fdbffc5c087aa9df130e8e31de462f4",
+      "LocalIP": "10.4.13.31",
+      "ExternalIP": null,
+      "ParentProcess": "explorer.exe"
+    }
+  },
+  {
+    "meta": {
+      "version": "1.0",
+      "vendor": "CrowdStrike Falcon"
+    },
+    "event": {
+      "DetectName": "Application Whitelisting Policy Violation",
+      "DetectDescription": "An unapproved application attempted to execute.",
+      "Severity": 3,
+      "SeverityName": "Low",
+      "Tactic": "Execution",
+      "Technique": "T1204.002 Malicious File",
+      "Timestamp": "2026-07-30T08:45:44Z",
+      "ComputerName": "WKSTN-MCHEN02",
+      "UserName": "acme\\tjones",
+      "FileName": "unapproved_app.exe",
+      "SHA256": "662bedec3cb78e127885c7de6e72d7cd4c737b35e126236570d6cf0e97f46ed8",
+      "LocalIP": "10.4.14.141",
+      "ExternalIP": null,
+      "ParentProcess": "explorer.exe"
+    }
+  },
+  {
+    "meta": {
+      "version": "1.0",
+      "vendor": "CrowdStrike Falcon"
+    },
+    "event": {
+      "DetectName": "Credential Theft via Infostealer",
+      "DetectDescription": "Process accessed browser credential stores and exfiltrated data.",
+      "Severity": 8,
+      "SeverityName": "High",
+      "Tactic": "Credential Access",
+      "Technique": "T1555.003 Credentials from Web Browsers",
+      "Timestamp": "2026-07-30T09:00:12Z",
+      "ComputerName": "LAPTOP-JSMITH01",
+      "UserName": "acme\\jsmith",
+      "FileName": "update_helper.exe",
+      "SHA256": "9f2b7c1a4e8d3f60ab5c9d2e7f1a4b8c6d0e3f5a7b9c1d2e4f6a8b0c2d4e6f8a",
+      "LocalIP": "10.4.12.55",
+      "ExternalIP": "203.0.113.77",
+      "ParentProcess": "chrome.exe"
+    }
+  },
+  {
+    "meta": {
+      "version": "1.0",
+      "vendor": "CrowdStrike Falcon"
+    },
+    "event": {
+      "DetectName": "Application Whitelisting Policy Violation",
+      "DetectDescription": "An unapproved application attempted to execute.",
+      "Severity": 3,
+      "SeverityName": "Low",
+      "Tactic": "Execution",
+      "Technique": "T1204.002 Malicious File",
+      "Timestamp": "2026-07-30T09:01:07Z",
+      "ComputerName": "LAPTOP-TJONES05",
+      "UserName": "acme\\svc-updater",
+      "FileName": "unapproved_app.exe",
+      "SHA256": "e49f095c6f1e3068cafb36fe9a1e8a5b83a6b296d43c957a8cfba4a91f34c20f",
+      "LocalIP": "10.4.14.219",
+      "ExternalIP": null,
+      "ParentProcess": "explorer.exe"
+    }
+  },
+  {
+    "meta": {
+      "version": "1.0",
+      "vendor": "CrowdStrike Falcon"
+    },
+    "event": {
+      "DetectName": "Adware Browser Extension Installed",
+      "DetectDescription": "A low-reputation browser extension was installed.",
+      "Severity": 2,
+      "SeverityName": "Informational",
+      "Tactic": "Persistence",
+      "Technique": "T1176 Browser Extensions",
+      "Timestamp": "2026-07-30T09:01:11Z",
+      "ComputerName": "DC02",
+      "UserName": "acme\\svc-updater",
+      "FileName": "chrome.exe",
+      "SHA256": "4ce522a1bf1867245f9e2c0176963851a9843f03fcc41762838a56b671566a46",
+      "LocalIP": "10.4.13.45",
+      "ExternalIP": null,
+      "ParentProcess": "explorer.exe"
+    }
+  },
+  {
+    "meta": {
+      "version": "1.0",
+      "vendor": "CrowdStrike Falcon"
+    },
+    "event": {
+      "DetectName": "Application Whitelisting Policy Violation",
+      "DetectDescription": "An unapproved application attempted to execute.",
+      "Severity": 3,
+      "SeverityName": "Low",
+      "Tactic": "Execution",
+      "Technique": "T1204.002 Malicious File",
+      "Timestamp": "2026-07-30T09:04:32Z",
+      "ComputerName": "WKSTN-MCHEN02",
+      "UserName": "acme\\rsingh",
+      "FileName": "unapproved_app.exe",
+      "SHA256": "a06765e7228a9ec7d953e47c9a57575449e88336837b70463a585f85743b5bfb",
+      "LocalIP": "10.4.12.57",
+      "ExternalIP": null,
+      "ParentProcess": "explorer.exe"
+    }
+  },
+  {
+    "meta": {
+      "version": "1.0",
+      "vendor": "CrowdStrike Falcon"
+    },
+    "event": {
+      "DetectName": "Outdated Software Version Detected",
+      "DetectDescription": "Software with a known vulnerable version was observed running.",
+      "Severity": 2,
+      "SeverityName": "Informational",
+      "Tactic": "N/A",
+      "Technique": "N/A Software Inventory",
+      "Timestamp": "2026-07-30T09:06:53Z",
+      "ComputerName": "LAPTOP-TJONES05",
+      "UserName": "acme\\tjones",
+      "FileName": "java.exe",
+      "SHA256": "332084f8b2d7d97720f7d61a0294f1c9c3877df499bf33a22107943bb7aecaae",
+      "LocalIP": "10.4.13.31",
+      "ExternalIP": null,
+      "ParentProcess": "explorer.exe"
+    }
+  },
+  {
+    "meta": {
+      "version": "1.0",
+      "vendor": "CrowdStrike Falcon"
+    },
+    "event": {
+      "DetectName": "Unusual Scheduled Task Creation",
+      "DetectDescription": "A scheduled task was created to run a script from a temp directory.",
+      "Severity": 5,
+      "SeverityName": "Medium",
+      "Tactic": "Persistence",
+      "Technique": "T1053.005 Scheduled Task",
+      "Timestamp": "2026-07-30T09:07:30Z",
+      "ComputerName": "LAPTOP-JSMITH01",
+      "UserName": "acme\\jsmith",
+      "FileName": "schtasks.exe",
+      "SHA256": "4c5d6e7f8091a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7",
+      "LocalIP": "10.4.12.55",
+      "ExternalIP": null,
+      "ParentProcess": "update_helper.exe"
+    }
+  },
+  {
+    "meta": {
+      "version": "1.0",
+      "vendor": "CrowdStrike Falcon"
+    },
+    "event": {
+      "DetectName": "Unsigned Driver Loaded",
+      "DetectDescription": "An unsigned kernel driver was loaded.",
+      "Severity": 5,
+      "SeverityName": "Medium",
+      "Tactic": "Defense Evasion",
+      "Technique": "T1215 Kernel Modules",
+      "Timestamp": "2026-07-30T09:13:41Z",
+      "ComputerName": "WKSTN-RSINGH04",
+      "UserName": "acme\\mchen",
+      "FileName": "drvinst.exe",
+      "SHA256": "7ea22b8b695f27cd22a969748fa1ecc5420bbfc81ad8352fee9715fc3391bdf8",
+      "LocalIP": "10.4.12.34",
+      "ExternalIP": null,
+      "ParentProcess": "services.exe"
+    }
+  },
+  {
+    "meta": {
+      "version": "1.0",
+      "vendor": "CrowdStrike Falcon"
+    },
+    "event": {
+      "DetectName": "Unsigned Driver Loaded",
+      "DetectDescription": "An unsigned kernel driver was loaded.",
+      "Severity": 5,
+      "SeverityName": "Medium",
+      "Tactic": "Defense Evasion",
+      "Technique": "T1215 Kernel Modules",
+      "Timestamp": "2026-07-30T09:13:43Z",
+      "ComputerName": "WKSTN-RSINGH04",
+      "UserName": "acme\\svc-updater",
+      "FileName": "drvinst.exe",
+      "SHA256": "a47ed1640ca4b8601ee8d9224ecde331ce692edfce0b5ecdc4c1dd3d74c3035d",
+      "LocalIP": "10.4.13.91",
+      "ExternalIP": null,
+      "ParentProcess": "services.exe"
+    }
+  },
+  {
+    "meta": {
+      "version": "1.0",
+      "vendor": "CrowdStrike Falcon"
+    },
+    "event": {
+      "DetectName": "Adware Browser Extension Installed",
+      "DetectDescription": "A low-reputation browser extension was installed.",
+      "Severity": 2,
+      "SeverityName": "Informational",
+      "Tactic": "Persistence",
+      "Technique": "T1176 Browser Extensions",
+      "Timestamp": "2026-07-30T09:15:14Z",
+      "ComputerName": "LAPTOP-TJONES05",
+      "UserName": "acme\\mchen",
+      "FileName": "chrome.exe",
+      "SHA256": "21b8901398bb674dc2643c16554071e14ae531acfdd67d25aba1a8374eb35c0d",
+      "LocalIP": "10.4.13.104",
+      "ExternalIP": null,
+      "ParentProcess": "explorer.exe"
+    }
+  },
+  {
+    "meta": {
+      "version": "1.0",
+      "vendor": "CrowdStrike Falcon"
+    },
+    "event": {
+      "DetectName": "Macro Executed from Office Document",
+      "DetectDescription": "A Word document executed an embedded macro.",
+      "Severity": 4,
+      "SeverityName": "Low",
+      "Tactic": "Execution",
+      "Technique": "T1204.002 Malicious File",
+      "Timestamp": "2026-07-30T09:33:55Z",
+      "ComputerName": "LAPTOP-TJONES05",
+      "UserName": "acme\\tjones",
+      "FileName": "winword.exe",
+      "SHA256": "9fecbb6a5e7310890b01058478be93761a56d0aa0bc138227d1cd1a801c367de",
+      "LocalIP": "10.4.12.99",
+      "ExternalIP": null,
+      "ParentProcess": "outlook.exe"
+    }
+  },
+  {
+    "meta": {
+      "version": "1.0",
+      "vendor": "CrowdStrike Falcon"
+    },
+    "event": {
+      "DetectName": "Macro Executed from Office Document",
+      "DetectDescription": "A Word document executed an embedded macro.",
+      "Severity": 4,
+      "SeverityName": "Low",
+      "Tactic": "Execution",
+      "Technique": "T1204.002 Malicious File",
+      "Timestamp": "2026-07-30T09:52:09Z",
+      "ComputerName": "DC02",
+      "UserName": "acme\\kpatel",
+      "FileName": "winword.exe",
+      "SHA256": "124b941bbf87106541fd9ffa40c7ae29a7155ad5b4fd8755f68fa8635cac38e7",
+      "LocalIP": "10.4.14.126",
+      "ExternalIP": null,
+      "ParentProcess": "outlook.exe"
+    }
+  },
+  {
+    "meta": {
+      "version": "1.0",
+      "vendor": "CrowdStrike Falcon"
+    },
+    "event": {
+      "DetectName": "Outdated Software Version Detected",
+      "DetectDescription": "Software with a known vulnerable version was observed running.",
+      "Severity": 2,
+      "SeverityName": "Informational",
+      "Tactic": "N/A",
+      "Technique": "N/A Software Inventory",
+      "Timestamp": "2026-07-30T10:18:27Z",
+      "ComputerName": "WKSTN-MCHEN02",
+      "UserName": "acme\\tjones",
+      "FileName": "java.exe",
+      "SHA256": "bbca7330b0507e808d11d6f9901a954a542a7ee09918825134784fc8a8e1e4eb",
+      "LocalIP": "10.4.12.71",
+      "ExternalIP": null,
+      "ParentProcess": "explorer.exe"
+    }
+  },
+  {
+    "meta": {
+      "version": "1.0",
+      "vendor": "CrowdStrike Falcon"
+    },
+    "event": {
+      "DetectName": "Macro Executed from Office Document",
+      "DetectDescription": "A Word document executed an embedded macro.",
+      "Severity": 4,
+      "SeverityName": "Low",
+      "Tactic": "Execution",
+      "Technique": "T1204.002 Malicious File",
+      "Timestamp": "2026-07-30T10:29:23Z",
+      "ComputerName": "WKSTN-MCHEN02",
+      "UserName": "acme\\kpatel",
+      "FileName": "winword.exe",
+      "SHA256": "abf6b26176f057fd1a8f5631d7aa90c3291c33d52e0d2242a00c3520b8b7c818",
+      "LocalIP": "10.4.14.13",
+      "ExternalIP": null,
+      "ParentProcess": "outlook.exe"
+    }
+  },
+  {
+    "meta": {
+      "version": "1.0",
+      "vendor": "CrowdStrike Falcon"
+    },
+    "event": {
+      "DetectName": "Outdated Software Version Detected",
+      "DetectDescription": "Software with a known vulnerable version was observed running.",
+      "Severity": 2,
+      "SeverityName": "Informational",
+      "Tactic": "N/A",
+      "Technique": "N/A Software Inventory",
+      "Timestamp": "2026-07-30T10:41:01Z",
+      "ComputerName": "LAPTOP-TJONES05",
+      "UserName": "acme\\svc-updater",
+      "FileName": "java.exe",
+      "SHA256": "076a7e11914a85f8791bdacb37357616a52e1d11bc898515acdbf9593a31d5c9",
+      "LocalIP": "10.4.13.218",
+      "ExternalIP": null,
+      "ParentProcess": "explorer.exe"
+    }
   }
-}
+]

@@ -1,0 +1,50 @@
+{
+  "version": "0",
+  "id": "11111111-2222-3333-4444-555555555555",
+  "detail-type": "Security Hub Findings - Imported",
+  "source": "aws.securityhub",
+  "account": "123456789012",
+  "time": "2026-07-30T10:00:00Z",
+  "region": "us-east-1",
+  "resources": [
+    "arn:aws:securityhub:us-east-1::product/aws/guardduty"
+  ],
+  "detail": {
+    "findings": [
+      {
+        "SchemaVersion": "2018-10-08",
+        "Id": "arn:aws:securityhub:us-east-1:123456789012:subscription/aws/guardduty/GuardDutyFinding-001",
+        "ProductArn": "arn:aws:securityhub:us-east-1::product/aws/guardduty",
+        "ProductName": "GuardDuty",
+        "CompanyName": "AWS",
+        "Region": "us-east-1",
+        "GeneratorId": "guardduty",
+        "AwsAccountId": "123456789012",
+        "Types": [
+          "TTPs/Initial Access/UnauthorizedAccess:EC2-SSHBruteForce"
+        ],
+        "CreatedAt": "2026-07-30T09:55:00Z",
+        "UpdatedAt": "2026-07-30T09:59:00Z",
+        "Severity": {
+          "Label": "HIGH",
+          "Normalized": 70
+        },
+        "Title": "EC2 instance is receiving brute force SSH attempts",
+        "Description": "An EC2 instance is receiving multiple failed SSH login attempts from a remote host.",
+        "Resources": [
+          {
+            "Type": "AwsEc2Instance",
+            "Id": "arn:aws:ec2:us-east-1:123456789012:instance/i-0123456789abcdef0",
+            "Partition": "aws",
+            "Region": "us-east-1"
+          }
+        ],
+        "Workflow": {
+          "Status": "NEW"
+        },
+        "RecordState": "ACTIVE"
+      }
+    ]
+  }
+}
+

@@ -1,2 +1,10 @@
+2026-07-30T08:02:11Z acme-fw01 1,2026/07/30 08:02:11,PA-VM,TRAFFIC,allow,outbound-web,10.4.12.71,151.101.1.69,443,tcp,ALLOW,web-browsing,ops,geo:United States,bytes=12044
+2026-07-30T08:15:33Z acme-fw01 1,2026/07/30 08:15:33,PA-VM,TRAFFIC,allow,outbound-web,10.4.13.20,140.82.112.3,443,tcp,ALLOW,web-browsing,deploy,geo:United States,bytes=8820
+2026-07-30T08:40:02Z acme-fw01 1,2026/07/30 08:40:02,PA-VM,TRAFFIC,allow,outbound-ssh,10.4.12.71,198.51.100.44,22,tcp,ALLOW,ssh,svc-backup,geo:United States,bytes=2210
+2026-07-30T09:05:47Z acme-fw01 1,2026/07/30 09:05:47,PA-VM,TRAFFIC,allow,outbound-web,10.4.13.20,172.217.0.14,443,tcp,ALLOW,web-browsing,mchen,geo:United States,bytes=15092
+2026-07-30T09:09:15Z acme-fw01 1,2026/07/30 09:09:15,PA-VM,TRAFFIC,allow,outbound-rdp,10.4.12.55,198.51.100.10,3389,tcp,ALLOW,rdp,jsmith,geo:United States,bytes=4410
 2026-07-30T09:11:59Z acme-fw01 1,2026/07/30 09:11:59,PA-VM,TRAFFIC,allow,vpn-portal,203.0.113.77,198.51.100.10,443,tcp,ALLOW,gp-portal,jsmith,geo:Russia,bytes=8421
 2026-07-30T09:12:40Z acme-fw01 1,2026/07/30 09:12:40,PA-VM,THREAT,alert,anomaly,203.0.113.77,198.51.100.10,443,tcp,ALERT,impossible-travel,jsmith,geo:Russia
+2026-07-30T09:14:02Z acme-fw01 1,2026/07/30 09:14:02,PA-VM,TRAFFIC,allow,outbound-web,10.4.12.71,151.101.1.69,80,tcp,ALLOW,web-browsing,ops,geo:United States,bytes=3110
+2026-07-30T09:18:50Z acme-fw01 1,2026/07/30 09:18:50,PA-VM,TRAFFIC,allow,outbound-web,10.4.13.20,140.82.112.3,443,tcp,ALLOW,web-browsing,deploy,geo:United States,bytes=6602
+2026-07-30T09:25:10Z acme-fw01 1,2026/07/30 09:25:10,PA-VM,TRAFFIC,allow,outbound-ssh,10.4.12.71,198.51.100.44,22,tcp,ALLOW,ssh,svc-backup,geo:United States,bytes=1180
