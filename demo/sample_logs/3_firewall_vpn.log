@@ -1,0 +1,2 @@
+2026-07-30T09:11:59Z acme-fw01 1,2026/07/30 09:11:59,PA-VM,TRAFFIC,allow,vpn-portal,203.0.113.77,198.51.100.10,443,tcp,ALLOW,gp-portal,jsmith,geo:Russia,bytes=8421
+2026-07-30T09:12:40Z acme-fw01 1,2026/07/30 09:12:40,PA-VM,THREAT,alert,anomaly,203.0.113.77,198.51.100.10,443,tcp,ALERT,impossible-travel,jsmith,geo:Russia

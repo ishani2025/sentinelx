@@ -1,0 +1,253 @@
+{
+  "Records": [
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T09:15:10Z",
+      "eventSource": "signin",
+      "eventName": "ConsoleLogin",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "203.0.113.77",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "jsmith",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/jsmith",
+        "accessKeyId": "AKIAIOSFODNN7EXAMPLE"
+      },
+      "recipientAccountId": "123456789012",
+      "eventType": "AwsConsoleSignIn",
+      "responseElements": {
+        "ConsoleLogin": "Success"
+      },
+      "additionalEventData": {
+        "MFAUsed": "No"
+      }
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T09:16:02Z",
+      "eventSource": "iam",
+      "eventName": "CreateAccessKey",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "203.0.113.77",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "jsmith",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/jsmith",
+        "accessKeyId": "AKIAIOSFODNN7EXAMPLE"
+      },
+      "recipientAccountId": "123456789012",
+      "requestParameters": {
+        "userName": "jsmith"
+      }
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T09:18:20Z",
+      "eventSource": "s3",
+      "eventName": "ListBuckets",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "203.0.113.77",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "jsmith",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/jsmith",
+        "accessKeyId": "AKIAIOSFODNN7EXAMPLE"
+      },
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T09:18:44Z",
+      "eventSource": "s3",
+      "eventName": "ListObjects",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "203.0.113.77",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "jsmith",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/jsmith",
+        "accessKeyId": "AKIAIOSFODNN7EXAMPLE"
+      },
+      "recipientAccountId": "123456789012",
+      "requestParameters": {
+        "bucketName": "acme-customer-pii"
+      }
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T09:19:07Z",
+      "eventSource": "s3",
+      "eventName": "GetObject",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "203.0.113.77",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "jsmith",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/jsmith",
+        "accessKeyId": "AKIAIOSFODNN7EXAMPLE"
+      },
+      "recipientAccountId": "123456789012",
+      "requestParameters": {
+        "bucketName": "acme-customer-pii",
+        "key": "customers/records_001.csv"
+      }
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T09:20:14Z",
+      "eventSource": "s3",
+      "eventName": "GetObject",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "203.0.113.77",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "jsmith",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/jsmith",
+        "accessKeyId": "AKIAIOSFODNN7EXAMPLE"
+      },
+      "recipientAccountId": "123456789012",
+      "requestParameters": {
+        "bucketName": "acme-customer-pii",
+        "key": "customers/records_002.csv"
+      }
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T09:21:21Z",
+      "eventSource": "s3",
+      "eventName": "GetObject",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "203.0.113.77",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "jsmith",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/jsmith",
+        "accessKeyId": "AKIAIOSFODNN7EXAMPLE"
+      },
+      "recipientAccountId": "123456789012",
+      "requestParameters": {
+        "bucketName": "acme-customer-pii",
+        "key": "customers/records_003.csv"
+      }
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T09:22:28Z",
+      "eventSource": "s3",
+      "eventName": "GetObject",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "203.0.113.77",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "jsmith",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/jsmith",
+        "accessKeyId": "AKIAIOSFODNN7EXAMPLE"
+      },
+      "recipientAccountId": "123456789012",
+      "requestParameters": {
+        "bucketName": "acme-customer-pii",
+        "key": "customers/records_004.csv"
+      }
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T09:23:35Z",
+      "eventSource": "s3",
+      "eventName": "GetObject",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "203.0.113.77",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "jsmith",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/jsmith",
+        "accessKeyId": "AKIAIOSFODNN7EXAMPLE"
+      },
+      "recipientAccountId": "123456789012",
+      "requestParameters": {
+        "bucketName": "acme-customer-pii",
+        "key": "customers/records_005.csv"
+      }
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T09:24:42Z",
+      "eventSource": "s3",
+      "eventName": "GetObject",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "203.0.113.77",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "jsmith",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/jsmith",
+        "accessKeyId": "AKIAIOSFODNN7EXAMPLE"
+      },
+      "recipientAccountId": "123456789012",
+      "requestParameters": {
+        "bucketName": "acme-customer-pii",
+        "key": "customers/records_006.csv"
+      }
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T09:25:49Z",
+      "eventSource": "s3",
+      "eventName": "GetObject",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "203.0.113.77",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "jsmith",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/jsmith",
+        "accessKeyId": "AKIAIOSFODNN7EXAMPLE"
+      },
+      "recipientAccountId": "123456789012",
+      "requestParameters": {
+        "bucketName": "acme-customer-pii",
+        "key": "customers/records_007.csv"
+      }
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-07-30T09:26:56Z",
+      "eventSource": "s3",
+      "eventName": "GetObject",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "203.0.113.77",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "userName": "jsmith",
+        "accountId": "123456789012",
+        "arn": "arn:aws:iam::123456789012:user/jsmith",
+        "accessKeyId": "AKIAIOSFODNN7EXAMPLE"
+      },
+      "recipientAccountId": "123456789012",
+      "requestParameters": {
+        "bucketName": "acme-customer-pii",
+        "key": "customers/records_008.csv"
+      }
+    }
+  ]
+}

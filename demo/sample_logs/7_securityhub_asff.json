@@ -1,0 +1,40 @@
+{
+  "Findings": [
+    {
+      "SchemaVersion": "2018-10-08",
+      "Id": "arn:aws:securityhub:us-east-1:123456789012:finding/exfil-jsmith-0730",
+      "ProductArn": "arn:aws:securityhub:us-east-1::product/aws/guardduty",
+      "AwsAccountId": "123456789012",
+      "Types": [
+        "TTPs/Exfiltration/Exfiltration:S3-AnomalousBehavior"
+      ],
+      "CreatedAt": "2026-07-30T09:22:15Z",
+      "UpdatedAt": "2026-07-30T09:22:15Z",
+      "Severity": {
+        "Label": "HIGH",
+        "Normalized": 80
+      },
+      "Title": "Potential data exfiltration from S3 by compromised IAM user jsmith",
+      "Description": "Correlated high-severity activity: IAM user jsmith exfiltrating PII from acme-customer-pii via 203.0.113.77.",
+      "Resources": [
+        {
+          "Type": "AwsIamAccessKey",
+          "Id": "AKIAIOSFODNN7EXAMPLE",
+          "Details": {
+            "AwsIamAccessKey": {
+              "UserName": "jsmith",
+              "Status": "Active"
+            }
+          }
+        }
+      ],
+      "ProductFields": {
+        "aws/guardduty/service/action/awsApiCallAction/remoteIpDetails/ipAddressV4": "203.0.113.77"
+      },
+      "RecordState": "ACTIVE",
+      "Workflow": {
+        "Status": "NEW"
+      }
+    }
+  ]
+}

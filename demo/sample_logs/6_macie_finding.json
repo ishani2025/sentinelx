@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0",
+  "id": "macie-8f7e6d5c",
+  "accountId": "123456789012",
+  "region": "us-east-1",
+  "type": "SensitiveData:S3Object/Personal",
+  "severity": {
+    "description": "High",
+    "score": 3
+  },
+  "createdAt": "2026-07-30T09:21:00Z",
+  "title": "The S3 bucket contains sensitive personal data (PII).",
+  "resourcesAffected": {
+    "s3Bucket": {
+      "name": "acme-customer-pii",
+      "publicAccess": {
+        "effectivePermission": "NOT_PUBLIC"
+      }
+    },
+    "s3Object": {
+      "key": "customers/records_001.csv"
+    }
+  },
+  "classificationDetails": {
+    "result": {
+      "sensitiveData": [
+        {
+          "category": "PERSONAL_INFORMATION",
+          "detections": [
+            {
+              "type": "US_SOCIAL_SECURITY_NUMBER",
+              "count": 1043
+            },
+            {
+              "type": "CREDIT_CARD_NUMBER",
+              "count": 872
+            },
+            {
+              "type": "NAME",
+              "count": 2100
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

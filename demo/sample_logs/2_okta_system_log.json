@@ -1,0 +1,75 @@
+[
+  {
+    "uuid": "a1b2c3d4-0001",
+    "published": "2026-07-30T09:12:44Z",
+    "eventType": "user.session.start",
+    "displayMessage": "User login to Okta",
+    "severity": "WARN",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u1a2b3c4",
+      "type": "User",
+      "alternateId": "jsmith@acme.com",
+      "displayName": "Jane Smith"
+    },
+    "client": {
+      "ipAddress": "203.0.113.77",
+      "userAgent": {
+        "rawUserAgent": "Mozilla/5.0",
+        "os": "Windows 10",
+        "browser": "CHROME"
+      },
+      "geographicalContext": {
+        "country": "Russia",
+        "city": "Moscow",
+        "state": "Moscow"
+      }
+    },
+    "authenticationContext": {
+      "authenticationStep": 0,
+      "externalSessionId": "1029384756"
+    },
+    "securityContext": {
+      "asNumber": 64512,
+      "asOrg": "unknown-hosting",
+      "isProxy": true
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "HIGH",
+        "riskReasons": "Anomalous location; impossible travel; new device"
+      }
+    }
+  },
+  {
+    "uuid": "a1b2c3d4-0000",
+    "published": "2026-07-30T08:05:03Z",
+    "eventType": "user.session.start",
+    "displayMessage": "User login to Okta",
+    "severity": "INFO",
+    "outcome": {
+      "result": "SUCCESS"
+    },
+    "actor": {
+      "id": "00u1a2b3c4",
+      "type": "User",
+      "alternateId": "jsmith@acme.com",
+      "displayName": "Jane Smith"
+    },
+    "client": {
+      "ipAddress": "198.51.100.10",
+      "geographicalContext": {
+        "country": "United States",
+        "city": "Austin",
+        "state": "Texas"
+      }
+    },
+    "debugContext": {
+      "debugData": {
+        "riskLevel": "LOW"
+      }
+    }
+  }
+]

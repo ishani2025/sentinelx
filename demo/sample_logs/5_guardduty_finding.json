@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "2.0",
+  "accountId": "123456789012",
+  "region": "us-east-1",
+  "id": "7ab8c9d0e1f2a3b4c5d6e7f8a9b0c1d2",
+  "type": "Exfiltration:S3/AnomalousBehavior",
+  "severity": 8.0,
+  "createdAt": "2026-07-30T09:20:05Z",
+  "updatedAt": "2026-07-30T09:22:10Z",
+  "title": "Anomalous S3 data access indicative of exfiltration by IAM user jsmith.",
+  "description": "IAM user jsmith invoked S3 APIs to retrieve a large number of objects from acme-customer-pii from an unusual location (Russia).",
+  "resource": {
+    "resourceType": "AccessKey",
+    "accessKeyDetails": {
+      "userName": "jsmith",
+      "accessKeyId": "AKIAIOSFODNN7EXAMPLE",
+      "userType": "IAMUser"
+    }
+  },
+  "service": {
+    "action": {
+      "actionType": "AWS_API_CALL",
+      "awsApiCallAction": {
+        "api": "GetObject",
+        "serviceName": "s3.amazonaws.com",
+        "callerType": "Remote IP",
+        "remoteIpDetails": {
+          "ipAddressV4": "203.0.113.77",
+          "country": {
+            "countryName": "Russia"
+          },
+          "city": {
+            "cityName": "Moscow"
+          }
+        }
+      }
+    },
+    "eventFirstSeen": "2026-07-30T09:18:20Z",
+    "eventLastSeen": "2026-07-30T09:22:01Z",
+    "count": 12,
+    "additionalInfo": {
+      "threatListName": "none"
+    }
+  },
+  "detectorId": "12abc34d56ef78gh90ij12kl34mn56op"
+}

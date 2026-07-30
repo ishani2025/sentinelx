@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "version": "1.0",
+    "vendor": "CrowdStrike Falcon"
+  },
+  "event": {
+    "DetectName": "Credential Theft via Infostealer",
+    "DetectDescription": "Process accessed browser credential stores and exfiltrated data.",
+    "Severity": 8,
+    "SeverityName": "High",
+    "Tactic": "Credential Access",
+    "Technique": "T1555.003 Credentials from Web Browsers",
+    "Timestamp": "2026-07-30T09:00:12Z",
+    "ComputerName": "LAPTOP-JSMITH01",
+    "UserName": "acme\\jsmith",
+    "FileName": "update_helper.exe",
+    "SHA256": "9f2b7c1a4e8d3f60ab5c9d2e7f1a4b8c6d0e3f5a7b9c1d2e4f6a8b0c2d4e6f8a",
+    "LocalIP": "10.4.12.55",
+    "ExternalIP": "203.0.113.77",
+    "ParentProcess": "chrome.exe"
+  }
+}
