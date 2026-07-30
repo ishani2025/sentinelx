@@ -1,0 +1,10 @@
+{
+  "source_type": "thehive_case", "attack_type": "malware",
+  "mitre_technique": "T1071", "asset_type": "ec2", "severity": "high", "department": "IT",
+  "case_id": "~39540", "incident_summary": "C2 beaconing from a compromised EC2 host.",
+  "affected_assets": ["ec2:i-0prod123"],
+  "root_cause": "Unpatched web service exploited; attacker rotated C2 IPs.",
+  "actions_taken": ["Blocked C2 IP (ineffective - attacker rotated IPs)", "Isolated EC2 host", "Forced password resets", "Rebuilt instance"],
+  "outcome": "Contained only after host isolation and credential reset.",
+  "lessons_learned": "Blocking a single IP alone failed. Isolate the affected EC2 and force password resets in addition to IP blocking."
+}

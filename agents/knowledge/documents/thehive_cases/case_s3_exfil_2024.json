@@ -1,0 +1,10 @@
+{
+  "source_type": "thehive_case", "attack_type": "data_exfiltration",
+  "mitre_technique": "T1530", "asset_type": "s3", "severity": "critical", "department": "Finance",
+  "case_id": "~39877", "incident_summary": "Bulk GetObject on a PII bucket using valid credentials.",
+  "affected_assets": ["s3:acme-customer-pii"],
+  "root_cause": "Over-permissioned role; no S3 data-event alarm on the crown-jewel bucket.",
+  "actions_taken": ["Revoked principal access", "Rotated credentials", "Engaged DPO/Legal", "Added S3 data-event detection"],
+  "outcome": "Reportable breach; notification issued within 72 hours.",
+  "lessons_learned": "PII buckets need data-event detection and immediate DPO engagement. IP blocking is ineffective against valid-credential exfiltration."
+}
