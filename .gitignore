@@ -1,0 +1,136 @@
+# ============================================================
+# SentinelX — .gitignore (Python backend + React frontend)
+# ============================================================
+
+# ----------------------------
+# Python backend
+# ----------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Test / coverage / type / lint caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.dmypy.json
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+nosetests.xml
+coverage.xml
+*.cover
+
+# Jupyter
+.ipynb_checkpoints/
+
+# ----------------------------
+# Secrets & environment (NEVER commit)
+# ----------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets.*
+credentials.json
+aws-credentials
+.aws/
+
+# ----------------------------
+# React / Node frontend
+# ----------------------------
+node_modules/
+# Keep the lockfile committed — do NOT ignore package-lock.json / yarn.lock / pnpm-lock.yaml
+/frontend/build/
+/frontend/dist/
+build/
+dist/
+.next/
+out/
+.cache/
+.parcel-cache/
+.vite/
+coverage/
+
+# Frontend env overrides (keep .env.example)
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# npm / yarn / pnpm logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+
+# ----------------------------
+# SentinelX runtime artifacts
+# ----------------------------
+# Local databases (SQLite dev/test) — Postgres is external, not committed
+*.db
+*.sqlite
+*.sqlite3
+sentinelx*.db
+
+# FAISS indexes / embeddings / model caches
+*.faiss
+faiss_index/
+.vector_store/
+.embeddings_cache/
+models/
+.cache/huggingface/
+.ollama/
+
+# Evidence / incident output (may contain sensitive data)
+evidence/
+incidents_out/
+*.evidence
+
+# ----------------------------
+# IDE / editor
+# ----------------------------
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# ----------------------------
+# OS
+# ----------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
