@@ -1,0 +1,227 @@
+{
+  "metadata": {
+    "technique_id": "T0886",
+    "technique_name": "Remote Services",
+    "domain": "ics",
+    "version": "1.1",
+    "last_modified": "2026-05-12T15:12:00.722Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Initial Access",
+      "Lateral Movement"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may leverage remote services to move between assets and network segments. These services are often used to allow operators to interact with systems remotely within the network, some examples are RDP, SMB, SSH, and other similar mechanisms. (Citation: Blake Johnson, Dan Caban, Marina Krotofil, Dan Scali, Nathan Brubaker, Christopher Glyer December 2017) (Citation: Dragos December 2017) (Citation: Joe Slowik April 2019) \n\nRemote services could be used to support remote access, data transmission, authentication, name resolution, and other remote functions. Further, remote services may be necessary to allow operators and administrators to configure systems within the network from their engineering or management workstations. An adversary may use this technique to access devices which may be dual-homed (Citation: Blake Johnson, Dan Caban, Marina Krotofil, Dan Scali, Nathan Brubaker, Christopher Glyer December 2017) to multiple network segments, and can be used for [Program Download](https://attack.mitre.org/techniques/T0843) or to execute attacks on control devices directly through [Valid Accounts](https://attack.mitre.org/techniques/T0859).\n\nSpecific remote services (RDP & VNC) may be a precursor to enable [Graphical User Interface](https://attack.mitre.org/techniques/T0823) execution on devices such as HMIs or engineering workstation software.\n\nBased on incident data, CISA and FBI assessed that Chinese state-sponsored actors also compromised various authorized remote access channels, including systems designed to transfer data and/or allow access between corporate and ICS networks.  (Citation: CISA AA21-201A Pipeline Intrusion July 2021)",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0804",
+        "name": "Detection of Remote Services"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1936",
+        "name": "Analytic 1936",
+        "description": "Monitor network data for uncommon  data flows (e.g., time of day, unusual source/destination address) that may be related to abuse of [Valid Accounts](https://attack.mitre.org/techniques/T0859) to log into a service specifically designed to accept remote connections, such as RDP, Telnet, SSH, and VNC.\nMonitor DLL file events, specifically creation of these files as well as the loading of DLLs into processes specifically designed to accept remote connections, such as RDP, Telnet, SSH, and VNC.\nMonitor for user accounts logged into systems they would not normally access or abnormal access patterns, such as multiple systems over a relatively short period of time. Correlate use of login activity related to remote services with unusual behavior or other malicious or suspicious activity. Adversaries will likely need to learn about an environment and the relationships between systems through Discovery techniques prior to attempting Lateral Movement. For added context on adversary procedures and background see [Remote Services](https://attack.mitre.org/techniques/T1021) and applicable sub-techniques.\nMonitor for newly executed processes related to services specifically designed to accept remote connections, such as RDP, Telnet, SSH, and VNC. The adversary may use [Valid Accounts](https://attack.mitre.org/techniques/T0859) to login and may perform follow-on actions that spawn additional processes as the user.\nMonitor executed commands and arguments to services specifically designed to accept remote connections, such as RDP, Telnet, SSH, and VNC. The adversary may then perform these actions using [Valid Accounts](https://attack.mitre.org/techniques/T0859).\nMonitor for newly constructed network connections into a service specifically designed to accept remote connections, such as RDP, Telnet, SSH, and VNC. Monitor network connections involving common remote management protocols, such as ports tcp:3283 and tcp:5900, as well as ports tcp:3389 and tcp:22 for remote logins. The adversary may use [Valid Accounts](https://attack.mitre.org/techniques/T0859) to enable remote logins.\nMonitor interactions with network shares, such as reads or file transfers, using remote services such as Server Message Block (SMB). For added context on adversary procedures and background see [Remote Services](https://attack.mitre.org/techniques/T1021) and applicable sub-techniques."
+      }
+    ],
+    "log_sources": [
+      "Command",
+      "Logon Session",
+      "Module",
+      "Network Share",
+      "Network Traffic",
+      "Process"
+    ],
+    "data_components": [
+      "Command Execution",
+      "Logon Session Creation",
+      "Module Load",
+      "Network Connection Creation",
+      "Network Share Access",
+      "Network Traffic Flow",
+      "Process Creation"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0813",
+      "name": "Software Process and Device Authentication",
+      "description": "Require the authentication of devices and software processes where appropriate. Devices that connect remotely to other systems should require strong authentication to prevent spoofing of communications. Furthermore, software processes should also require authentication when accessing APIs."
+    },
+    {
+      "id": "M0800",
+      "name": "Authorization Enforcement",
+      "description": "The device or system should restrict read, manipulate, or execute privileges to only authenticated users who require access based on approved security policies.  Role-based Access Control (RBAC) schemes can help reduce the overhead of assigning permissions to the large number of devices within an ICS. For example, IEC 62351 provides examples of roles used to support common system operations within the electric power sector  (Citation: International Electrotechnical Commission July 2020), while IEEE 1686 defines standard permissions for users of IEDs. (Citation: Institute of Electrical and Electronics Engineers January 2014)"
+    },
+    {
+      "id": "M0930",
+      "name": "Network Segmentation",
+      "description": "Architect sections of the network to isolate critical systems, functions, or resources. Use physical and logical segmentation to prevent access to potentially sensitive systems and information. Use a DMZ to contain any internet-facing services that should not be exposed from the internal network.  Restrict network access to only required systems and services. In addition, prevent systems from other networks or business functions (e.g., enterprise) from accessing critical process control systems. For example, in IEC 62443, systems within the same secure level should be grouped into a zone, and access to that zone is restricted by a conduit, or mechanism to restrict data flows between zones by segmenting the network. (Citation: IEC February 2019) (Citation: IEC August 2013)"
+    },
+    {
+      "id": "M0927",
+      "name": "Password Policies",
+      "description": "Set and enforce secure password policies for accounts."
+    },
+    {
+      "id": "M0804",
+      "name": "Human User Authentication",
+      "description": "Require user authentication before allowing access to data or accepting commands to a device. While strong multi-factor authentication is preferable, it is not always feasible within ICS environments. Performing strong user authentication also requires additional security controls and processes which are often the target of related adversarial techniques (e.g., Valid Accounts, Default Credentials). Therefore, associated ATT&CK mitigations should be considered in addition to this, including [Multi-factor Authentication](https://attack.mitre.org/mitigations/M0932), [Account Use Policies](https://attack.mitre.org/mitigations/M0936), [Password Policies](https://attack.mitre.org/mitigations/M0927), [User Account Management](https://attack.mitre.org/mitigations/M0918), [Privileged Account Management](https://attack.mitre.org/mitigations/M0926), and [User Account Control](https://attack.mitre.org/mitigations/M1052)."
+    },
+    {
+      "id": "M0807",
+      "name": "Network Allowlists",
+      "description": "Network allowlists can be implemented through either host-based files or system hosts files to specify what connections (e.g., IP address, MAC address, port, protocol) can be made from a device. Allowlist techniques that operate at the  application layer (e.g., DNP3, Modbus, HTTP) are addressed in [Filter Network Traffic](https://attack.mitre.org/mitigations/M0937) mitigation."
+    },
+    {
+      "id": "M0918",
+      "name": "User Account Management",
+      "description": "Manage the creation, modification, use, and permissions associated to user accounts."
+    },
+    {
+      "id": "M0801",
+      "name": "Access Management",
+      "description": "Access Management technologies can be used to enforce authorization polices and decisions, especially when existing field devices do not provide sufficient capabilities to support user identification and authentication. (Citation: McCarthy, J et al. July 2018) These technologies typically utilize an in-line network device or gateway system to prevent access to unauthenticated users, while also integrating with an authentication service to first verify user credentials. (Citation: Centre for the Protection of National Infrastructure November 2010)"
+    },
+    {
+      "id": "M0937",
+      "name": "Filter Network Traffic",
+      "description": "Use network appliances to filter ingress or egress traffic and perform protocol-based filtering. Configure software on endpoints to filter network traffic.   Perform inline allow/denylisting of network messages based on the application layer (OSI Layer 7) protocol, especially for automation protocols. Application allowlists are beneficial when there are well-defined communication sequences, types, rates, or patterns needed during expected system operations. Application denylists may be needed if all acceptable communication sequences cannot be defined, but instead a set of known malicious uses can be denied (e.g., excessive communication  attempts, shutdown messages, invalid commands).  Devices performing these functions are often referred to as deep-packet inspection (DPI) firewalls, context-aware firewalls, or firewalls blocking specific automation/SCADA protocol aware firewalls. (Citation: Centre for the Protection of National Infrastructure February 2005)"
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S1045",
+        "name": "INCONTROLLER"
+      },
+      {
+        "id": "S0496",
+        "name": "REvil"
+      },
+      {
+        "id": "S0603",
+        "name": "Stuxnet"
+      }
+    ],
+    "tools": [],
+    "campaigns": [
+      {
+        "id": "C0028",
+        "name": "2015 Ukraine Electric Power Attack"
+      },
+      {
+        "id": "C0025",
+        "name": "2016 Ukraine Electric Power Attack"
+      },
+      {
+        "id": "C0030",
+        "name": "Triton Safety Instrumented System Attack"
+      },
+      {
+        "id": "C0063",
+        "name": "2025 Poland Wiper Attacks"
+      }
+    ]
+  },
+  "procedure_examples": [
+    {
+      "source_id": "S1045",
+      "source_name": "INCONTROLLER",
+      "source_type": "malware",
+      "description": "[INCONTROLLER](https://attack.mitre.org/software/S1045) can use the CODESYS protocol to remotely connect to Schneider PLCs and perform maintenance functions on the device.(Citation: Wylie-22)\n\n[INCONTROLLER](https://attack.mitre.org/software/S1045) can use Telnet to upload payloads and execute commands on Omron PLCs.\t(Citation: Brubaker-Incontroller)(Citation: Dragos-Pipedream) The malware can also use HTTP-based CGI scripts (e.g., cpu.fcgi, ecat.fcgi) to gain administrative access to the device.(Citation: Wylie-22) "
+    },
+    {
+      "source_id": "C0028",
+      "source_name": "2015 Ukraine Electric Power Attack",
+      "source_type": "campaign",
+      "description": "During the [2015 Ukraine Electric Power Attack](https://attack.mitre.org/campaigns/C0028), [Sandworm Team](https://attack.mitre.org/groups/G0034) used an IT helpdesk software to move the mouse on ICS control devices to maliciously release electricity breakers. (Citation: Andy Greenberg June 2017)"
+    },
+    {
+      "source_id": "C0025",
+      "source_name": "2016 Ukraine Electric Power Attack",
+      "source_type": "campaign",
+      "description": "During the [2016 Ukraine Electric Power Attack](https://attack.mitre.org/campaigns/C0025), [Sandworm Team](https://attack.mitre.org/groups/G0034) used MS-SQL access to a pivot machine, allowing code execution throughout the ICS network.(Citation: Dragos Crashoverride 2018)"
+    },
+    {
+      "source_id": "C0030",
+      "source_name": "Triton Safety Instrumented System Attack",
+      "source_type": "campaign",
+      "description": "In the [Triton Safety Instrumented System Attack](https://attack.mitre.org/campaigns/C0030), [TEMP.Veles](https://attack.mitre.org/groups/G0088) utilized remote desktop protocol (RDP) jump boxes, poorly configured OT firewalls (Citation: Triton-EENews-2017), along with other traditional malware backdoors, to move into the ICS environment.(Citation: FireEye TRITON 2018)(Citation: Triton-EENews-2017)"
+    },
+    {
+      "source_id": "S0496",
+      "source_name": "REvil",
+      "source_type": "malware",
+      "description": "[REvil](https://attack.mitre.org/software/S0496) uses the SMB protocol to encrypt files located on remotely connected file shares. (Citation: Max Heinemeyer February 2020)"
+    },
+    {
+      "source_id": "S0603",
+      "source_name": "Stuxnet",
+      "source_type": "malware",
+      "description": "[Stuxnet](https://attack.mitre.org/software/S0603) executes malicious SQL commands in the WinCC database server to propagate to remote systems. The malicious SQL commands include xp_cmdshell, sp_dumpdbilog, and sp_addextendedproc. (Citation: Nicolas Falliere, Liam O Murchu, Eric Chien February 2011)"
+    },
+    {
+      "source_id": "C0063",
+      "source_name": "2025 Poland Wiper Attacks",
+      "source_type": "campaign",
+      "description": "During the [2025 Poland Wiper Attacks](https://attack.mitre.org/campaigns/C0063), the adversaries gained initial access to the operational technology via the compromised Fortinet edge devices, and used used SSH, RDP, and SMB/Windows Admin Shares to connect to remote systems and execute commands.(Citation: CERT Polska)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0886",
+      "description": null
+    },
+    {
+      "source_name": "Blake Johnson, Dan Caban, Marina Krotofil, Dan Scali, Nathan Brubaker, Christopher Glyer December 2017",
+      "url": "https://www.fireeye.com/blog/threat-research/2017/12/attackers-deploy-new-ics-attack-framework-triton.html",
+      "description": "Blake Johnson, Dan Caban, Marina Krotofil, Dan Scali, Nathan Brubaker, Christopher Glyer 2017, December 14 Attackers Deploy New ICS Attack Framework TRITON and Cause Operational Disruption to Critical Infrastructure Retrieved. 2018/01/12 "
+    },
+    {
+      "source_name": "CISA AA21-201A Pipeline Intrusion July 2021",
+      "url": "https://us-cert.cisa.gov/sites/default/files/publications/AA21-201A_Chinese_Gas_Pipeline_Intrusion_Campaign_2011_to_2013%20(1).pdf",
+      "description": "Department of Justice (DOJ), DHS Cybersecurity & Infrastructure Security Agency (CISA) 2021, July 20 Chinese Gas Pipeline Intrusion Campaign, 2011 to 2013 Retrieved. 2021/10/08 "
+    },
+    {
+      "source_name": "Dragos December 2017",
+      "url": "https://dragos.com/blog/trisis/TRISIS-01.pdf",
+      "description": "Dragos 2017, December 13 TRISIS Malware Analysis of Safety System Targeted Malware Retrieved. 2018/01/12 "
+    },
+    {
+      "source_name": "Joe Slowik April 2019",
+      "url": "https://dragos.com/blog/industry-news/implications-of-it-ransomware-for-ics-environments/",
+      "description": "Joe Slowik 2019, April 10 Implications of IT Ransomware for ICS Environments Retrieved. 2019/10/27 "
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Command",
+      "Logon Session",
+      "Module",
+      "Network Share",
+      "Network Traffic",
+      "Process"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

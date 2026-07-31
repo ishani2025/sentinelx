@@ -1,0 +1,119 @@
+{
+  "metadata": {
+    "technique_id": "T0815",
+    "technique_name": "Denial of View",
+    "domain": "ics",
+    "version": "1.1",
+    "last_modified": "2025-04-15T19:58:33.142Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Impact"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may cause a denial of view in attempt to disrupt and prevent operator oversight on the status of an ICS environment. This may manifest itself as a temporary communication failure between a device and its control source, where the interface recovers and becomes available once the interference ceases. (Citation: Corero) (Citation: Michael J. Assante and Robert M. Lee) (Citation: Tyson Macaulay) \n\nAn adversary may attempt to deny operator visibility by preventing them from receiving status and reporting messages. Denying this view may temporarily block and prevent operators from noticing a change in state or anomalous behavior. The environment's data and processes may still be operational, but functioning in an unintended or adversarial manner. ",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0769",
+        "name": "Detection of Denial of View"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1901",
+        "name": "Analytic 1901",
+        "description": "No standard detection method currently exists for this technique."
+      }
+    ],
+    "log_sources": [],
+    "data_components": []
+  },
+  "mitigations": [
+    {
+      "id": "M0810",
+      "name": "Out-of-Band Communications Channel",
+      "description": "Have alternative methods to support communication requirements during communication failures and data integrity attacks. (Citation: National Institute of Standards and Technology April 2013) (Citation: Defense Advanced Research Projects Agency)"
+    },
+    {
+      "id": "M0953",
+      "name": "Data Backup",
+      "description": "Take and store data backups from end user systems and critical servers. Ensure backup and storage systems are hardened and kept separate from the corporate network to prevent compromise.   Maintain and exercise incident response plans  (Citation: Department of Homeland Security October 2009), including the management of  'gold-copy' back-up images and configurations for key systems to enable quick recovery and response from adversarial activities that impact control, view, or availability."
+    },
+    {
+      "id": "M0811",
+      "name": "Redundancy of Service",
+      "description": "Redundancy could be provided for both critical ICS devices and services, such as back-up devices or hot-standbys."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S0604",
+        "name": "Industroyer"
+      }
+    ],
+    "tools": [],
+    "campaigns": [
+      {
+        "id": "C0020",
+        "name": "Maroochy Water Breach"
+      }
+    ]
+  },
+  "procedure_examples": [
+    {
+      "source_id": "S0604",
+      "source_name": "Industroyer",
+      "source_type": "malware",
+      "description": "[Industroyer](https://attack.mitre.org/software/S0604) is able to block serial COM channels temporarily causing a denial of view. (Citation: Anton Cherepanov, ESET June 2017)"
+    },
+    {
+      "source_id": "C0020",
+      "source_name": "Maroochy Water Breach",
+      "source_type": "campaign",
+      "description": "In the [Maroochy Water Breach](https://attack.mitre.org/campaigns/C0020), the adversary temporarily shut an investigator out of the network, preventing them from viewing the state of the system.(Citation: Marshall Abrams July 2008)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0815",
+      "description": null
+    },
+    {
+      "source_name": "Corero",
+      "url": "https://www.corero.com/resources/files/whitepapers/cns_whitepaper_ics.pdf",
+      "description": "Corero   Industrial Control System (ICS) Security Retrieved. 2019/11/04 "
+    },
+    {
+      "source_name": "Michael J. Assante and Robert M. Lee",
+      "url": "https://icscsi.org/library/Documents/White_Papers/SANS%20-%20ICS%20Cyber%20Kill%20Chain.pdf",
+      "description": "Michael J. Assante and Robert M. Lee SANS Industrial Control System (ICS) Security; The Industrial Control System Cyber Kill Chain Retrieved 2024/11/25"
+    },
+    {
+      "source_name": "Tyson Macaulay",
+      "url": "https://books.google.com/books?id=oXIYBAAAQBAJ&pg=PA249&lpg=PA249&dq=loss+denial+manipulation+of+view&source=bl&ots=dV1uQ8IUff&sig=ACfU3U2NIwGjhg051D_Ytw6npyEk9xcf4w&hl=en&sa=X&ved=2ahUKEwj2wJ7y4tDlAhVmplkKHSTaDnQQ6AEwAHoECAgQAQ#v=onepage&q=loss%20denial%20manipulation%20of%20view&f=false",
+      "description": "Tyson Macaulay Michael J. Assante and Robert M. Lee Corero   Industrial Control System (ICS) Security Retrieved. 2019/11/04  The Industrial Control System Cyber Kill Chain Retrieved. 2019/11/04  RIoT Control: Understanding and Managing Risks and the Internet of Things Retrieved. 2019/11/04 "
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

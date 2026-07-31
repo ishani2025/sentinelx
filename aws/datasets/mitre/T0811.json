@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "technique_id": "T0811",
+    "technique_name": "Data from Information Repositories",
+    "domain": "ics",
+    "version": "1.2",
+    "last_modified": "2025-04-16T21:26:13.205Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Collection"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may target and collect data from information repositories. This can include sensitive data such as specifications, schematics, or diagrams of control system layouts, devices, and processes. Examples of information repositories include reference databases in the process environment, as well as databases in the corporate network that might contain information about the ICS.(Citation: Cybersecurity & Infrastructure Security Agency March 2018)\n\nInformation collected from these systems may provide the adversary with a better understanding of the operational environment, vendors used, processes, or procedures of the ICS.\n\nIn a campaign between 2011 and 2013 against ONG organizations, Chinese state-sponsored actors searched document repositories for specific information such as, system manuals, remote terminal unit (RTU) sites, personnel lists, documents that included the string SCAD*, user credentials, and remote dial-up access information. (Citation: CISA AA21-201A Pipeline Intrusion July 2021)",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0754",
+        "name": "Detection of Data from Information Repositories"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1886",
+        "name": "Analytic 1886",
+        "description": "Monitor for newly constructed logon behavior within Microsoft's SharePoint can be configured to report access to certain pages and documents.(Citation: Microsoft SharePoint Logging) Sharepoint audit logging can also be configured to report when a user shares a resource.(Citation: Sharepoint Sharing Events) The user access logging within Atlassian's Confluence can also be configured to report access to certain pages and documents through AccessLogFilter.(Citation: Atlassian Confluence Logging) Additional log storage and analysis infrastructure will likely be required for more robust detection capabilities. \nIn the case of detecting collection from shared network drives monitor for unexpected and abnormal accesses to network shares. \nMonitor for third-party application logging, messaging, and/or other artifacts that may leverage information repositories to mine valuable information. Information repositories generally have a considerably large user base, detection of malicious use can be non-trivial. At minimum, access to information repositories performed by privileged users (for example, Active Directory Domain, Enterprise, or Schema Administrators) should be closely monitored and alerted upon, as these types of accounts should generally not be used to access information repositories. If the capability exists, it may be of value to monitor and alert on users that are retrieving and viewing a large number of documents and pages; this behavior may be indicative of programmatic means being used to retrieve all data within the repository. In environments with high-maturity, it may be possible to leverage User-Behavioral Analytics (UBA) platforms to detect and alert on user-based anomalies."
+      }
+    ],
+    "log_sources": [
+      "Application Log",
+      "Logon Session",
+      "Network Share"
+    ],
+    "data_components": [
+      "Application Log Content",
+      "Logon Session Creation",
+      "Network Share Access"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0947",
+      "name": "Audit",
+      "description": "Perform audits or scans of systems, permissions, insecure software, insecure configurations, etc. to identify potential weaknesses. Perform periodic integrity checks of the device to validate the correctness of the firmware, software, programs, and configurations. Integrity checks, which typically include cryptographic hashes or digital signatures, should be compared to those obtained at known valid states, especially after events like device reboots, program downloads, or program restarts."
+    },
+    {
+      "id": "M0941",
+      "name": "Encrypt Sensitive Information",
+      "description": "Protect sensitive data-at-rest with strong encryption."
+    },
+    {
+      "id": "M0922",
+      "name": "Restrict File and Directory Permissions",
+      "description": "Restrict access by setting directory and file permissions that are not specific to users or privileged accounts."
+    },
+    {
+      "id": "M0918",
+      "name": "User Account Management",
+      "description": "Manage the creation, modification, use, and permissions associated to user accounts."
+    },
+    {
+      "id": "M0926",
+      "name": "Privileged Account Management",
+      "description": "Manage the creation, modification, use, and permissions associated to privileged accounts, including SYSTEM and root."
+    },
+    {
+      "id": "M0917",
+      "name": "User Training",
+      "description": "Train users to be aware of access or manipulation attempts by an adversary to reduce the risk of successful spearphishing, social engineering, and other techniques that involve user interaction."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S0038",
+        "name": "Duqu"
+      }
+    ],
+    "tools": [],
+    "campaigns": []
+  },
+  "procedure_examples": [
+    {
+      "source_id": "S0038",
+      "source_name": "Duqu",
+      "source_type": "malware",
+      "description": "[Duqu](https://attack.mitre.org/software/S0038) downloads additional modules for the collection of data in information repositories, including the Infostealer 2 module that can access data from Windows Shares.(Citation: Symantec)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0811",
+      "description": null
+    },
+    {
+      "source_name": "Cybersecurity & Infrastructure Security Agency March 2018",
+      "url": "https://us-cert.cisa.gov/ncas/alerts/TA18-074A",
+      "description": "Cybersecurity & Infrastructure Security Agency 2018, March 15 Alert (TA18-074A) Russian Government Cyber Activity Targeting Energy and Other Critical Infrastructure Sectors Retrieved. 2019/10/11 "
+    },
+    {
+      "source_name": "CISA AA21-201A Pipeline Intrusion July 2021",
+      "url": "https://us-cert.cisa.gov/sites/default/files/publications/AA21-201A_Chinese_Gas_Pipeline_Intrusion_Campaign_2011_to_2013%20(1).pdf",
+      "description": "Department of Justice (DOJ), DHS Cybersecurity & Infrastructure Security Agency (CISA) 2021, July 20 Chinese Gas Pipeline Intrusion Campaign, 2011 to 2013 Retrieved. 2021/10/08 "
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Application Log",
+      "Logon Session",
+      "Network Share"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

@@ -1,0 +1,174 @@
+{
+  "metadata": {
+    "technique_id": "T0865",
+    "technique_name": "Spearphishing Attachment",
+    "domain": "ics",
+    "version": "1.1",
+    "last_modified": "2025-04-16T21:26:15.346Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Initial Access"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may use a spearphishing attachment, a variant of spearphishing, as a form of a social engineering attack against specific targets. Spearphishing attachments are different from other forms of spearphishing in that they employ malware attached to an email. All forms of spearphishing are electronically delivered and target a specific individual, company, or industry. In this scenario, adversaries attach a file to the spearphishing email and usually rely upon [User Execution](https://attack.mitre.org/techniques/T0863) to gain execution and access. (Citation: Enterprise ATT&CK October 2019) \n\nA Chinese spearphishing campaign running from December 9, 2011 through February 29, 2012, targeted ONG organizations and their employees. The emails were constructed with a high level of sophistication to convince employees to open the malicious file attachments. (Citation: CISA AA21-201A Pipeline Intrusion July 2021)",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0781",
+        "name": "Detection of Spearphishing Attachment"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1913",
+        "name": "Analytic 1913",
+        "description": "Monitor for suspicious descendant process spawning from Microsoft Office and other productivity software.(Citation: Elastic - Koadiac Detection with EQL) For added context on adversary procedures and background see [Spearphishing Attachment](https://attack.mitre.org/techniques/T1566/001).\nMonitor for newly constructed files from a spearphishing emails with a malicious attachment in an attempt to gain access to victim systems.\nMonitor network traffic for suspicious email attachments. Consider correlation with process monitoring and command line to detect anomalous processes execution and command line arguments associated to traffic patterns (e.g., monitor anomalies in use of files that do not normally initiate connections for respective protocol(s)). Use web proxies to review content of emails including sender information, headers, and attachments for potentially malicious content.\nMonitor mail server and proxy logs for evidence of messages originating from spoofed addresses, including records indicating failed DKIM+SPF validation or mismatched message headers.(Citation: Microsoft Anti Spoofing)(Citation: ACSC Email Spoofing) Anti-virus can potentially detect malicious documents and attachments as they're scanned to be stored on the email server or on the user's computer."
+      }
+    ],
+    "log_sources": [
+      "Application Log",
+      "File",
+      "Network Traffic",
+      "Process"
+    ],
+    "data_components": [
+      "Application Log Content",
+      "File Creation",
+      "Network Traffic Content",
+      "Process Creation"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0917",
+      "name": "User Training",
+      "description": "Train users to be aware of access or manipulation attempts by an adversary to reduce the risk of successful spearphishing, social engineering, and other techniques that involve user interaction."
+    },
+    {
+      "id": "M0931",
+      "name": "Network Intrusion Prevention",
+      "description": "Use intrusion detection signatures to block traffic at network boundaries.  In industrial control environments, network intrusion prevention should be configured so it will not disrupt protocols and communications responsible for real-time functions related to control or safety."
+    },
+    {
+      "id": "M0949",
+      "name": "Antivirus/Antimalware",
+      "description": "Use signatures or heuristics to detect malicious software.  Within industrial control environments, antivirus/antimalware installations should be limited to assets that are not involved in critical or real-time operations. To minimize the impact to system availability, all products should first be validated within a representative test environment before deployment to production systems. (Citation: NCCIC August 2018)"
+    },
+    {
+      "id": "M0921",
+      "name": "Restrict Web-Based Content",
+      "description": "Restrict use of certain websites, block downloads/attachments, block Javascript, restrict browser extensions, etc."
+    }
+  ],
+  "relationships": {
+    "groups": [
+      {
+        "id": "G0064",
+        "name": "APT33"
+      },
+      {
+        "id": "G0032",
+        "name": "Lazarus Group"
+      },
+      {
+        "id": "G0049",
+        "name": "OilRig"
+      },
+      {
+        "id": "G1000",
+        "name": "ALLANITE"
+      }
+    ],
+    "malware": [
+      {
+        "id": "S0089",
+        "name": "BlackEnergy"
+      },
+      {
+        "id": "S0093",
+        "name": "Backdoor.Oldrea"
+      }
+    ],
+    "tools": [],
+    "campaigns": []
+  },
+  "procedure_examples": [
+    {
+      "source_id": "G0064",
+      "source_name": "APT33",
+      "source_type": "intrusion-set",
+      "description": "[APT33](https://attack.mitre.org/groups/G0064) sent spear phishing emails containing links to HTML application files, which were embedded with malicious code. (Citation: Jacqueline O'Leary et al. September 2017) [APT33](https://attack.mitre.org/groups/G0064) has conducted targeted spear phishing campaigns against U.S. government agencies and private sector companies. (Citation: Andy Greenburg June 2019)"
+    },
+    {
+      "source_id": "G0032",
+      "source_name": "Lazarus Group",
+      "source_type": "intrusion-set",
+      "description": "[Lazarus Group](https://attack.mitre.org/groups/G0032) has been observed targeting organizations using spearphishing documents with embedded malicious payloads. (Citation: Novetta Threat Research Group February 2016) Highly targeted spear phishing campaigns have been conducted against a U.S. electric grid company. (Citation: Eduard Kovacs March 2018)"
+    },
+    {
+      "source_id": "G0049",
+      "source_name": "OilRig",
+      "source_type": "intrusion-set",
+      "description": "[OilRig](https://attack.mitre.org/groups/G0049) used spearphishing emails with malicious Microsoft Excel spreadsheet attachments. (Citation: Robert Falcone, Bryan Lee May 2016)"
+    },
+    {
+      "source_id": "G1000",
+      "source_name": "ALLANITE",
+      "source_type": "intrusion-set",
+      "description": "[ALLANITE](https://attack.mitre.org/groups/G1000) utilized spear phishing to gain access into energy sector environments. (Citation: Jeff Jones May 2018)"
+    },
+    {
+      "source_id": "S0089",
+      "source_name": "BlackEnergy",
+      "source_type": "malware",
+      "description": "[BlackEnergy](https://attack.mitre.org/software/S0089) targeted energy sector organizations in a wide reaching email spearphishing campaign. Adversaries utilized malicious Microsoft Word documents attachments. (Citation: Booz Allen Hamilton)\n"
+    },
+    {
+      "source_id": "S0093",
+      "source_name": "Backdoor.Oldrea",
+      "source_type": "malware",
+      "description": "The [Backdoor.Oldrea](https://attack.mitre.org/software/S0093) RAT is distributed through a trojanized installer attached to emails. (Citation: Daavid Hentunen, Antti Tikkanen June 2014)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0865",
+      "description": null
+    },
+    {
+      "source_name": "CISA AA21-201A Pipeline Intrusion July 2021",
+      "url": "https://us-cert.cisa.gov/sites/default/files/publications/AA21-201A_Chinese_Gas_Pipeline_Intrusion_Campaign_2011_to_2013%20(1).pdf",
+      "description": "Department of Justice (DOJ), DHS Cybersecurity & Infrastructure Security Agency (CISA) 2021, July 20 Chinese Gas Pipeline Intrusion Campaign, 2011 to 2013 Retrieved. 2021/10/08 "
+    },
+    {
+      "source_name": "Enterprise ATT&CK October 2019",
+      "url": "https://attack.mitre.org/techniques/T1193/",
+      "description": "Enterprise ATT&CK 2019, October 25 Spearphishing Attachment Retrieved. 2019/10/25 "
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Application Log",
+      "File",
+      "Network Traffic",
+      "Process"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

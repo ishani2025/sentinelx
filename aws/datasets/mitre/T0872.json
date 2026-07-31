@@ -1,0 +1,123 @@
+{
+  "metadata": {
+    "technique_id": "T0872",
+    "technique_name": "Indicator Removal on Host",
+    "domain": "ics",
+    "version": "1.0",
+    "last_modified": "2025-04-25T15:16:47.841Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Evasion"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may attempt to remove indicators of their presence on a system in an effort to cover their tracks. In cases where an adversary may feel detection is imminent, they may try to overwrite, delete, or cover up changes they have made to the device.",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0750",
+        "name": "Detection of Indicator Removal on Host"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1882",
+        "name": "Analytic 1882",
+        "description": "Monitor executed commands and arguments that may delete or alter generated artifacts on a host system, including logs or captured files such as quarantined malware.\nMonitor for API calls that may delete or alter generated artifacts on a host system, including logs or captured files such as quarantined malware.\nMonitor for changes made to Windows Registry keys or values that may delete or alter generated artifacts on a host system, including logs or captured files such as quarantined malware. For added context on adversary procedures and background see [Indicator Removal](https://attack.mitre.org/techniques/T1070) and applicable sub-techniques.\nMonitor for contextual file data that may show signs of deletion or alter generated artifacts on a host system, including logs or captured files such as quarantined malware.\nMonitor Windows registry keys that may be deleted or alter generated artifacts on a host system, including logs or captured files such as quarantined malware. For added context on adversary procedures and background see [Indicator Removal](https://attack.mitre.org/techniques/T1070) and applicable sub-techniques.\nMonitor for a file that may delete or alter generated artifacts on a host system, including logs or captured files such as quarantined malware.\nMonitor for changes made to a file may delete or alter generated artifacts on a host system, including logs or captured files such as quarantined malware.\nMonitor for newly executed processes that may delete or alter generated artifacts on a host system, including logs or captured files such as quarantined malware."
+      }
+    ],
+    "log_sources": [
+      "Command",
+      "File",
+      "Process",
+      "Windows Registry"
+    ],
+    "data_components": [
+      "Command Execution",
+      "File Deletion",
+      "File Metadata",
+      "File Modification",
+      "OS API Execution",
+      "Process Creation",
+      "Windows Registry Key Deletion",
+      "Windows Registry Key Modification"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0922",
+      "name": "Restrict File and Directory Permissions",
+      "description": "Restrict access by setting directory and file permissions that are not specific to users or privileged accounts."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S1009",
+        "name": "Triton"
+      },
+      {
+        "id": "S0607",
+        "name": "KillDisk"
+      }
+    ],
+    "tools": [],
+    "campaigns": [
+      {
+        "id": "C0030",
+        "name": "Triton Safety Instrumented System Attack"
+      }
+    ]
+  },
+  "procedure_examples": [
+    {
+      "source_id": "S1009",
+      "source_name": "Triton",
+      "source_type": "malware",
+      "description": "[Triton](https://attack.mitre.org/software/S1009) would reset the controller to the previous state over TriStation and if this failed it would write a dummy program to memory in what was likely an attempt at anti-forensics. (Citation: Jos Wetzels January 2018)"
+    },
+    {
+      "source_id": "S0607",
+      "source_name": "KillDisk",
+      "source_type": "malware",
+      "description": "[KillDisk](https://attack.mitre.org/software/S0607) deletes application, security, setup, and system event logs from Windows systems. (Citation: Anton Cherepanov)"
+    },
+    {
+      "source_id": "C0030",
+      "source_name": "Triton Safety Instrumented System Attack",
+      "source_type": "campaign",
+      "description": "In the [Triton Safety Instrumented System Attack](https://attack.mitre.org/campaigns/C0030), [TEMP.Veles](https://attack.mitre.org/groups/G0088) would programmatically return the controller to a normal running state if the [Triton](https://attack.mitre.org/software/S1009) malware failed. If the controller could not recover in a defined time window, [TEMP.Veles](https://attack.mitre.org/groups/G0088) programmatically overwrote their malicious program with invalid data.(Citation: FireEye TRITON Dec 2017)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0872",
+      "description": null
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Command",
+      "File",
+      "Process",
+      "Windows Registry"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "metadata": {
+    "technique_id": "T0846.001",
+    "technique_name": "Port Scan",
+    "domain": "ics",
+    "version": "1.0",
+    "last_modified": "2026-05-12T15:12:00.635Z",
+    "platforms": [],
+    "tactics": [
+      "Discovery"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may perform a port scan on a system, device, or network to identify live hosts, enumerate open ports and running services, identify operating systems, and map out the network.(Citation: NIST SP 800-82r3) The results of a port scan may inform adversary [Discovery](https://attack.mitre.org/tactics/TA0102), [Lateral Movement](https://attack.mitre.org/tactics/TA0109), and vulnerability exploitation decisions ([Exploitation for Evasion](https://attack.mitre.org/techniques/T0820), [Exploitation for Privilege Escalation](https://attack.mitre.org/techniques/T0890), [Exploitation of Remote Services](https://attack.mitre.org/techniques/T0866)). \n\nSome common tools for executing a port scan include `nmap`, `netcat`, and the Advanced Port Scanner.\n",
+    "is_subtechnique": true,
+    "parent_technique": "T0846"
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0907",
+        "name": "Detection of Port Scan"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN2050",
+        "name": "Analytic 2050",
+        "description": "Monitor for new processes engaging in scanning activity or connecting to multiple systems by correlating process creation network data.\n\nMonitor for hosts enumerating network connected resources using non-ICS enterprise protocols.  \n"
+      }
+    ],
+    "log_sources": [
+      "Network",
+      "Network Traffic",
+      "Process",
+      "Traffic"
+    ],
+    "data_components": [
+      "Network Connection Creation",
+      "Network Traffic Content",
+      "Network Traffic Flow",
+      "Process Creation"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0814",
+      "name": "Static Network Configuration",
+      "description": "Configure hosts and devices to use static network configurations when possible, protocols that require dynamic discovery/addressing (e.g., ARP, DHCP, DNS) can be used to manipulate network message forwarding and enable various AiTM attacks. This mitigation may not always be usable due to limited device features or challenges introduced with different network configurations."
+    },
+    {
+      "id": "M0930",
+      "name": "Network Segmentation",
+      "description": "Architect sections of the network to isolate critical systems, functions, or resources. Use physical and logical segmentation to prevent access to potentially sensitive systems and information. Use a DMZ to contain any internet-facing services that should not be exposed from the internal network.  Restrict network access to only required systems and services. In addition, prevent systems from other networks or business functions (e.g., enterprise) from accessing critical process control systems. For example, in IEC 62443, systems within the same secure level should be grouped into a zone, and access to that zone is restricted by a conduit, or mechanism to restrict data flows between zones by segmenting the network. (Citation: IEC February 2019) (Citation: IEC August 2013)"
+    },
+    {
+      "id": "M0931",
+      "name": "Network Intrusion Prevention",
+      "description": "Use intrusion detection signatures to block traffic at network boundaries.  In industrial control environments, network intrusion prevention should be configured so it will not disrupt protocols and communications responsible for real-time functions related to control or safety."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S1045",
+        "name": "INCONTROLLER"
+      },
+      {
+        "id": "S0604",
+        "name": "Industroyer"
+      },
+      {
+        "id": "S1006",
+        "name": "PLC-Blaster"
+      }
+    ],
+    "tools": [],
+    "campaigns": [
+      {
+        "id": "C0063",
+        "name": "2025 Poland Wiper Attacks"
+      }
+    ]
+  },
+  "procedure_examples": [
+    {
+      "source_id": "C0063",
+      "source_name": "2025 Poland Wiper Attacks",
+      "source_type": "campaign",
+      "description": "During the [2025 Poland Wiper Attacks](https://attack.mitre.org/campaigns/C0063), the adversaries used Advanced Port Scanner and Advanced IP Scanner to conduct remote system discovery activities.(Citation: CERT Polska)"
+    },
+    {
+      "source_id": "S1045",
+      "source_name": "INCONTROLLER",
+      "source_type": "malware",
+      "description": "[INCONTROLLER](https://attack.mitre.org/software/S1045) has the ability to perform scans for TCP port 4840 to identify devices running OPC UA servers.(Citation: Wylie-22)"
+    },
+    {
+      "source_id": "S0604",
+      "source_name": "Industroyer",
+      "source_type": "malware",
+      "description": "The [Industroyer](https://attack.mitre.org/software/S0604) IEC 61850 payload component has the ability to discover relevant devices in the infected host's network subnet by attempting to connect on port 102.(Citation: Anton Cherepanov, ESET June 2017)"
+    },
+    {
+      "source_id": "S1006",
+      "source_name": "PLC-Blaster",
+      "source_type": "malware",
+      "description": "[PLC-Blaster](https://attack.mitre.org/software/S1006) scans the network to find other Siemens S7 PLC devices to infect. It locates these devices by checking for a service listening on TCP port 102.(Citation: Spenneberg, Ralf, Maik Brggemann, and Hendrik Schwartke March 2016)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0846/001",
+      "description": null
+    },
+    {
+      "source_name": "NIST SP 800-82r3",
+      "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-82r3.pdf",
+      "description": "Keith Stouffer. (2023, September). Guide to Operational Technology  (OT) Security. Retrieved April 22, 2026."
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Network",
+      "Network Traffic",
+      "Process",
+      "Traffic"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

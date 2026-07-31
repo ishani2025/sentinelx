@@ -1,0 +1,161 @@
+{
+  "metadata": {
+    "technique_id": "T0869",
+    "technique_name": "Standard Application Layer Protocol",
+    "domain": "ics",
+    "version": "1.0",
+    "last_modified": "2025-04-25T15:16:52.173Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Command and Control"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may establish command and control capabilities over commonly used application layer protocols such as HTTP(S), OPC, RDP, telnet, DNP3, and modbus. These protocols may be used to disguise adversary actions as benign network traffic. Standard protocols may be seen on their associated port or in some cases over a non-standard port.  Adversaries may use these protocols to reach out of the network for command and control, or in some cases to other infected devices within the network.",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0799",
+        "name": "Detection of Standard Application Layer Protocol"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1931",
+        "name": "Analytic 1931",
+        "description": "Monitor and analyze traffic flows that do not follow the expected protocol standards and traffic flows (e.g., extraneous packets that do not belong to established flows    , or gratuitous or anomalous traffic patterns). Consider correlation with process monitoring and command line to detect anomalous processes execution and command line arguments associated to traffic patterns (e.g., monitor anomalies in use of files that do not normally initiate connections for respective protocol(s)).\nMonitor and analyze traffic patterns and packet inspection associated to protocol(s), leveraging SSL/TLS inspection for encrypted traffic, that do not follow the expected protocol standards and traffic flows (e.g., extraneous packets that do not belong to established flows, gratuitous or anomalous traffic patterns, anomalous syntax, or structure). Consider correlation with process monitoring and command line to detect anomalous processes execution and command line arguments associated to traffic patterns  (e.g., monitor anomalies in use of files that do not normally initiate connections for respective protocol(s))."
+      }
+    ],
+    "log_sources": [
+      "Network Traffic"
+    ],
+    "data_components": [
+      "Network Traffic Content",
+      "Network Traffic Flow"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0930",
+      "name": "Network Segmentation",
+      "description": "Architect sections of the network to isolate critical systems, functions, or resources. Use physical and logical segmentation to prevent access to potentially sensitive systems and information. Use a DMZ to contain any internet-facing services that should not be exposed from the internal network.  Restrict network access to only required systems and services. In addition, prevent systems from other networks or business functions (e.g., enterprise) from accessing critical process control systems. For example, in IEC 62443, systems within the same secure level should be grouped into a zone, and access to that zone is restricted by a conduit, or mechanism to restrict data flows between zones by segmenting the network. (Citation: IEC February 2019) (Citation: IEC August 2013)"
+    },
+    {
+      "id": "M0931",
+      "name": "Network Intrusion Prevention",
+      "description": "Use intrusion detection signatures to block traffic at network boundaries.  In industrial control environments, network intrusion prevention should be configured so it will not disrupt protocols and communications responsible for real-time functions related to control or safety."
+    },
+    {
+      "id": "M0807",
+      "name": "Network Allowlists",
+      "description": "Network allowlists can be implemented through either host-based files or system hosts files to specify what connections (e.g., IP address, MAC address, port, protocol) can be made from a device. Allowlist techniques that operate at the  application layer (e.g., DNP3, Modbus, HTTP) are addressed in [Filter Network Traffic](https://attack.mitre.org/mitigations/M0937) mitigation."
+    }
+  ],
+  "relationships": {
+    "groups": [
+      {
+        "id": "G0049",
+        "name": "OilRig"
+      }
+    ],
+    "malware": [
+      {
+        "id": "S1045",
+        "name": "INCONTROLLER"
+      },
+      {
+        "id": "S0089",
+        "name": "BlackEnergy"
+      },
+      {
+        "id": "S1165",
+        "name": "FrostyGoop"
+      },
+      {
+        "id": "S0603",
+        "name": "Stuxnet"
+      },
+      {
+        "id": "S0496",
+        "name": "REvil"
+      },
+      {
+        "id": "S1009",
+        "name": "Triton"
+      }
+    ],
+    "tools": [],
+    "campaigns": []
+  },
+  "procedure_examples": [
+    {
+      "source_id": "S1045",
+      "source_name": "INCONTROLLER",
+      "source_type": "malware",
+      "description": "[INCONTROLLER](https://attack.mitre.org/software/S1045) can remotely send commands to a malicious agent uploaded on Omron PLCs over HTTP or HTTPS.(Citation: CISA-AA22-103A) "
+    },
+    {
+      "source_id": "S0089",
+      "source_name": "BlackEnergy",
+      "source_type": "malware",
+      "description": "[BlackEnergy](https://attack.mitre.org/software/S0089) uses HTTP POST request to contact external command and control servers. (Citation: Booz Allen Hamilton)\n"
+    },
+    {
+      "source_id": "S1165",
+      "source_name": "FrostyGoop",
+      "source_type": "malware",
+      "description": "[FrostyGoop](https://attack.mitre.org/software/S1165) utilizes the Modbus protocol for transmitting commands to victim devices.(Citation: Dragos FROSTYGOOP 2024)"
+    },
+    {
+      "source_id": "S0603",
+      "source_name": "Stuxnet",
+      "source_type": "malware",
+      "description": "[Stuxnet](https://attack.mitre.org/software/S0603) uses a thread to monitor a data block DB890 of sequence A or B. This thread is constantly running and probing this block (every 5 minutes). On an infected PLC, if block DB890 is found and contains a special magic value (used by Stuxnet to identify his own block DB890), this blocks data can be read and written. This thread is likely used to optimize the way sequences A and B work, and modify their behavior when the Step7 editor is opened. (Citation: Nicolas Falliere, Liam O Murchu, Eric Chien February 2011)"
+    },
+    {
+      "source_id": "S0496",
+      "source_name": "REvil",
+      "source_type": "malware",
+      "description": "[REvil](https://attack.mitre.org/software/S0496) sends HTTPS POST messages with randomly generated URLs to communicate with a remote server. (Citation: Tom Fakterman August 2019) (Citation: SecureWorks September 2019)"
+    },
+    {
+      "source_id": "G0049",
+      "source_name": "OilRig",
+      "source_type": "intrusion-set",
+      "description": "[OilRig](https://attack.mitre.org/groups/G0049) communicated with its command and control using HTTP requests. (Citation: Robert Falcone, Bryan Lee May 2016)"
+    },
+    {
+      "source_id": "S1009",
+      "source_name": "Triton",
+      "source_type": "malware",
+      "description": "[Triton](https://attack.mitre.org/software/S1009) can communicate with the implant utilizing the TriStation 'get main processor diagnostic data' command and looks for a specifically crafted packet body from which it extracts a command value and its arguments. (Citation: Jos Wetzels January 2018)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0869",
+      "description": null
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Network Traffic"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

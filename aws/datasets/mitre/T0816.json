@@ -1,0 +1,157 @@
+{
+  "metadata": {
+    "technique_id": "T0816",
+    "technique_name": "Device Restart/Shutdown",
+    "domain": "ics",
+    "version": "1.1",
+    "last_modified": "2026-05-12T15:12:00.623Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Inhibit Response Function"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may forcibly restart or shutdown a device in an ICS environment to disrupt and potentially negatively impact physical processes. Methods of device restart and shutdown exist in some devices as built-in, standard functionalities. These functionalities can be executed using interactive device web interfaces, CLIs, and network protocol commands.\n\nUnexpected restart or shutdown of control system devices may prevent expected response functions happening during critical states.\n\nA device restart can also be a sign of malicious device modifications, as many updates require a shutdown in order to take effect.",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0801",
+        "name": "Detection of Device Restart/Shutdown"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1933",
+        "name": "Analytic 1933",
+        "description": "Monitor for a loss of network communications, which may indicate a device has been shutdown or restarted. This will not directly detect the technique’s execution, but instead may provide additional evidence that the technique has been used and may complement other detections.\nDevice restarts and shutdowns may be observable in device application logs. Monitor for unexpected device restarts or shutdowns.\nDevices may produce alarms about restarts or shutdowns. Monitor for unexpected device restarts or shutdowns.\nMonitor ICS automation protocols for functions that restart or shutdown a device. Commands to restart or shutdown devices may also be observable in traditional IT management protocols."
+      }
+    ],
+    "log_sources": [
+      "Application Log",
+      "Network Traffic",
+      "Operational Databases"
+    ],
+    "data_components": [
+      "Application Log Content",
+      "Device Alarm",
+      "Network Traffic Content",
+      "Network Traffic Flow"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0807",
+      "name": "Network Allowlists",
+      "description": "Network allowlists can be implemented through either host-based files or system hosts files to specify what connections (e.g., IP address, MAC address, port, protocol) can be made from a device. Allowlist techniques that operate at the  application layer (e.g., DNP3, Modbus, HTTP) are addressed in [Filter Network Traffic](https://attack.mitre.org/mitigations/M0937) mitigation."
+    },
+    {
+      "id": "M0804",
+      "name": "Human User Authentication",
+      "description": "Require user authentication before allowing access to data or accepting commands to a device. While strong multi-factor authentication is preferable, it is not always feasible within ICS environments. Performing strong user authentication also requires additional security controls and processes which are often the target of related adversarial techniques (e.g., Valid Accounts, Default Credentials). Therefore, associated ATT&CK mitigations should be considered in addition to this, including [Multi-factor Authentication](https://attack.mitre.org/mitigations/M0932), [Account Use Policies](https://attack.mitre.org/mitigations/M0936), [Password Policies](https://attack.mitre.org/mitigations/M0927), [User Account Management](https://attack.mitre.org/mitigations/M0918), [Privileged Account Management](https://attack.mitre.org/mitigations/M0926), and [User Account Control](https://attack.mitre.org/mitigations/M1052)."
+    },
+    {
+      "id": "M0930",
+      "name": "Network Segmentation",
+      "description": "Architect sections of the network to isolate critical systems, functions, or resources. Use physical and logical segmentation to prevent access to potentially sensitive systems and information. Use a DMZ to contain any internet-facing services that should not be exposed from the internal network.  Restrict network access to only required systems and services. In addition, prevent systems from other networks or business functions (e.g., enterprise) from accessing critical process control systems. For example, in IEC 62443, systems within the same secure level should be grouped into a zone, and access to that zone is restricted by a conduit, or mechanism to restrict data flows between zones by segmenting the network. (Citation: IEC February 2019) (Citation: IEC August 2013)"
+    },
+    {
+      "id": "M0802",
+      "name": "Communication Authenticity",
+      "description": "When communicating over an untrusted network, utilize secure network protocols that both authenticate the message sender and can verify its integrity. This can be done either through message authentication codes (MACs) or digital signatures, to detect spoofed network messages and unauthorized connections."
+    },
+    {
+      "id": "M0800",
+      "name": "Authorization Enforcement",
+      "description": "The device or system should restrict read, manipulate, or execute privileges to only authenticated users who require access based on approved security policies.  Role-based Access Control (RBAC) schemes can help reduce the overhead of assigning permissions to the large number of devices within an ICS. For example, IEC 62351 provides examples of roles used to support common system operations within the electric power sector  (Citation: International Electrotechnical Commission July 2020), while IEEE 1686 defines standard permissions for users of IEDs. (Citation: Institute of Electrical and Electronics Engineers January 2014)"
+    },
+    {
+      "id": "M0942",
+      "name": "Disable or Remove Feature or Program",
+      "description": "Remove or deny access to unnecessary and potentially vulnerable software to prevent abuse by adversaries."
+    },
+    {
+      "id": "M0937",
+      "name": "Filter Network Traffic",
+      "description": "Use network appliances to filter ingress or egress traffic and perform protocol-based filtering. Configure software on endpoints to filter network traffic.   Perform inline allow/denylisting of network messages based on the application layer (OSI Layer 7) protocol, especially for automation protocols. Application allowlists are beneficial when there are well-defined communication sequences, types, rates, or patterns needed during expected system operations. Application denylists may be needed if all acceptable communication sequences cannot be defined, but instead a set of known malicious uses can be denied (e.g., excessive communication  attempts, shutdown messages, invalid commands).  Devices performing these functions are often referred to as deep-packet inspection (DPI) firewalls, context-aware firewalls, or firewalls blocking specific automation/SCADA protocol aware firewalls. (Citation: Centre for the Protection of National Infrastructure February 2005)"
+    },
+    {
+      "id": "M0801",
+      "name": "Access Management",
+      "description": "Access Management technologies can be used to enforce authorization polices and decisions, especially when existing field devices do not provide sufficient capabilities to support user identification and authentication. (Citation: McCarthy, J et al. July 2018) These technologies typically utilize an in-line network device or gateway system to prevent access to unauthenticated users, while also integrating with an authentication service to first verify user credentials. (Citation: Centre for the Protection of National Infrastructure November 2010)"
+    },
+    {
+      "id": "M0813",
+      "name": "Software Process and Device Authentication",
+      "description": "Require the authentication of devices and software processes where appropriate. Devices that connect remotely to other systems should require strong authentication to prevent spoofing of communications. Furthermore, software processes should also require authentication when accessing APIs."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S0604",
+        "name": "Industroyer"
+      }
+    ],
+    "tools": [],
+    "campaigns": [
+      {
+        "id": "C0063",
+        "name": "2025 Poland Wiper Attacks"
+      },
+      {
+        "id": "C0028",
+        "name": "2015 Ukraine Electric Power Attack"
+      }
+    ]
+  },
+  "procedure_examples": [
+    {
+      "source_id": "C0063",
+      "source_name": "2025 Poland Wiper Attacks",
+      "source_type": "campaign",
+      "description": "During the [2025 Poland Wiper Attacks](https://attack.mitre.org/campaigns/C0063), the adversaries corrupted the firmware in the Hitachi RTUs resulting in a fault that triggered a reboot loop.(Citation: CERT Polska)"
+    },
+    {
+      "source_id": "S0604",
+      "source_name": "Industroyer",
+      "source_type": "malware",
+      "description": "The [Industroyer](https://attack.mitre.org/software/S0604) SIPROTEC DoS module exploits the CVE-2015-5374 vulnerability in order to render a Siemens SIPROTEC device unresponsive. While the vulnerability does not directly cause the restart or shutdown of the device, the device must be restarted manually before it can resume operations. (Citation: Anton Cherepanov, ESET June 2017)"
+    },
+    {
+      "source_id": "C0028",
+      "source_name": "2015 Ukraine Electric Power Attack",
+      "source_type": "campaign",
+      "description": "During the [2015 Ukraine Electric Power Attack](https://attack.mitre.org/campaigns/C0028), [Sandworm Team](https://attack.mitre.org/groups/G0034) scheduled the uninterruptable power supplies (UPS) to shutdown data and telephone servers via the UPS management interface. (Citation: Ukraine15 - EISAC - 201603)(Citation: Booz Allen Hamilton)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0816",
+      "description": null
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Application Log",
+      "Network Traffic",
+      "Operational Databases"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

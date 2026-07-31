@@ -1,0 +1,114 @@
+{
+  "metadata": {
+    "technique_id": "T0834",
+    "technique_name": "Native API",
+    "domain": "ics",
+    "version": "1.0",
+    "last_modified": "2025-04-16T21:26:17.499Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Execution"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may directly interact with the native OS application programming interface (API) to access system functions. Native APIs provide a controlled means of calling low-level OS services within the kernel, such as those involving hardware/devices, memory, and processes. (Citation: The MITRE Corporation May 2017) These native APIs are leveraged by the OS during system boot (when other system components are not yet initialized) as well as carrying out tasks and requests during routine operations. \n\nFunctionality provided by native APIs are often also exposed to user-mode applications via interfaces and libraries. For example, functions such as memcpy and direct operations on memory registers can be used to modify user and system memory space.",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0753",
+        "name": "Detection of Native API"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1885",
+        "name": "Analytic 1885",
+        "description": "Devices that provide user access to the underlying operating system may allow the installation of custom software to monitor OS API execution. Monitoring API calls may generate a significant amount of data and may not be useful for defense unless collected under specific circumstances, since benign use of API functions are common and may be difficult to distinguish from malicious behavior. Correlation of other events with behavior surrounding API function calls using API monitoring will provide additional context to an event that may assist in determining if it is due to malicious behavior."
+      }
+    ],
+    "log_sources": [
+      "Process"
+    ],
+    "data_components": [
+      "OS API Execution"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0938",
+      "name": "Execution Prevention",
+      "description": "Block execution of code on a system through application control, and/or script blocking."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S1009",
+        "name": "Triton"
+      },
+      {
+        "id": "S1006",
+        "name": "PLC-Blaster"
+      },
+      {
+        "id": "S0603",
+        "name": "Stuxnet"
+      }
+    ],
+    "tools": [],
+    "campaigns": []
+  },
+  "procedure_examples": [
+    {
+      "source_id": "S1009",
+      "source_name": "Triton",
+      "source_type": "malware",
+      "description": "[Triton](https://attack.mitre.org/software/S1009)'s imain.bin payload takes commands from the TsHi.ExplReadRam(Ex), TsHi.ExplWriteRam(Ex) and TsHi.ExplExec functions to perform operations on controller memory and registers using syscalls written in PowerPC shellcode. (Citation: Jos Wetzels January 2018)"
+    },
+    {
+      "source_id": "S1006",
+      "source_name": "PLC-Blaster",
+      "source_type": "malware",
+      "description": "[PLC-Blaster](https://attack.mitre.org/software/S1006) uses the system function blocks TCON and TDISCON to initiate and destroy TCP connections to arbitrary systems. Buffers may be sent and received on these connections with TRCV und TSEND system function blocks. (Citation: Spenneberg, Ralf, Maik Brggemann, and Hendrik Schwartke March 2016)"
+    },
+    {
+      "source_id": "S0603",
+      "source_name": "Stuxnet",
+      "source_type": "malware",
+      "description": "[Stuxnet](https://attack.mitre.org/software/S0603) calls system function blocks which are part of the operating system running on the PLC. Theyre used to execute system tasks, such as reading the system clock (SFC1) and generating data blocks on the fly. (Citation: Nicolas Falliere, Liam O Murchu, Eric Chien February 2011)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0834",
+      "description": null
+    },
+    {
+      "source_name": "The MITRE Corporation May 2017",
+      "url": "https://attack.mitre.org/techniques/T1106/",
+      "description": "The MITRE Corporation 2017, May 31 ATT&CK T1106: Native API Retrieved. 2021/04/26 "
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Process"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

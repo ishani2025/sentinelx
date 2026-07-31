@@ -1,0 +1,158 @@
+{
+  "metadata": {
+    "technique_id": "T0830",
+    "technique_name": "Adversary-in-the-Middle",
+    "domain": "ics",
+    "version": "2.0",
+    "last_modified": "2025-04-16T21:26:16.777Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Collection"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries with privileged network access may seek to modify network traffic in real time using adversary-in-the-middle (AiTM) attacks. (Citation: Gabriel Sanchez October 2017) This type of attack allows the adversary to intercept traffic to and/or from a particular device on the network. If a AiTM attack is established, then the adversary has the ability to block, log, modify, or inject traffic into the communication stream. There are several ways to accomplish this attack, but some of the most-common are Address Resolution Protocol (ARP) poisoning and the use of a proxy. (Citation: Bonnie Zhu, Anthony Joseph, Shankar Sastry 2011)  \n\nAn AiTM attack may allow an adversary to perform the following attacks:  \n[Block Reporting Message](https://attack.mitre.org/techniques/T0804), [Spoof Reporting Message](https://attack.mitre.org/techniques/T0856), [Modify Parameter](https://attack.mitre.org/techniques/T0836), [Unauthorized Command Message](https://attack.mitre.org/techniques/T0855)",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0764",
+        "name": "Detection of Adversary-in-the-Middle"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1896",
+        "name": "Analytic 1896",
+        "description": "Monitor HKLM\\Software\\Policies\\Microsoft\\Windows NT\\DNSClient for changes to the \"EnableMulticast\" DWORD value. A value of \"0\" indicates LLMNR is disabled.\nHost-based implementations of this technique may utilize networking-based system calls or network utility commands (e.g., iptables) to locally intercept traffic. Monitor for relevant process creation events.\nMonitor for network traffic originating from unknown/unexpected hosts. Local network traffic metadata (such as source MAC addressing) as well as usage of network management protocols such as DHCP may be helpful in identifying hardware. For added context on adversary procedures and background see [Adversary-in-the-Middle](https://attack.mitre.org/techniques/T1557) and applicable sub-techniques.\nMonitor for newly constructed services/daemons through Windows event logs for event IDs 4697 and 7045.\nMonitor network traffic for anomalies associated with known AiTM behavior. For Collection activity where transmitted data is not manipulated, anomalies may be present in network management protocols (e.g., ARP, DHCP).\nMonitor application logs for changes to settings and other events associated with network protocols and other services commonly abused for AiTM."
+      }
+    ],
+    "log_sources": [
+      "Application Log",
+      "Network Traffic",
+      "Process",
+      "Service",
+      "Windows Registry"
+    ],
+    "data_components": [
+      "Application Log Content",
+      "Network Traffic Content",
+      "Network Traffic Flow",
+      "Process Creation",
+      "Service Creation",
+      "Windows Registry Key Modification"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0930",
+      "name": "Network Segmentation",
+      "description": "Architect sections of the network to isolate critical systems, functions, or resources. Use physical and logical segmentation to prevent access to potentially sensitive systems and information. Use a DMZ to contain any internet-facing services that should not be exposed from the internal network.  Restrict network access to only required systems and services. In addition, prevent systems from other networks or business functions (e.g., enterprise) from accessing critical process control systems. For example, in IEC 62443, systems within the same secure level should be grouped into a zone, and access to that zone is restricted by a conduit, or mechanism to restrict data flows between zones by segmenting the network. (Citation: IEC February 2019) (Citation: IEC August 2013)"
+    },
+    {
+      "id": "M0810",
+      "name": "Out-of-Band Communications Channel",
+      "description": "Have alternative methods to support communication requirements during communication failures and data integrity attacks. (Citation: National Institute of Standards and Technology April 2013) (Citation: Defense Advanced Research Projects Agency)"
+    },
+    {
+      "id": "M0813",
+      "name": "Software Process and Device Authentication",
+      "description": "Require the authentication of devices and software processes where appropriate. Devices that connect remotely to other systems should require strong authentication to prevent spoofing of communications. Furthermore, software processes should also require authentication when accessing APIs."
+    },
+    {
+      "id": "M0814",
+      "name": "Static Network Configuration",
+      "description": "Configure hosts and devices to use static network configurations when possible, protocols that require dynamic discovery/addressing (e.g., ARP, DHCP, DNS) can be used to manipulate network message forwarding and enable various AiTM attacks. This mitigation may not always be usable due to limited device features or challenges introduced with different network configurations."
+    },
+    {
+      "id": "M0931",
+      "name": "Network Intrusion Prevention",
+      "description": "Use intrusion detection signatures to block traffic at network boundaries.  In industrial control environments, network intrusion prevention should be configured so it will not disrupt protocols and communications responsible for real-time functions related to control or safety."
+    },
+    {
+      "id": "M0947",
+      "name": "Audit",
+      "description": "Perform audits or scans of systems, permissions, insecure software, insecure configurations, etc. to identify potential weaknesses. Perform periodic integrity checks of the device to validate the correctness of the firmware, software, programs, and configurations. Integrity checks, which typically include cryptographic hashes or digital signatures, should be compared to those obtained at known valid states, especially after events like device reboots, program downloads, or program restarts."
+    },
+    {
+      "id": "M0942",
+      "name": "Disable or Remove Feature or Program",
+      "description": "Remove or deny access to unnecessary and potentially vulnerable software to prevent abuse by adversaries."
+    },
+    {
+      "id": "M0802",
+      "name": "Communication Authenticity",
+      "description": "When communicating over an untrusted network, utilize secure network protocols that both authenticate the message sender and can verify its integrity. This can be done either through message authentication codes (MACs) or digital signatures, to detect spoofed network messages and unauthorized connections."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S1010",
+        "name": "VPNFilter"
+      }
+    ],
+    "tools": [],
+    "campaigns": [
+      {
+        "id": "C0030",
+        "name": "Triton Safety Instrumented System Attack"
+      }
+    ]
+  },
+  "procedure_examples": [
+    {
+      "source_id": "C0030",
+      "source_name": "Triton Safety Instrumented System Attack",
+      "source_type": "campaign",
+      "description": "In the [Triton Safety Instrumented System Attack](https://attack.mitre.org/campaigns/C0030), [TEMP.Veles](https://attack.mitre.org/groups/G0088) changed phone numbers tied to certain specific accounts in a designated contact list. They then used the changed phone numbers to redirect network traffic to websites controlled by them, thereby allowing them to capture and use any login codes sent to the devices via text message.(Citation: Triton-EENews-2017)"
+    },
+    {
+      "source_id": "S1010",
+      "source_name": "VPNFilter",
+      "source_type": "malware",
+      "description": "The [VPNFilter](https://attack.mitre.org/software/S1010)'s ssler module configures the device's iptables to redirect all traffic destined for port 80 to its local service listening on port 8888. Any outgoing web requests on port 80 are now intercepted by ssler and can be inspected by the ps module and manipulated before being sent to the legitimate HTTP service. (Citation: William Largent June 2018) (Citation: Carl Hurd March 2019)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0830",
+      "description": null
+    },
+    {
+      "source_name": "Bonnie Zhu, Anthony Joseph, Shankar Sastry 2011",
+      "url": "http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6142258",
+      "description": "Bonnie Zhu, Anthony Joseph, Shankar Sastry 2011 A Taxonomy of Cyber Attacks on SCADA Systems Retrieved. 2018/01/12 "
+    },
+    {
+      "source_name": "Gabriel Sanchez October 2017",
+      "url": "https://www.sans.org/reading-room/whitepapers/ICS/man-in-the-middle-attack-modbus-tcp-illustrated-wireshark-38095",
+      "description": "Gabriel Sanchez 2017, October Man-In-The-Middle Attack Against Modbus TCP Illustrated with Wireshark Retrieved. 2020/01/05 "
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Application Log",
+      "Network Traffic",
+      "Process",
+      "Service",
+      "Windows Registry"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

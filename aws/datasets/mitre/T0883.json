@@ -1,0 +1,124 @@
+{
+  "metadata": {
+    "technique_id": "T0883",
+    "technique_name": "Internet Accessible Device",
+    "domain": "ics",
+    "version": "1.0",
+    "last_modified": "2025-04-16T21:26:20.494Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Initial Access"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may gain access into industrial environments through systems exposed directly to the internet for remote access rather than through [External Remote Services](https://attack.mitre.org/techniques/T0822). Internet Accessible Devices are exposed to the internet unintentionally or intentionally without adequate protections. This may allow for adversaries to move directly into the control system network. Access onto these devices is accomplished without the use of exploits, these would be represented within the [Exploit Public-Facing Application](https://attack.mitre.org/techniques/T0819) technique.\n\nAdversaries may leverage built in functions for remote access which may not be protected or utilize minimal legacy protections that may be targeted. (Citation: NCCIC January 2014) These services may be discoverable through the use of online scanning tools. \n\nIn the case of the Bowman dam incident, adversaries leveraged access to the dam control network through a cellular modem. Access to the device was protected by password authentication, although the application was vulnerable to brute forcing. (Citation: NCCIC January 2014) (Citation: Danny Yadron December 2015) (Citation: Mark Thompson March 2016)\n\nIn Trend Micros manufacturing deception operations adversaries were detected leveraging direct internet access to an ICS environment through the exposure of operational protocols such as Siemens S7, Omron FINS, and EtherNet/IP, in addition to misconfigured VNC access. (Citation: Stephen Hilt, Federico Maggi, Charles Perine, Lord Remorin, Martin Rsler, and Rainer Vosseler)",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0796",
+        "name": "Detection of Internet Accessible Device"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1928",
+        "name": "Analytic 1928",
+        "description": "Monitor logon activity for unexpected or unusual access to devices from the Internet.\nMonitor for unexpected protocols to/from the Internet. While network traffic content and logon session metadata may directly identify a login event, new Internet-based network flows may also be a reliable indicator of this technique.\nMonitor for unusual logins to Internet connected devices or unexpected protocols to/from the Internet. Network traffic content will provide valuable context and details about the content of network flows."
+      }
+    ],
+    "log_sources": [
+      "Logon Session",
+      "Network Traffic"
+    ],
+    "data_components": [
+      "Logon Session Metadata",
+      "Network Traffic Content",
+      "Network Traffic Flow"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0930",
+      "name": "Network Segmentation",
+      "description": "Architect sections of the network to isolate critical systems, functions, or resources. Use physical and logical segmentation to prevent access to potentially sensitive systems and information. Use a DMZ to contain any internet-facing services that should not be exposed from the internal network.  Restrict network access to only required systems and services. In addition, prevent systems from other networks or business functions (e.g., enterprise) from accessing critical process control systems. For example, in IEC 62443, systems within the same secure level should be grouped into a zone, and access to that zone is restricted by a conduit, or mechanism to restrict data flows between zones by segmenting the network. (Citation: IEC February 2019) (Citation: IEC August 2013)"
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S1157",
+        "name": "Fuxnet"
+      }
+    ],
+    "tools": [],
+    "campaigns": [
+      {
+        "id": "C0031",
+        "name": "Unitronics Defacement Campaign"
+      }
+    ]
+  },
+  "procedure_examples": [
+    {
+      "source_id": "S1157",
+      "source_name": "Fuxnet",
+      "source_type": "malware",
+      "description": "[Fuxnet](https://attack.mitre.org/software/S1157) execution relied upon accessing Internet-accessible devices for initial access and deployment.(Citation: Claroty Fuxnet 2024)"
+    },
+    {
+      "source_id": "C0031",
+      "source_name": "Unitronics Defacement Campaign",
+      "source_type": "campaign",
+      "description": "During the [Unitronics Defacement Campaign](https://attack.mitre.org/campaigns/C0031), the [CyberAv3ngers](https://attack.mitre.org/groups/G1027) exploited devices connected to the public internet, such as internet connected Unitronics [Programmable Logic Controller (PLC)](https://attack.mitre.org/assets/A0003) with [Human-Machine Interface (HMI)](https://attack.mitre.org/assets/A0002) and networking equipment such as cellular modems found in OT environments.(Citation: CISA AA23-335A IRGC-Affiliated December 2023)(Citation: Lisa Zahner December 2023)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0883",
+      "description": null
+    },
+    {
+      "source_name": "Danny Yadron December 2015",
+      "url": "https://www.wsj.com/articles/iranian-hackers-infiltrated-new-york-dam-in-2013-1450662559",
+      "description": "Danny Yadron 2015, December 20 Iranian Hackers Infiltrated New York Dam in 2013 Retrieved. 2019/11/07 "
+    },
+    {
+      "source_name": "Mark Thompson March 2016",
+      "url": "https://time.com/4270728/iran-cyber-attack-dam-fbi/",
+      "description": "Mark Thompson 2016, March 24 Iranian Cyber Attack on New York Dam Shows Future of War Retrieved. 2019/11/07 "
+    },
+    {
+      "source_name": "NCCIC January 2014",
+      "url": "https://www.us-cert.gov/sites/default/files/Monitors/ICS-CERT_Monitor_Jan-April2014.pdf",
+      "description": "NCCIC 2014, January 1 Internet Accessible Control Systems At Risk Retrieved. 2019/11/07 "
+    },
+    {
+      "source_name": "Stephen Hilt, Federico Maggi, Charles Perine, Lord Remorin, Martin Rsler, and Rainer Vosseler",
+      "url": "https://documents.trendmicro.com/assets/white_papers/wp-caught-in-the-act-running-a-realistic-factory-honeypot-to-capture-real-threats.pdf",
+      "description": "Stephen Hilt, Federico Maggi, Charles Perine, Lord Remorin, Martin Rsler, and Rainer Vosseler Mark Thompson 2016, March 24 Iranian Cyber Attack on New York Dam Shows Future of War Retrieved. 2019/11/07  Caught in the Act: Running a Realistic Factory Honeypot to Capture Real Threats Retrieved. 2021/04/12 "
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Logon Session",
+      "Network Traffic"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

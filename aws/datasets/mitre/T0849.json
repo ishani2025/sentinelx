@@ -1,0 +1,155 @@
+{
+  "metadata": {
+    "technique_id": "T0849",
+    "technique_name": "Masquerading",
+    "domain": "ics",
+    "version": "1.1",
+    "last_modified": "2025-04-16T21:26:18.036Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Evasion"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may use masquerading to disguise a malicious application or executable as another file, to avoid operator and engineer suspicion. Possible disguises of these masquerading files can include commonly found programs, expected vendor executables and configuration files, and other commonplace application and naming conventions. By impersonating expected and vendor-relevant files and applications, operators and engineers may not notice the presence of the underlying malicious content and possibly end up running those masquerading as legitimate functions. \n\nApplications and other files commonly found on Windows systems or in engineering workstations have been impersonated before. This can be as simple as renaming a file to effectively disguise it in the ICS environment.",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0725",
+        "name": "Detection of Masquerading"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1858",
+        "name": "Analytic 1858",
+        "description": "Monitor for newly constructed services/daemons that may attempt to manipulate features of their artifacts to make them appear legitimate or benign to users and/or security tools.\nMonitor for changes made to files outside of an update or patch that may attempt to manipulate features of their artifacts to make them appear legitimate or benign to users and/or security tools.\nMonitor for file names that are mismatched between the file name on disk and that of the binary's metadata. This is a likely indicator that a binary was renamed after it was compiled. For added context on adversary procedures and background see [Masquerading](https://attack.mitre.org/techniques/T1036) and applicable sub-techniques.\nMonitor executed commands and arguments that may attempt to manipulate features of their artifacts to make them appear legitimate or benign to users and/or security tools.(Citation: Twitter ItsReallyNick Masquerading Update)\nMonitor for changes made to scheduled jobs that may attempt to manipulate features of their artifacts to make them appear legitimate or benign to users and/or security tools.\nMonitor for changes made to services that may attempt to manipulate features of their artifacts to make them appear legitimate or benign to users and/or security tools.\nCollect file hashes. Monitor for file names that do not match their expected hash. Perform file monitoring. Files with known names but in unusual locations are suspect.  Look for indications of common characters that may indicate an attempt to trick users into misidentifying the file type, such as a space as the last character of a file name or the right-to-left override characters\"\\u202E\", \"[U+202E]\", and \"%E2%80%AE\". For added context on adversary procedures and background see [Masquerading](https://attack.mitre.org/techniques/T1036) and applicable sub-techniques.\nMonitor for newly constructed scheduled jobs that may attempt to manipulate features of their artifacts to make them appear legitimate or benign to users and/or security tools."
+      }
+    ],
+    "log_sources": [
+      "Command",
+      "File",
+      "Process",
+      "Scheduled Job",
+      "Service"
+    ],
+    "data_components": [
+      "Command Execution",
+      "File Metadata",
+      "File Modification",
+      "Process Metadata",
+      "Scheduled Job Creation",
+      "Scheduled Job Modification",
+      "Service Creation",
+      "Service Modification"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0945",
+      "name": "Code Signing",
+      "description": "Enforce binary and application integrity with digital signature verification to prevent untrusted code from executing."
+    },
+    {
+      "id": "M0938",
+      "name": "Execution Prevention",
+      "description": "Block execution of code on a system through application control, and/or script blocking."
+    },
+    {
+      "id": "M0922",
+      "name": "Restrict File and Directory Permissions",
+      "description": "Restrict access by setting directory and file permissions that are not specific to users or privileged accounts."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S0603",
+        "name": "Stuxnet"
+      },
+      {
+        "id": "S1009",
+        "name": "Triton"
+      },
+      {
+        "id": "S0496",
+        "name": "REvil"
+      },
+      {
+        "id": "S0605",
+        "name": "EKANS"
+      }
+    ],
+    "tools": [],
+    "campaigns": [
+      {
+        "id": "C0025",
+        "name": "2016 Ukraine Electric Power Attack"
+      }
+    ]
+  },
+  "procedure_examples": [
+    {
+      "source_id": "S0603",
+      "source_name": "Stuxnet",
+      "source_type": "malware",
+      "description": "[Stuxnet](https://attack.mitre.org/software/S0603) renames s7otbxdx.dll, a dll responsible for handling communications with a PLC. It replaces this dll file with its own version that allows it to intercept any calls that are made to access the PLC. (Citation: Nicolas Falliere, Liam O Murchu, Eric Chien February 2011)"
+    },
+    {
+      "source_id": "S1009",
+      "source_name": "Triton",
+      "source_type": "malware",
+      "description": "[Triton](https://attack.mitre.org/software/S1009)'s injector, inject.bin, masquerades as a standard compiled PowerPC program for the Tricon. (Citation: DHS CISA February 2019)\n\n[Triton](https://attack.mitre.org/software/S1009) was configured to masquerade as trilog.exe, which is the Triconex software for analyzing SIS logs.(Citation: FireEye TRITON)"
+    },
+    {
+      "source_id": "S0496",
+      "source_name": "REvil",
+      "source_type": "malware",
+      "description": "[REvil](https://attack.mitre.org/software/S0496) searches for whether the Ahnlab autoup.exe service is running on the target system and injects its payload into this existing process. (Citation: Tom Fakterman August 2019)"
+    },
+    {
+      "source_id": "S0605",
+      "source_name": "EKANS",
+      "source_type": "malware",
+      "description": "[EKANS](https://attack.mitre.org/software/S0605) masquerades itself as a valid executable with the filename update.exe. Many valid programs use the process name update.exe to perform background software updates. (Citation: Dragos Threat Intelligence February 2020)"
+    },
+    {
+      "source_id": "C0025",
+      "source_name": "2016 Ukraine Electric Power Attack",
+      "source_type": "campaign",
+      "description": "During the [2016 Ukraine Electric Power Attack](https://attack.mitre.org/campaigns/C0025), [Sandworm Team](https://attack.mitre.org/groups/G0034) transferred executable files as .txt and then renamed them to .exe, likely to avoid detection through extension tracking.(Citation: Dragos Crashoverride 2018)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0849",
+      "description": null
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Command",
+      "File",
+      "Process",
+      "Scheduled Job",
+      "Service"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

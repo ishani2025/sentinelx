@@ -1,0 +1,166 @@
+{
+  "metadata": {
+    "technique_id": "T0822",
+    "technique_name": "External Remote Services",
+    "domain": "ics",
+    "version": "1.1",
+    "last_modified": "2026-05-12T15:12:00.705Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Initial Access"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may leverage external remote services as a point of initial access into your network. These services allow users to connect to internal network resources from external locations. Examples are VPNs, Citrix, and other access mechanisms. Remote service gateways often manage connections and credential authentication for these services. (Citation: Daniel Oakley, Travis Smith, Tripwire)\n\nExternal remote services allow administration of a control system from outside the system. Often, vendors and internal engineering groups have access to external remote services to control system networks via the corporate network. In some cases, this access is enabled directly from the internet. While remote access enables ease of maintenance when a control system is in a remote area, compromise of remote access solutions is a liability. The adversary may use these services to gain access to and execute attacks against a control system network. Access to valid accounts is often a requirement. \n\nAs they look for an entry point into the control system network, adversaries may begin searching for existing point-to-point VPN implementations at trusted third party networks or through remote support employee connections where split tunneling is enabled. (Citation: Electricity Information Sharing and Analysis Center; SANS Industrial Control Systems March 2016)\n",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0803",
+        "name": "Detection of External Remote Services"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1935",
+        "name": "Analytic 1935",
+        "description": "Monitor for network traffic originating from unknown/unexpected systems.\nMonitor authentication logs and analyze for unusual access patterns, windows of activity, and access outside of normal business hours, including use of [Valid Accounts](https://attack.mitre.org/techniques/T0859).\nWhen authentication is not required to access an exposed remote service, monitor for follow-on activities such as anomalous external use of the exposed API or application."
+      }
+    ],
+    "log_sources": [
+      "Application Log",
+      "Logon Session",
+      "Network Traffic"
+    ],
+    "data_components": [
+      "Application Log Content",
+      "Logon Session Metadata",
+      "Network Traffic Flow"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0930",
+      "name": "Network Segmentation",
+      "description": "Architect sections of the network to isolate critical systems, functions, or resources. Use physical and logical segmentation to prevent access to potentially sensitive systems and information. Use a DMZ to contain any internet-facing services that should not be exposed from the internal network.  Restrict network access to only required systems and services. In addition, prevent systems from other networks or business functions (e.g., enterprise) from accessing critical process control systems. For example, in IEC 62443, systems within the same secure level should be grouped into a zone, and access to that zone is restricted by a conduit, or mechanism to restrict data flows between zones by segmenting the network. (Citation: IEC February 2019) (Citation: IEC August 2013)"
+    },
+    {
+      "id": "M0936",
+      "name": "Account Use Policies",
+      "description": "Configure features related to account use like login attempt lockouts, specific login times, etc."
+    },
+    {
+      "id": "M0935",
+      "name": "Limit Access to Resource Over Network",
+      "description": "Prevent access to file shares, remote access to systems, unnecessary services. Mechanisms to limit access may include use of network concentrators, RDP gateways, etc."
+    },
+    {
+      "id": "M0927",
+      "name": "Password Policies",
+      "description": "Set and enforce secure password policies for accounts."
+    },
+    {
+      "id": "M0918",
+      "name": "User Account Management",
+      "description": "Manage the creation, modification, use, and permissions associated to user accounts."
+    },
+    {
+      "id": "M0942",
+      "name": "Disable or Remove Feature or Program",
+      "description": "Remove or deny access to unnecessary and potentially vulnerable software to prevent abuse by adversaries."
+    },
+    {
+      "id": "M0932",
+      "name": "Multi-factor Authentication",
+      "description": "Use two or more pieces of evidence to authenticate to a system; such as username and password in addition to a token from a physical smart card or token generator.  Within industrial control environments assets such as low-level controllers, workstations, and HMIs have real-time operational control and safety requirements which may restrict the use of multi-factor."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S1157",
+        "name": "Fuxnet"
+      }
+    ],
+    "tools": [],
+    "campaigns": [
+      {
+        "id": "C0028",
+        "name": "2015 Ukraine Electric Power Attack"
+      },
+      {
+        "id": "C0020",
+        "name": "Maroochy Water Breach"
+      },
+      {
+        "id": "C0063",
+        "name": "2025 Poland Wiper Attacks"
+      }
+    ]
+  },
+  "procedure_examples": [
+    {
+      "source_id": "C0028",
+      "source_name": "2015 Ukraine Electric Power Attack",
+      "source_type": "campaign",
+      "description": "During the [2015 Ukraine Electric Power Attack](https://attack.mitre.org/campaigns/C0028), [Sandworm Team](https://attack.mitre.org/groups/G0034) used Valid Accounts taken from the Windows Domain Controller to access the control system Virtual Private Network (VPN) used by grid operators. (Citation: Booz Allen Hamilton)"
+    },
+    {
+      "source_id": "C0020",
+      "source_name": "Maroochy Water Breach",
+      "source_type": "campaign",
+      "description": "In the [Maroochy Water Breach](https://attack.mitre.org/campaigns/C0020), the adversary gained remote computer access to the system over radio.(Citation: Marshall Abrams July 2008)"
+    },
+    {
+      "source_id": "S1157",
+      "source_name": "Fuxnet",
+      "source_type": "malware",
+      "description": "[Fuxnet](https://attack.mitre.org/software/S1157) initial execution relied on accessing external remote services for victim environments.(Citation: Claroty Fuxnet 2024)"
+    },
+    {
+      "source_id": "C0063",
+      "source_name": "2025 Poland Wiper Attacks",
+      "source_type": "campaign",
+      "description": "During the [2025 Poland Wiper Attacks](https://attack.mitre.org/campaigns/C0063), the adversaries gained initial access by compromising Fortinet edge devices. (Citation: CERT Polska)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0822",
+      "description": null
+    },
+    {
+      "source_name": "Daniel Oakley, Travis Smith, Tripwire",
+      "url": "https://attack.mitre.org/wiki/Technique/T1133",
+      "description": "Daniel Oakley, Travis Smith, Tripwire   Retrieved. 2018/05/30 "
+    },
+    {
+      "source_name": "Electricity Information Sharing and Analysis Center; SANS Industrial Control Systems March 2016",
+      "url": "https://assets.contentstack.io/v3/assets/blt36c2e63521272fdc/blt6a77276749b76a40/607f235992f0063e5c070fff/E-ISAC_SANS_Ukraine_DUC_5%5b73%5d.pdf",
+      "description": "Electricity Information Sharing and Analysis Center; SANS Industrial Control Systems 2016, March 18 Analysis of the Cyber Attack on the Ukranian Power Grid: Defense Use Case Retrieved. 2018/03/27 "
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Application Log",
+      "Logon Session",
+      "Network Traffic"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

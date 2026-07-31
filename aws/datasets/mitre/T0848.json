@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "technique_id": "T0848",
+    "technique_name": "Rogue Master",
+    "domain": "ics",
+    "version": "1.2",
+    "last_modified": "2025-04-16T21:26:17.326Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Initial Access"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may setup a rogue master to leverage control server functions to communicate with outstations. A rogue master can be used to send legitimate control messages to other control system devices, affecting processes in unintended ways. It may also be used to disrupt network communications by capturing and receiving the network traffic meant for the actual master. Impersonating a master may also allow an adversary to avoid detection. \n\nIn the case of the 2017 Dallas Siren incident, adversaries used a rogue master to send command messages to the 156 distributed sirens across the city, either through a single rogue transmitter with a strong signal, or using many distributed repeaters. (Citation: Bastille April 2017) (Citation: Zack Whittaker April 2017)",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0792",
+        "name": "Detection of Rogue Master"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1924",
+        "name": "Analytic 1924",
+        "description": "Consult asset management systems which may help with the detection of computer systems or network devices that should not exist on a network.\nMonitor for network traffic originating from unknown/unexpected devices or addresses.  Local network traffic metadata could be used to identify unexpected connections, including unknown/unexpected source MAC addresses connecting to ports associated with operational protocols. Also, network management protocols such as DHCP and ARP may be helpful in identifying unexpected devices. \nMonitor for new master devices communicating with outstations, which may be visible in alarms within the ICS environment.\nMonitor for unexpected ICS protocol functions from new and existing devices. Monitoring known devices requires ICS function level insight to determine if an unauthorized device is issuing commands (e.g., a historian).\nMonitor for new master devices communicating with outstation assets, which may be visible in asset application logs."
+      }
+    ],
+    "log_sources": [
+      "Application Log",
+      "Asset",
+      "Network Traffic",
+      "Operational Databases"
+    ],
+    "data_components": [
+      "Application Log Content",
+      "Asset Inventory",
+      "Device Alarm",
+      "Network Traffic Content",
+      "Network Traffic Flow"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0813",
+      "name": "Software Process and Device Authentication",
+      "description": "Require the authentication of devices and software processes where appropriate. Devices that connect remotely to other systems should require strong authentication to prevent spoofing of communications. Furthermore, software processes should also require authentication when accessing APIs."
+    },
+    {
+      "id": "M0937",
+      "name": "Filter Network Traffic",
+      "description": "Use network appliances to filter ingress or egress traffic and perform protocol-based filtering. Configure software on endpoints to filter network traffic.   Perform inline allow/denylisting of network messages based on the application layer (OSI Layer 7) protocol, especially for automation protocols. Application allowlists are beneficial when there are well-defined communication sequences, types, rates, or patterns needed during expected system operations. Application denylists may be needed if all acceptable communication sequences cannot be defined, but instead a set of known malicious uses can be denied (e.g., excessive communication  attempts, shutdown messages, invalid commands).  Devices performing these functions are often referred to as deep-packet inspection (DPI) firewalls, context-aware firewalls, or firewalls blocking specific automation/SCADA protocol aware firewalls. (Citation: Centre for the Protection of National Infrastructure February 2005)"
+    },
+    {
+      "id": "M0930",
+      "name": "Network Segmentation",
+      "description": "Architect sections of the network to isolate critical systems, functions, or resources. Use physical and logical segmentation to prevent access to potentially sensitive systems and information. Use a DMZ to contain any internet-facing services that should not be exposed from the internal network.  Restrict network access to only required systems and services. In addition, prevent systems from other networks or business functions (e.g., enterprise) from accessing critical process control systems. For example, in IEC 62443, systems within the same secure level should be grouped into a zone, and access to that zone is restricted by a conduit, or mechanism to restrict data flows between zones by segmenting the network. (Citation: IEC February 2019) (Citation: IEC August 2013)"
+    },
+    {
+      "id": "M0807",
+      "name": "Network Allowlists",
+      "description": "Network allowlists can be implemented through either host-based files or system hosts files to specify what connections (e.g., IP address, MAC address, port, protocol) can be made from a device. Allowlist techniques that operate at the  application layer (e.g., DNP3, Modbus, HTTP) are addressed in [Filter Network Traffic](https://attack.mitre.org/mitigations/M0937) mitigation."
+    },
+    {
+      "id": "M0802",
+      "name": "Communication Authenticity",
+      "description": "When communicating over an untrusted network, utilize secure network protocols that both authenticate the message sender and can verify its integrity. This can be done either through message authentication codes (MACs) or digital signatures, to detect spoofed network messages and unauthorized connections."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [],
+    "tools": [],
+    "campaigns": [
+      {
+        "id": "C0020",
+        "name": "Maroochy Water Breach"
+      }
+    ]
+  },
+  "procedure_examples": [
+    {
+      "source_id": "C0020",
+      "source_name": "Maroochy Water Breach",
+      "source_type": "campaign",
+      "description": "In the [Maroochy Water Breach](https://attack.mitre.org/campaigns/C0020), the adversary falsified network addresses in order to send false data and instructions to pumping stations.(Citation: Marshall Abrams July 2008)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0848",
+      "description": null
+    },
+    {
+      "source_name": "Bastille April 2017",
+      "url": "https://www.bastille.net/blogs/2017/4/17/dallas-siren-attack",
+      "description": "Bastille 2017, April 17 Dallas Siren Attack Retrieved. 2020/11/06 "
+    },
+    {
+      "source_name": "Zack Whittaker April 2017",
+      "url": "https://www.zdnet.com/article/experts-think-they-know-how-dallas-emergency-sirens-were-hacked/",
+      "description": "Zack Whittaker 2017, April 12 Dallas' emergency sirens were hacked with a rogue radio signal Retrieved. 2020/11/06 "
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Application Log",
+      "Asset",
+      "Network Traffic",
+      "Operational Databases"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

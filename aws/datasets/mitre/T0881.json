@@ -1,0 +1,163 @@
+{
+  "metadata": {
+    "technique_id": "T0881",
+    "technique_name": "Service Stop",
+    "domain": "ics",
+    "version": "1.1",
+    "last_modified": "2025-04-15T19:58:03.170Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Inhibit Response Function"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may stop or disable services on a system to render those services unavailable to legitimate users. Stopping critical services can inhibit or stop response to an incident or aid in the adversary's overall objectives to cause damage to the environment. (Citation: Enterprise ATT&CK)  Services may not allow for modification of their data stores while running. Adversaries may stop services in order to conduct Data Destruction. (Citation: Enterprise ATT&CK)",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0765",
+        "name": "Detection of Service Stop"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1897",
+        "name": "Analytic 1897",
+        "description": "Monitor for changes made to files that may stop or disable services on a system to render those services unavailable to legitimate users.\nMonitor executed commands and arguments that may stop or disable services on a system to render those services unavailable to legitimate users.\nRemote access tools with built-in features may interact directly with the Windows API to perform these functions outside of typical system utilities. For example, ChangeServiceConfigW may be used by an adversary to prevent services from starting. For added context on adversary procedures and background see [Service Stop](https://attack.mitre.org/techniques/T1489).\nMonitor processes and command-line arguments to see if critical processes are terminated or stop running. For added context on adversary procedures and background see [Service Stop](https://attack.mitre.org/techniques/T1489).\nAlterations to the service binary path or the service startup type changed to disabled may be suspicious.\nMonitor for changes made to Windows registry keys and/or values that may stop or disable services on a system to render those services unavailable to legitimate users.\nMonitor for newly executed processes that may stop or disable services on a system to render those services unavailable to legitimate users."
+      }
+    ],
+    "log_sources": [
+      "Command",
+      "File",
+      "Process",
+      "Service",
+      "Windows Registry"
+    ],
+    "data_components": [
+      "Command Execution",
+      "File Modification",
+      "OS API Execution",
+      "Process Creation",
+      "Process Termination",
+      "Service Metadata",
+      "Windows Registry Key Modification"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0918",
+      "name": "User Account Management",
+      "description": "Manage the creation, modification, use, and permissions associated to user accounts."
+    },
+    {
+      "id": "M0924",
+      "name": "Restrict Registry Permissions",
+      "description": "Restrict the ability to modify certain hives or keys in the Windows Registry."
+    },
+    {
+      "id": "M0922",
+      "name": "Restrict File and Directory Permissions",
+      "description": "Restrict access by setting directory and file permissions that are not specific to users or privileged accounts."
+    },
+    {
+      "id": "M0930",
+      "name": "Network Segmentation",
+      "description": "Architect sections of the network to isolate critical systems, functions, or resources. Use physical and logical segmentation to prevent access to potentially sensitive systems and information. Use a DMZ to contain any internet-facing services that should not be exposed from the internal network.  Restrict network access to only required systems and services. In addition, prevent systems from other networks or business functions (e.g., enterprise) from accessing critical process control systems. For example, in IEC 62443, systems within the same secure level should be grouped into a zone, and access to that zone is restricted by a conduit, or mechanism to restrict data flows between zones by segmenting the network. (Citation: IEC February 2019) (Citation: IEC August 2013)"
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S0605",
+        "name": "EKANS"
+      },
+      {
+        "id": "S0496",
+        "name": "REvil"
+      },
+      {
+        "id": "S1072",
+        "name": "Industroyer2"
+      },
+      {
+        "id": "S0604",
+        "name": "Industroyer"
+      },
+      {
+        "id": "S0607",
+        "name": "KillDisk"
+      }
+    ],
+    "tools": [],
+    "campaigns": []
+  },
+  "procedure_examples": [
+    {
+      "source_id": "S0605",
+      "source_name": "EKANS",
+      "source_type": "malware",
+      "description": "Before encrypting the process, [EKANS](https://attack.mitre.org/software/S0605) first kills the process if its name matches one of the processes defined on the kill-list.  (Citation: Daniel Kapellmann Zafra, Keith Lunden, Nathan Brubaker, Jeremy Kennelly July 2020) (Citation: Daniel Kapellmann Zafra, Keith Lunden, Nathan Brubaker, Jeremy Kennelly July 2020) EKANS also utilizes netsh commands to implement firewall rules that blocks any remote communication with the device. (Citation: Ben Hunter and Fred Gutierrez July 2020)"
+    },
+    {
+      "source_id": "S0496",
+      "source_name": "REvil",
+      "source_type": "malware",
+      "description": "[REvil](https://attack.mitre.org/software/S0496) searches for all processes listed in the prc field within its configuration file and then terminates each process. (Citation: McAfee Labs October 2019)"
+    },
+    {
+      "source_id": "S1072",
+      "source_name": "Industroyer2",
+      "source_type": "malware",
+      "description": "[Industroyer2](https://attack.mitre.org/software/S1072) has the capability to terminate specified processes (i.e., PServiceControl.exe and PService_PDD.exe) and rename each process to prevent restart. These are defined through a hardcoded configuration.(Citation: Industroyer2 Mandiant April 2022)"
+    },
+    {
+      "source_id": "S0604",
+      "source_name": "Industroyer",
+      "source_type": "malware",
+      "description": "[Industroyer](https://attack.mitre.org/software/S0604) has the capability to stop a service itself, or to login as a user and stop a service as that user. (Citation: Anton Cherepanov, ESET June 2017)"
+    },
+    {
+      "source_id": "S0607",
+      "source_name": "KillDisk",
+      "source_type": "malware",
+      "description": "[KillDisk](https://attack.mitre.org/software/S0607) looks for and terminates two non-standard processes, one of which is an ICS application. (Citation: Anton Cherepanov)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0881",
+      "description": null
+    },
+    {
+      "source_name": "Enterprise ATT&CK",
+      "url": "https://attack.mitre.org/techniques/T1489/",
+      "description": "Enterprise ATT&CK Enterprise ATT&CK   Service Stop Retrieved. 2019/10/29  Service Stop Retrieved. 2019/10/29 "
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Command",
+      "File",
+      "Process",
+      "Service",
+      "Windows Registry"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}
