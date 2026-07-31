@@ -1,0 +1,154 @@
+{
+  "report_metadata": {
+    "report_id": "IR-2026-000123",
+    "generated_at": "2026-07-31T10:30:15Z",
+    "generated_by": "SentinelX Report Agent",
+    "version": "1.0"
+  },
+
+  "finding_summary": {
+    "finding_id": "arn:aws:securityhub:...",
+    "title": "EC2 Instance Communicating with Cryptocurrency Mining Pool",
+    "description": "...",
+    "severity": {
+      "label": "HIGH",
+      "score": 8.7
+    },
+    "status": "ACTIVE",
+    "provider": "GuardDuty",
+    "region": "ap-south-1",
+    "account_id": "123456789012",
+    "resource_type": "AWS::EC2::Instance",
+    "resource_id": "i-0abc123456789"
+  },
+
+  "executive_summary": {
+    "risk_level": "HIGH",
+    "confidence": 0.97,
+    "business_impact": "Possible compromise of EC2 instance with outbound communication to known malicious mining infrastructure.",
+    "recommended_priority": "Immediate Investigation"
+  },
+
+  "attack_analysis": {
+    "attack_type": "Cryptocurrency Mining",
+    "kill_chain_stage": [
+      "Execution",
+      "Persistence",
+      "Command and Control"
+    ],
+    "mitre_attack": [
+      {
+        "technique_id": "T1496",
+        "technique": "Resource Hijacking"
+      },
+      {
+        "technique_id": "T1071",
+        "technique": "Application Layer Protocol"
+      }
+    ],
+    "attack_probability": 0.96
+  },
+
+  "affected_resources": [
+    {
+      "resource_id": "i-0abc123456789",
+      "resource_name": "Production-WebServer",
+      "resource_type": "EC2",
+      "public_ip": "18.xx.xx.xx",
+      "private_ip": "10.0.2.15",
+      "iam_role": "WebServerRole"
+    }
+  ],
+
+  "evidence": {
+    "network": [
+      "Outbound TCP connection to known mining pool",
+      "Repeated DNS lookups to suspicious domain"
+    ],
+    "identity": [
+      "IAM credentials not used"
+    ],
+    "process": [
+      "High CPU utilization detected"
+    ],
+    "logs": [
+      "VPC Flow Logs",
+      "CloudTrail",
+      "GuardDuty Finding"
+    ]
+  },
+
+  "root_cause_hypothesis": {
+    "primary_hypothesis": "EC2 instance compromised through vulnerable web application.",
+    "alternate_hypotheses": [
+      "Compromised SSH credentials",
+      "Malicious insider activity"
+    ]
+  },
+
+  "recommended_actions": {
+    "immediate": [
+      "Isolate EC2 instance",
+      "Snapshot EBS volume",
+      "Block outbound communication"
+    ],
+    "short_term": [
+      "Rotate IAM credentials",
+      "Patch vulnerable software"
+    ],
+    "long_term": [
+      "Enable runtime monitoring",
+      "Deploy IDS",
+      "Harden security groups"
+    ]
+  },
+
+  "automation_plan": {
+    "safe_actions": [
+      {
+        "action": "Snapshot EBS",
+        "automation": true
+      },
+      {
+        "action": "Collect Logs",
+        "automation": true
+      }
+    ],
+    "approval_required": [
+      {
+        "action": "Terminate Instance",
+        "risk": "HIGH"
+      },
+      {
+        "action": "Detach IAM Role",
+        "risk": "MEDIUM"
+      }
+    ]
+  },
+
+  "playbook_mapping": {
+    "playbook_name": "EC2 Cryptocurrency Investigation",
+    "playbook_version": "2.3",
+    "estimated_resolution_time": "45 minutes"
+  },
+
+  "timeline": [
+    {
+      "timestamp": "2026-07-31T09:42:12Z",
+      "event": "Suspicious outbound traffic detected"
+    },
+    {
+      "timestamp": "2026-07-31T09:44:18Z",
+      "event": "GuardDuty generated finding"
+    },
+    {
+      "timestamp": "2026-07-31T09:44:30Z",
+      "event": "Security Hub imported finding"
+    }
+  ],
+
+  "report_confidence": {
+    "overall_score": 0.95,
+    "reasoning": "Finding correlated with GuardDuty detection, VPC Flow Logs, and MITRE mapping."
+  }
+}
