@@ -29,24 +29,94 @@ AWS's GuardDuty Investigation Agent investigates only *inside AWS*. SentinelX is
 ## Architecture
 
 ```
-AWS sources (GuardDuty, Macie, Inspector, CloudTrail)          Non-AWS sources
-        │                                            (Okta/Azure AD, EDR, Firewall)
-   Security Hub ── EventBridge ──▶ SentinelX ◀── Universal Log Collector
-                                      │
-                     GuardDuty Investigation Agent (AWS-native investigation)
-                                      │
-                            ┌──── Supervisor Agent ────┐   (cross-platform correlation)
-              Business Context · Policy · Historical · Risk Assessment
-                                      │
-                          Response Planning ──▶ Execution Agent
-                        auto (low-risk) │ human approval (high-impact)
-                                      │
-                           boto3 / AWS + enterprise APIs
-                                      │
-                    TheHive case + Slack report ──▶ RAG knowledge base
-```
+                                          +------------------------------------------------+
+                                          |                 AWS Sources                    |
+                                          | GuardDuty | Macie | Inspector | CloudTrail    |
+                                          +------------------------+-----------------------+
+                                                                   |
+                                                                   v
+                                                          +------------------+
+                                                          |   Security Hub   |
+                                                          +--------+---------+
+                                                                   |
+                                                                   | GuardDuty Findings
+                                                                   v
+                                         +---------------------------------------------+
+                                         | GuardDuty Investigation Agent               |
+                                         | (AWS-native Investigation & Enrichment)     |
+                                         +----------------------+----------------------+
+                                                                |
+                                        Investigation Report?   |
+                                      +-------------------------+
+                                      |                         |
+                                     Yes                       No
+                                      |                         |
+                                      |          +-----------------------------------+
+                                      |          | Local LLM Investigation           |
+                                      |          | Report Generator                  |
+                                      |          +----------------+------------------+
+                                      |                           |
+                                      +-------------+-------------+
+                                                    |
+                                                    v
 
-Colour legend used in the deck: **blue = AWS (consumed)**, **violet = SentinelX (built)**.
++--------------------------------------------+      +----------------------------------------------+
+|            Non-AWS Sources                 |----->|        Universal Log Collector               |
+| Okta / Azure AD | EDR | Firewall | VPN     |      | Collect • Parse • Normalize • Enrich Logs    |
++--------------------------------------------+      +------------------+---------------------------+
+                                                                       |
+                                                                       |
+                                                                       v
+                                   +----------------------------------------------------------------+
+                                   |                     Supervisor Agent                           |
+                                   |----------------------------------------------------------------|
+                                   | • Cross-platform Correlation                                  |
+                                   | • Business Context                                            |
+                                   | • Policy Validation                                           |
+                                   | • Risk Assessment                                             |
+                                   +----------------------------+-----------------------------------+
+                                                                |
+                                                                v
+                                   +----------------------------------------------------------------+
+                                   |                    Response Planning                           |
+                                   +----------------------------+-----------------------------------+
+                                                                |
+                               +--------------------------------+--------------------------------+
+                               |                                                                 |
+                               | Low / Medium Risk                                               | High / Critical Risk
+                               |                                                                 |
+                               v                                                                 v
+                    +-------------------------+                                   +-----------------------------+
+                    | Automatic Execution     |                                   | Human Approval Required     |
+                    +------------+------------+                                   +-------------+---------------+
+                                 |                                                              |
+                                 +------------------------------+-------------------------------+
+                                                                |
+                                                                v
+                                         +----------------------------------------------+
+                                         |               Execution Agent                |
+                                         | boto3 • AWS APIs • Enterprise APIs           |
+                                         +-------------------+--------------------------+
+                                                             |
+                                  +--------------------------+---------------------------+
+                                  |                                                      |
+                                  v                                                      v
+                      +--------------------------+                          +--------------------------+
+                      |       TheHive            |                          |         Slack            |
+                      | Incident / Case Mgmt     |                          | Alerts & Reports         |
+                      +-------------+------------+                          +-------------+------------+
+                                    \                                                /
+                                     \                                              /
+                                      +----------------------+----------------------+
+                                                             |
+                                                             v
+                                              +-------------------------------+
+                                              |      RAG Knowledge Base       |
+                                              | Cases • IoCs • Playbooks      |
+                                              | Policies • Lessons Learned    |
+                                              +-------------------------------+
+
+```
 
 ---
 
