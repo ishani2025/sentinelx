@@ -106,13 +106,24 @@ class _KeywordStore:
         return set(re.findall(r"[a-z0-9_.]+", s.lower()))
 
     def search(self, query: str, k: int = 4, where: Optional[dict] = None) -> list[dict]:
+        # A real narrowing filter (attack_type/asset_type/mitre_technique, beyond just
+        # source_type) is authoritative on its own: a doc matching it is targeted
+        # evidence even when the free-text query is sparse/placeholder text with zero
+        # token overlap (e.g. a terse or missing incident description). Previously,
+        # requiring nonzero overlap on top of an exact filter match silently threw
+        # away exact matches, forcing the LLM synthesis step to reason over zero
+        # evidence — which it should not be trusted to safely refuse (see
+        # knowledge_node's has_evidence guard). A bare source_type filter (no real
+        # narrowing) still requires overlap, so a genuinely irrelevant query correctly
+        # returns nothing rather than arbitrary same-type documents.
         q = self._tok(query)
+        narrowed = bool(where) and len(where) > 1
         scored = []
         for d in self._docs:
             if not _match_filter(d.metadata, where):
                 continue
             overlap = len(q & self._tok(d.content + " " + " ".join(map(str, d.metadata.values()))))
-            if overlap:
+            if overlap or narrowed:
                 scored.append((overlap, d))
         scored.sort(key=lambda x: x[0], reverse=True)
         return [{"content": d.content, "metadata": d.metadata, "score": s} for s, d in scored[:k]]

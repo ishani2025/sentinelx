@@ -211,8 +211,14 @@ def knowledge_node(
         cases=len(collector.get("cases", [])), threat_intel=len(collector.get("threat_intel", [])))
 
     # ---- synthesis: compare AWS vs enterprise (LLM, else grounded) ----
+    # Only ask the LLM to synthesize when there is real retrieved evidence to reason
+    # over. A local/smaller model asked to "compare AWS recs against enterprise
+    # evidence" when given zero evidence cannot be trusted to safely return nothing
+    # instead of inventing plausible-looking playbook/case names — skip the call
+    # entirely rather than rely on prompt instructions to prevent that.
+    has_evidence = any(collector.get(k) for k in ("playbooks", "cases", "threat_intel"))
     log("llm_started", stage="synthesis")
-    context = _llm_synthesis(synthesis_call, aws_recs, collector) or _grounded_synthesis(aws_recs, collector)
+    context = (has_evidence and _llm_synthesis(synthesis_call, aws_recs, collector)) or _grounded_synthesis(aws_recs, collector)
     log("llm_finished", stage="synthesis")
 
     if not context.retrieved_playbooks and not context.similar_cases:
