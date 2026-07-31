@@ -40,12 +40,14 @@ def response_planning_node(
     policy = state.get("policy_context") or {}
     knowledge = state.get("knowledge_context") or {}
     risk = state.get("risk_assessment") or {}
+    prior_completed = list(state.get("completed_nodes") or [])
+    prior_log = list(state.get("reasoning_log") or [])
 
     log("node_started", node="Response Planning", incident=incident.get("incident_id"))
     if not incident:
         err = ResponseNodeError(error="missing_incident", detail="Response Planning Node requires 'incident'.")
-        return {"response_plan": err.model_dump(), "completed_nodes": ["Response Planning"],
-                "reasoning_log": [f"[Response Planning][ERROR] {err.detail}"]}
+        return {"response_plan": err.model_dump(), "completed_nodes": prior_completed + ["Response"],
+                "reasoning_log": prior_log + [f"[Response Planning][ERROR] {err.detail}"]}
 
     log("state_received", has_business=bool(business), has_policy=bool(policy),
         has_knowledge=bool(knowledge), has_risk=bool(risk))
@@ -75,8 +77,8 @@ def response_planning_node(
         priority=plan.priority, source=source, execution_ms=elapsed_ms)
 
     return {"response_plan": plan.model_dump(),
-            "completed_nodes": ["Response Planning"],
-            "reasoning_log": [
+            "completed_nodes": prior_completed + ["Response"],
+            "reasoning_log": prior_log + [
                 "Response Planning Node started.",
                 f"Combined AWS + business + policy + knowledge + risk context ({source}).",
                 f"Generated {len(plan.actions)}-step plan; {approvals} action(s) require human approval; "

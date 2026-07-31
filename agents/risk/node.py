@@ -36,12 +36,14 @@ def risk_assessment_node(
     business = state.get("business_context") or {}
     policy = state.get("policy_context") or {}
     knowledge = state.get("knowledge_context") or {}
+    prior_completed = list(state.get("completed_nodes") or [])
+    prior_log = list(state.get("reasoning_log") or [])
 
     log("node_started", node="Risk Assessment", incident=incident.get("incident_id"))
     if not incident:
         err = RiskNodeError(error="missing_incident", detail="Risk Assessment Node requires 'incident'.")
-        return {"risk_assessment": err.model_dump(), "completed_nodes": ["Risk Assessment"],
-                "reasoning_log": [f"[Risk Assessment][ERROR] {err.detail}"]}
+        return {"risk_assessment": err.model_dump(), "completed_nodes": prior_completed + ["Risk"],
+                "reasoning_log": prior_log + [f"[Risk Assessment][ERROR] {err.detail}"]}
 
     log("state_received", has_business=bool(business), has_policy=bool(policy), has_knowledge=bool(knowledge))
 
@@ -71,8 +73,8 @@ def risk_assessment_node(
         priority=assessment.priority, source=source, execution_ms=elapsed_ms)
 
     return {"risk_assessment": assessment.model_dump(),
-            "completed_nodes": ["Risk Assessment"],
-            "reasoning_log": [
+            "completed_nodes": prior_completed + ["Risk"],
+            "reasoning_log": prior_log + [
                 "Risk Assessment Node started.",
                 f"Combined AWS investigation + business + policy + knowledge context ({source}).",
                 f"Overall risk {assessment.overall_risk}, priority {assessment.priority}, "

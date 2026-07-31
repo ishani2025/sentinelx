@@ -1,0 +1,10 @@
+{
+  "source_type": "thehive_case", "attack_type": "cryptocurrency_mining",
+  "mitre_technique": "T1496", "asset_type": "ec2", "severity": "high", "department": "Sales",
+  "case_id": "~40188", "incident_summary": "Public-facing EC2 web server observed beaconing to a known cryptocurrency mining pool after exploitation of a vulnerable web application.",
+  "affected_assets": ["ec2:i-0abc123456789"],
+  "root_cause": "Unpatched web application vulnerability allowed remote code execution; attacker deployed a miner and persisted via a cron job.",
+  "actions_taken": ["Isolated instance via quarantine security group", "Snapshotted EBS volume for forensics", "Blocked outbound traffic to the mining pool IP", "Revoked instance IAM role STS sessions", "Rebuilt instance from a clean AMI", "Patched the vulnerable web application"],
+  "outcome": "Contained within 40 minutes of detection; no data exfiltration observed; instance rebuilt and redeployed.",
+  "lessons_learned": "GuardDuty CryptoCurrency findings should trigger immediate network isolation, not just alerting — the miner persisted via cron and would have survived a simple process kill. Always patch the initial access vector before returning the instance to service."
+}

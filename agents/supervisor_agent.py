@@ -43,24 +43,25 @@ You ONLY decide which specialized workflow node should execute next.
 
 You receive the complete InvestigationState. Reason ONLY over that state.
 
-Valid node names: "Business", "Policy", "Knowledge", "Risk", "Response".
+Valid node names: "Business", "Policy", "Knowledge", "Risk".
+You never route to "Response" — Risk always hands off to Response directly,
+outside your control, once your job is done.
 
 Decide, based purely on the current InvestigationState:
   - which node should execute next
   - why
-  - whether the whole investigation is complete
+  - whether your part of the investigation is complete
 
 Selection guidance (decide dynamically from what is present/absent in the state):
   - business_context missing                          -> "Business"
   - business_context present, policy_context missing  -> "Policy"
   - business + policy present, knowledge missing       -> "Knowledge"
-  - all context present, risk_assessment missing       -> "Risk"
-  - risk_assessment present, response_plan missing      -> "Response"
-  - response_plan present                               -> workflow_complete = true
+  - all context present, risk_assessment missing       -> "Risk" (this is your final decision;
+    once Risk runs it hands off to Response directly and you will not be consulted again)
 
 You MUST return ONLY valid JSON, no prose, in exactly this shape:
 {
-  "next_node": "<Business|Policy|Knowledge|Risk|Response|END>",
+  "next_node": "<Business|Policy|Knowledge|Risk|END>",
   "workflow_complete": <true|false>,
   "reason": "<one or two sentence justification>"
 }
@@ -111,7 +112,66 @@ class InvestigationState(TypedDict, total=False):
     reasoning_log: list
 
 
-VALID_NODES = ["Business", "Policy", "Knowledge", "Risk", "Response", "END"]
+VALID_NODES = ["Business", "Policy", "Knowledge", "Risk", "END"]
+
+
+# =========================================================================== #
+# 3b. INCIDENT ADAPTER
+# =========================================================================== #
+def adapt_aws_report(report: dict) -> dict:
+    """Flatten a nested AWS Investigation Report (report_metadata / finding_summary /
+    attack_analysis / affected_resources / recommended_actions / ...) into the flat
+    incident shape every specialized node's extractors read (resource_id, attack_type,
+    mitre_mapping, aws_recommendations, ...). The full original report is kept intact
+    under 'raw_report' for anything that wants the nested detail. Idempotent: a dict
+    that doesn't look like a nested report (no 'finding_summary') is returned unchanged,
+    so callers can pass either a report or an already-flat incident to state['incident'].
+    """
+    if not isinstance(report, dict) or "finding_summary" not in report:
+        return report
+
+    meta = report.get("report_metadata") or {}
+    finding = report.get("finding_summary") or {}
+    exec_summary = report.get("executive_summary") or {}
+    attack = report.get("attack_analysis") or {}
+    affected = report.get("affected_resources") or []
+    recs = report.get("recommended_actions") or {}
+    mitre = attack.get("mitre_attack") or []
+    primary_resource = affected[0] if affected else {}
+    resource_id = finding.get("resource_id") or primary_resource.get("resource_id")
+
+    return {
+        "incident_id": meta.get("report_id") or finding.get("finding_id"),
+        "title": finding.get("title"),
+        "description": finding.get("description"),
+        "status": finding.get("status"),
+        "provider": finding.get("provider"),
+        "region": finding.get("region"),
+        "account_id": finding.get("account_id"),
+        "resource_type": finding.get("resource_type"),
+        "resource_id": resource_id,
+        "resource_arn": resource_id,
+        "resource_name": primary_resource.get("resource_name"),
+        "attack_type": attack.get("attack_type"),
+        "kill_chain_stage": attack.get("kill_chain_stage", []),
+        "mitre_mapping": [m.get("technique_id") for m in mitre if isinstance(m, dict) and m.get("technique_id")],
+        "mitre_techniques": mitre,
+        "attack_probability": attack.get("attack_probability"),
+        "attack_summary": finding.get("description") or exec_summary.get("business_impact"),
+        "aws_recommendations": list(recs.get("immediate", [])) + list(recs.get("short_term", []))
+                               + list(recs.get("long_term", [])),
+        "recommended_actions": recs,
+        "affected_resources": affected,
+        "evidence": report.get("evidence", {}),
+        "root_cause_hypothesis": report.get("root_cause_hypothesis", {}),
+        "automation_plan": report.get("automation_plan", {}),
+        "playbook_mapping": report.get("playbook_mapping", {}),
+        "timeline": report.get("timeline", []),
+        "risk_level": exec_summary.get("risk_level"),
+        "confidence": exec_summary.get("confidence"),
+        "recommended_priority": exec_summary.get("recommended_priority"),
+        "raw_report": report,
+    }
 
 
 # =========================================================================== #
@@ -258,9 +318,12 @@ def router(state: InvestigationState) -> str:
 # =========================================================================== #
 def build_graph(nodes: Dict[str, Callable[[InvestigationState], InvestigationState]]):
     """
-    Wire the StateGraph. `nodes` maps the five specialized node names to callables.
-    START -> Supervisor -> (conditional) specialized node -> Supervisor -> ... -> END.
-    Specialized nodes never call each other; only the Supervisor routes.
+    Wire the StateGraph.
+    START -> Supervisor -> (conditional) Business|Policy|Knowledge|Risk|END.
+    Business/Policy/Knowledge loop straight back to Supervisor (it decides what's next).
+    Risk does NOT loop back — it hands off straight to Response, which is terminal.
+    Specialized nodes never call each other directly; the Supervisor only ever
+    routes among Business/Policy/Knowledge/Risk.
     """
     from langgraph.graph import StateGraph, START, END
 
@@ -275,15 +338,17 @@ def build_graph(nodes: Dict[str, Callable[[InvestigationState], InvestigationSta
     g.add_conditional_edges(
         "Supervisor", router,
         {"Business": "Business", "Policy": "Policy", "Knowledge": "Knowledge",
-         "Risk": "Risk", "Response": "Response", "END": END})
-    for name in ("Business", "Policy", "Knowledge", "Risk", "Response"):
+         "Risk": "Risk", "END": END})
+    for name in ("Business", "Policy", "Knowledge"):
         g.add_edge(name, "Supervisor")
+    g.add_edge("Risk", "Response")   # straight edge, no loop back to Supervisor
+    g.add_edge("Response", END)      # Response is terminal
     return g.compile()
 
 
 __all__ = ["InvestigationState", "SUPERVISOR_SYSTEM_PROMPT", "load_supervisor_prompt",
            "get_llm", "chat", "validate_state", "parse_decision", "supervisor_node",
-           "mark_node_complete", "router", "build_graph", "VALID_NODES"]
+           "mark_node_complete", "router", "build_graph", "VALID_NODES", "adapt_aws_report"]
 
 
 # =========================================================================== #
@@ -294,24 +359,32 @@ if __name__ == "__main__":
     this = sys.modules[__name__]
     def _fake_chat(system, user):
         s = json.loads(user.split("\n", 1)[1])
+        # Supervisor only ever chooses among Business/Policy/Knowledge/Risk/END —
+        # Risk hands off to Response directly, so the supervisor is never asked about it.
         if not s["business_context"]:    d = {"next_node": "Business", "workflow_complete": False, "reason": "need business"}
         elif not s["policy_context"]:    d = {"next_node": "Policy", "workflow_complete": False, "reason": "need policy"}
         elif not s["knowledge_context"]: d = {"next_node": "Knowledge", "workflow_complete": False, "reason": "need history"}
         elif not s["risk_assessment"]:   d = {"next_node": "Risk", "workflow_complete": False, "reason": "assess risk"}
-        elif not s["response_plan"]:      d = {"next_node": "Response", "workflow_complete": False, "reason": "plan"}
         else:                             d = {"next_node": "END", "workflow_complete": True, "reason": "done"}
         return "```json\n" + json.dumps(d) + "\n```"
     this.chat = _fake_chat  # patch the shared helper
 
     state: InvestigationState = {"incident": {"incident_id": "inc_demo"}}
     producer = {"Business": "business_context", "Policy": "policy_context",
-                "Knowledge": "knowledge_context", "Risk": "risk_assessment", "Response": "response_plan"}
+                "Knowledge": "knowledge_context", "Risk": "risk_assessment"}
     for _ in range(10):
         state = supervisor_node(state)
         nxt = router(state)
         print("Supervisor ->", nxt)
-        if state["workflow_complete"]:
+        if nxt == "END":
             break
         state[producer[nxt]] = {"ok": True}
         state = mark_node_complete(state, nxt)
+        if nxt == "Risk":
+            # Risk -> Response is a direct graph edge; the Supervisor is not consulted again.
+            state["response_plan"] = {"ok": True}
+            state = mark_node_complete(state, "Response")
+            state["workflow_complete"] = True
+            print("Risk -> Response (direct edge, no Supervisor loop)")
+            break
     print("completed_nodes:", state["completed_nodes"], "| complete:", state["workflow_complete"])

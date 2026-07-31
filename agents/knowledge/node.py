@@ -7,6 +7,7 @@ improved recommendations. Returns ONLY knowledge_context, completed_nodes, reaso
 from __future__ import annotations
 
 import json
+import re
 import time
 from typing import Any, Callable, Optional
 
@@ -37,10 +38,20 @@ def _aws_recommendations(incident: dict) -> list[str]:
     return []
 
 
+def _slugify_attack_type(raw: Optional[str]) -> Optional[str]:
+    """Knowledge-base metadata uses snake_case attack_type slugs (e.g. 'data_exfiltration'),
+    but incidents commonly carry human-readable text (e.g. AWS's 'Cryptocurrency Mining').
+    Normalize so retrieval filtering actually matches the document metadata."""
+    if not raw:
+        return None
+    slug = re.sub(r"[^a-z0-9]+", "_", str(raw).strip().lower()).strip("_")
+    return slug or None
+
+
 def _attack_signal(incident: dict, business_context: dict) -> dict[str, Optional[str]]:
     mitre = incident.get("mitre_mapping") or incident.get("mitre") or []
     mt = mitre[0] if isinstance(mitre, list) and mitre else (mitre if isinstance(mitre, str) else None)
-    return {"attack_type": incident.get("attack_type") or incident.get("attack"),
+    return {"attack_type": _slugify_attack_type(incident.get("attack_type") or incident.get("attack")),
             "asset_type": (business_context or {}).get("asset_type"),
             "mitre_technique": mt,
             "query": incident.get("attack_summary") or incident.get("summary") or str(mitre)}
@@ -141,11 +152,13 @@ def knowledge_node(
     start = time.perf_counter()
     incident = state.get("incident") or {}
     business_context = state.get("business_context") or {}
+    prior_completed: list[Any] = list(state.get("completed_nodes") or [])
+    prior_log: list[str] = list(state.get("reasoning_log") or [])
     log("node_started", node="Knowledge", incident=incident.get("incident_id"))
     if not incident:
         err = KnowledgeNodeError(error="missing_incident", detail="Knowledge Node requires 'incident'.")
-        return {"knowledge_context": err.model_dump(), "completed_nodes": ["Knowledge"],
-                "reasoning_log": [f"[Knowledge][ERROR] {err.detail}"]}
+        return {"knowledge_context": err.model_dump(), "completed_nodes": prior_completed + ["Knowledge"],
+                "reasoning_log": prior_log + [f"[Knowledge][ERROR] {err.detail}"]}
 
     try:
         store = vector_store or KnowledgeVectorStore()
@@ -153,8 +166,8 @@ def knowledge_node(
     except Exception as ex:
         err = KnowledgeNodeError(error="vector_store_unavailable", detail=str(ex))
         log_error("node_vs_error", ex, node="Knowledge")
-        return {"knowledge_context": err.model_dump(), "completed_nodes": ["Knowledge"],
-                "reasoning_log": [f"[Knowledge][ERROR] vector store unavailable: {ex}"]}
+        return {"knowledge_context": err.model_dump(), "completed_nodes": prior_completed + ["Knowledge"],
+                "reasoning_log": prior_log + [f"[Knowledge][ERROR] vector store unavailable: {ex}"]}
 
     collector: dict[str, Any] = {}
     reasoning_log: list[str] = ["Knowledge Node started."]
@@ -208,8 +221,8 @@ def knowledge_node(
     elapsed_ms = round((time.perf_counter() - start) * 1000, 1)
     log("knowledge_generated", additions=len(context.missing_aws_recommendations), execution_ms=elapsed_ms)
     return {"knowledge_context": context.model_dump(),
-            "completed_nodes": ["Knowledge"],
-            "reasoning_log": reasoning_log + [
+            "completed_nodes": prior_completed + ["Knowledge"],
+            "reasoning_log": prior_log + reasoning_log + [
                 f"Knowledge context generated: {len(context.missing_aws_recommendations)} "
                 f"enterprise addition(s) to AWS recommendations.",
                 f"Knowledge Node completed in {elapsed_ms} ms."]}

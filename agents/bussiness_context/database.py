@@ -63,6 +63,13 @@ _ASSETS = [
           asset_type="ec2", application_id="APP-ANALYTICS", owner_id="OWN-CHARLIE", department_id="DEP-DS",
           business_unit="R&D", environment="development", criticality="medium",
           contains_sensitive_data=False, business_function="Runs internal analytics jobs"),
+    # Matches the sample GuardDuty "EC2 Instance Communicating with Cryptocurrency Mining
+    # Pool" finding (resource_id i-0abc123456789 / resource_name Production-WebServer):
+    # a second, Sales-owned public web server fronting the Customer Portal fleet.
+    Asset(asset_id="AST-WEB-EC2", asset_name="Production-WebServer", aws_resource_id="i-0abc123456789",
+          asset_type="ec2", application_id="APP-PORTAL", owner_id="OWN-BOB", department_id="DEP-SALES",
+          business_unit="Revenue", environment="production", criticality="critical",
+          contains_sensitive_data=False, business_function="Public-facing web server for the customer portal"),
 ]
 
 def seed_if_empty(session_factory: Callable[[], Session]) -> None:

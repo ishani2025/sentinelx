@@ -57,12 +57,14 @@ def business_context_node(
     """LangGraph node. `session_factory`, `llm`, and `summary_call` are dependency-injectable."""
     with Timer() as t:
         incident = state.get("incident") or {}
+        prior_completed: list[Any] = list(state.get("completed_nodes") or [])
+        prior_log: list[str] = list(state.get("reasoning_log") or [])
         log("node_started", node="Business Context", incident=incident.get("incident_id"))
         if not incident:
             err = BusinessNodeError(error="missing_incident", detail="Business Context Node requires 'incident'.")
             log_error("node_precondition_failed", err.detail, node="Business Context")
-            return {"business_context": err.model_dump(), "completed_nodes": ["Business Context"],
-                    "reasoning_log": [f"[Business Context][ERROR] {err.detail}"]}
+            return {"business_context": err.model_dump(), "completed_nodes": prior_completed + ["Business"],
+                    "reasoning_log": prior_log + [f"[Business Context][ERROR] {err.detail}"]}
 
         try:
             sf = session_factory or make_session_factory()
@@ -71,8 +73,8 @@ def business_context_node(
         except Exception as ex:
             err = BusinessNodeError(error="database_unavailable", detail=str(ex))
             log_error("node_db_error", ex, node="Business Context")
-            return {"business_context": err.model_dump(), "completed_nodes": ["Business Context"],
-                    "reasoning_log": [f"[Business Context][ERROR] database unavailable: {ex}"]}
+            return {"business_context": err.model_dump(), "completed_nodes": prior_completed + ["Business"],
+                    "reasoning_log": prior_log + [f"[Business Context][ERROR] database unavailable: {ex}"]}
 
         collector: dict[str, Any] = {}
         reasoning_log: list[str] = ["Business Context Node started."]
@@ -114,13 +116,13 @@ def business_context_node(
             err = BusinessNodeError(error="asset_not_found",
                 detail="No enterprise asset matched the incident's AWS resources.")
             log_error("business_context_not_found", err.detail, node="Business Context")
-            return {"business_context": err.model_dump(), "completed_nodes": ["Business Context"],
-                    "reasoning_log": reasoning_log + [f"[Business Context][ERROR] {err.detail}"]}
+            return {"business_context": err.model_dump(), "completed_nodes": prior_completed + ["Business"],
+                    "reasoning_log": prior_log + reasoning_log + [f"[Business Context][ERROR] {err.detail}"]}
 
         log("business_context_generated", asset=context.asset_name, department=context.department)
     return {"business_context": context.model_dump(),
-            "completed_nodes": ["Business Context"],
-            "reasoning_log": reasoning_log + [
+            "completed_nodes": prior_completed + ["Business"],
+            "reasoning_log": prior_log + reasoning_log + [
                 f"Business context generated for '{context.asset_name}' "
                 f"({context.department}, {context.criticality}).",
                 f"Business Context Node completed in {t.ms} ms."]}
