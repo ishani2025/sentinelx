@@ -1,8 +1,8 @@
-# SentinelX
+# SoCx
 
 **Autonomous, AI-native SOC platform that turns cloud security alerts into cross-platform, policy-governed incident response.**
 
-SentinelX sits on top of AWS security services and correlates threats across AWS **and** non-AWS systems (identity, endpoint, network), reasons over them with a mesh of specialized AI agents, executes a governed response with human-in-the-loop approval, and documents every incident as an auditable case that feeds its long-term memory.
+SoCx sits on top of AWS security services and correlates threats across AWS **and** non-AWS systems (identity, endpoint, network), reasons over them with a mesh of specialized AI agents, executes a governed response with human-in-the-loop approval, and documents every incident as an auditable case that feeds its long-term memory.
 
 > Built for the FRONTIER 2026 AI & Agentic Product Challenge (AWS Student Builder Groups · VIT Chennai) — Track 02, Agentic Systems.
 
@@ -12,7 +12,7 @@ SentinelX sits on top of AWS security services and correlates threats across AWS
 
 Enterprise SOCs receive ~3,000 cloud-security alerts a day; ~46% are false positives, ~62% of alerts are never investigated, and there's a global shortage of ~4.8M security professionals. Real threats — stolen credentials, exposed data, privilege escalation — slip through because they span systems no single tool watches together, and attackers stay hidden a mean of ~181 days. Detection tools raise alerts but don't *investigate or respond* — that manual reasoning is what buries analysts.
 
-## What SentinelX does
+## What SoCx does
 
 - **Consumes** AWS detection + the GuardDuty Investigation Agent instead of rebuilding them.
 - **Correlates** the AWS finding with non-AWS signals (Okta/Azure AD, EDR, firewall) by shared identity, IP, and time — reconstructing the *whole* attack chain, not just the AWS half.
@@ -123,7 +123,7 @@ AWS's GuardDuty Investigation Agent investigates only *inside AWS*. SentinelX is
 ## Repository structure
 
 ```
-sentinelx/
+SoCx/
 ├── README.md                     # this file
 ├── config/                       # settings, policies, assets, risk_matrix
 ├── ingestion/
@@ -199,9 +199,6 @@ Aligned to NIST SP 800-61, NIST CSF 2.0, MITRE ATT&CK, MITRE D3FEND, CIS Control
 
 Multi-cloud parity (Azure/GCP), real cross-system identity resolution, confidence-calibrated autonomy, predictive/pre-emptive playbooks, and formal audit certification. See the design doc for details.
 
-## Team
-
-FRONTIER 2026 · Track 02 (Agentic Systems) — *add team name + members here.*
 
 ## License
 
