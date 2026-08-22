@@ -1,0 +1,116 @@
+{
+  "metadata": {
+    "technique_id": "T0874",
+    "technique_name": "Hooking",
+    "domain": "ics",
+    "version": "1.2",
+    "last_modified": "2025-04-15T19:58:56.978Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Execution",
+      "Privilege Escalation"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may hook into application programming interface (API) functions used by processes to redirect calls for execution and privilege escalation means. Windows processes often leverage these API functions to perform tasks that require reusable system resources. Windows API functions are typically stored in dynamic-link libraries (DLLs) as exported functions. (Citation: Enterprise ATT&CK)\n\nOne type of hooking seen in ICS involves redirecting calls to these functions via import address table (IAT) hooking. IAT hooking uses modifications to a process IAT, where pointers to imported API functions are stored. (Citation: Nicolas Falliere, Liam O Murchu, Eric Chien February 2011)",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0722",
+        "name": "Detection of Hooking"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1855",
+        "name": "Analytic 1855",
+        "description": "Monitor for API calls that can be used to install a hook procedure, such as the SetWindowsHookEx and SetWinEventHook functions.(Citation: Microsoft Hook Overview)(Citation: Volatility Detecting Hooks Sept 2012) Also consider analyzing hook chains (which hold pointers to hook procedures for each type of hook) using tools(Citation: Volatility Detecting Hooks Sept 2012)(Citation: PreKageo Winhook Jul 2011)(Citation: Jay GetHooks Sept 2011) or by programmatically examining internal kernel structures.(Citation: Zairon Hooking Dec 2006)(Citation: EyeofRa Detecting Hooking June 2017)\nVerify integrity of live processes by comparing code in memory to that of corresponding static binaries, specifically checking for jumps and other instructions that redirect code flow."
+      }
+    ],
+    "log_sources": [
+      "Process"
+    ],
+    "data_components": [
+      "OS API Execution",
+      "Process Metadata"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0944",
+      "name": "Restrict Library Loading",
+      "description": "Prevent abuse of library loading mechanisms in the operating system and software to load untrusted code by configuring appropriate library loading mechanisms and investigating potential vulnerable software."
+    },
+    {
+      "id": "M0947",
+      "name": "Audit",
+      "description": "Perform audits or scans of systems, permissions, insecure software, insecure configurations, etc. to identify potential weaknesses. Perform periodic integrity checks of the device to validate the correctness of the firmware, software, programs, and configurations. Integrity checks, which typically include cryptographic hashes or digital signatures, should be compared to those obtained at known valid states, especially after events like device reboots, program downloads, or program restarts."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S0603",
+        "name": "Stuxnet"
+      },
+      {
+        "id": "S1009",
+        "name": "Triton"
+      }
+    ],
+    "tools": [],
+    "campaigns": []
+  },
+  "procedure_examples": [
+    {
+      "source_id": "S0603",
+      "source_name": "Stuxnet",
+      "source_type": "malware",
+      "description": "[Stuxnet](https://attack.mitre.org/software/S0603) modifies the Import Address Tables DLLs to hook specific APIs that are used to open project files. (Citation: Nicolas Falliere, Liam O Murchu, Eric Chien February 2011)"
+    },
+    {
+      "source_id": "S1009",
+      "source_name": "Triton",
+      "source_type": "malware",
+      "description": "[Triton](https://attack.mitre.org/software/S1009)'s injector, inject.bin, changes the function pointer of the 'get main processor diagnostic data' TriStation command to the address of imain.bin so that it is executed prior to the normal handler. (Citation: Jos Wetzels January 2018)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0874",
+      "description": null
+    },
+    {
+      "source_name": "Enterprise ATT&CK",
+      "url": "https://attack.mitre.org/techniques/T1179/",
+      "description": "Enterprise ATT&CK   Hooking Retrieved. 2019/10/27 "
+    },
+    {
+      "source_name": "Nicolas Falliere, Liam O Murchu, Eric Chien February 2011",
+      "url": "https://docs.broadcom.com/doc/security-response-w32-stuxnet-dossier-11-en",
+      "description": "Nicolas Falliere, Liam O Murchu, Eric Chien 2011, February W32.Stuxnet Dossier (Version 1.4) Retrieved November 17, 2024."
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Process"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

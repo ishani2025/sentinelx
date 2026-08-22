@@ -1,0 +1,114 @@
+{
+  "metadata": {
+    "technique_id": "T0878",
+    "technique_name": "Alarm Suppression",
+    "domain": "ics",
+    "version": "1.2",
+    "last_modified": "2025-04-16T21:26:11.789Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Inhibit Response Function"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may target protection function alarms to prevent them from notifying operators of critical conditions. Alarm messages may be a part of an overall reporting system and of particular interest for adversaries. Disruption of the alarm system does not imply the disruption of the reporting system as a whole.\n\nA Secura presentation on targeting OT notes a dual fold goal for adversaries attempting alarm suppression: prevent outgoing alarms from being raised and prevent incoming alarms from being responded to. (Citation: Jos Wetzels, Marina Krotofil 2019) The method of suppression may greatly depend on the type of alarm in question:  \n\n* An alarm raised by a protocol message \n* An alarm signaled with I/O \n* An alarm bit set in a flag (and read) \n\nIn ICS environments, the adversary may have to suppress or contend with multiple alarms and/or alarm propagation to achieve a specific goal to evade detection or prevent intended responses from occurring. (Citation: Jos Wetzels, Marina Krotofil 2019)  Methods of suppression may involve tampering or altering device displays and logs, modifying in memory code to fixed values, or even tampering with assembly level instruction code.",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0728",
+        "name": "Detection of Alarm Suppression"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1861",
+        "name": "Analytic 1861",
+        "description": "Monitor for loss of network traffic which could indicate alarms are being suppressed. A loss of expected communications associated with network protocols used to communicate alarm events or process data could indicate this technique is being used. This will not directly detect the technique’s execution, but instead may provide additional evidence that the technique has been used and may complement other detections.\nMonitor for loss of operational process data which could indicate alarms are being suppressed. This will not directly detect the technique’s execution, but instead may provide additional evidence that the technique has been used and may complement other detections.\nMonitor for loss of expected device alarms which could indicate alarms are being suppressed. As noted in the technique description, there may be multiple sources of alarms in an ICS environment. Discrepancies between alarms may indicate the adversary is suppressing some but not all the alarms in the environment. This will not directly detect the technique’s execution, but instead may provide additional evidence that the technique has been used and may complement other detections.\nMonitor for loss of expected operational process alarms which could indicate alarms are being suppressed. As noted in the technique description, there may be multiple sources of alarms in an ICS environment. Discrepancies between alarms may indicate the adversary is suppressing some but not all the alarms in the environment.  This will not directly detect the technique’s execution, but instead may provide additional evidence that the technique has been used and may complement other detections."
+      }
+    ],
+    "log_sources": [
+      "Network Traffic",
+      "Operational Databases"
+    ],
+    "data_components": [
+      "Device Alarm",
+      "Network Traffic Flow",
+      "Process History/Live Data",
+      "Process/Event Alarm"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0814",
+      "name": "Static Network Configuration",
+      "description": "Configure hosts and devices to use static network configurations when possible, protocols that require dynamic discovery/addressing (e.g., ARP, DHCP, DNS) can be used to manipulate network message forwarding and enable various AiTM attacks. This mitigation may not always be usable due to limited device features or challenges introduced with different network configurations."
+    },
+    {
+      "id": "M0807",
+      "name": "Network Allowlists",
+      "description": "Network allowlists can be implemented through either host-based files or system hosts files to specify what connections (e.g., IP address, MAC address, port, protocol) can be made from a device. Allowlist techniques that operate at the  application layer (e.g., DNP3, Modbus, HTTP) are addressed in [Filter Network Traffic](https://attack.mitre.org/mitigations/M0937) mitigation."
+    },
+    {
+      "id": "M0930",
+      "name": "Network Segmentation",
+      "description": "Architect sections of the network to isolate critical systems, functions, or resources. Use physical and logical segmentation to prevent access to potentially sensitive systems and information. Use a DMZ to contain any internet-facing services that should not be exposed from the internal network.  Restrict network access to only required systems and services. In addition, prevent systems from other networks or business functions (e.g., enterprise) from accessing critical process control systems. For example, in IEC 62443, systems within the same secure level should be grouped into a zone, and access to that zone is restricted by a conduit, or mechanism to restrict data flows between zones by segmenting the network. (Citation: IEC February 2019) (Citation: IEC August 2013)"
+    },
+    {
+      "id": "M0810",
+      "name": "Out-of-Band Communications Channel",
+      "description": "Have alternative methods to support communication requirements during communication failures and data integrity attacks. (Citation: National Institute of Standards and Technology April 2013) (Citation: Defense Advanced Research Projects Agency)"
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [],
+    "tools": [],
+    "campaigns": [
+      {
+        "id": "C0020",
+        "name": "Maroochy Water Breach"
+      }
+    ]
+  },
+  "procedure_examples": [
+    {
+      "source_id": "C0020",
+      "source_name": "Maroochy Water Breach",
+      "source_type": "campaign",
+      "description": "In the [Maroochy Water Breach](https://attack.mitre.org/campaigns/C0020), the adversary suppressed alarm reporting to the central computer.(Citation: Marshall Abrams July 2008)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0878",
+      "description": null
+    },
+    {
+      "source_name": "Jos Wetzels, Marina Krotofil 2019",
+      "url": "https://troopers.de/downloads/troopers19/TROOPERS19_NGI_IoT_diet_poisoned_fruit.pdf",
+      "description": "Jos Wetzels, Marina Krotofil 2019 A Diet of Poisoned Fruit: Designing Implants & OT Payloads for ICS Embedded Devices Retrieved. 2019/11/01 "
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Network Traffic",
+      "Operational Databases"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

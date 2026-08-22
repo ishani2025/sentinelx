@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "technique_id": "T0806",
+    "technique_name": "Brute Force I/O",
+    "domain": "ics",
+    "version": "1.1",
+    "last_modified": "2025-04-16T21:26:16.573Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Impair Process Control"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may repetitively or successively change I/O point values to perform an action. Brute Force I/O may be achieved by changing either a range of I/O point values or a single point value repeatedly to manipulate a process function. The adversary's goal and the information they have about the target environment will influence which of the options they choose. In the case of brute forcing a range of point values, the adversary may be able to achieve an impact without targeting a specific point. In the case where a single point is targeted, the adversary may be able to generate instability on the process function associated with that particular point. \n\nAdversaries may use Brute Force I/O to cause failures within various industrial processes. These failures could be the result of wear on equipment or damage to downstream equipment.",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0737",
+        "name": "Detection of Brute Force I/O"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1870",
+        "name": "Analytic 1870",
+        "description": "Monitor operational process data for write commands for an excessive number of I/O points or manipulating a single value an excessive number of times. This will not directly detect the technique’s execution, but instead may provide additional evidence that the technique has been used and may complement other detections.\nSome asset application logs may provide information on I/O points related to write commands. Monitor for write commands for an excessive number of I/O points or manipulating a single value an excessive number of times.\nMonitor network traffic for ICS functions related to write commands for an excessive number of I/O points or manipulating a single value an excessive number of times."
+      }
+    ],
+    "log_sources": [
+      "Application Log",
+      "Network Traffic",
+      "Operational Databases"
+    ],
+    "data_components": [
+      "Application Log Content",
+      "Network Traffic Content",
+      "Process History/Live Data"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0807",
+      "name": "Network Allowlists",
+      "description": "Network allowlists can be implemented through either host-based files or system hosts files to specify what connections (e.g., IP address, MAC address, port, protocol) can be made from a device. Allowlist techniques that operate at the  application layer (e.g., DNP3, Modbus, HTTP) are addressed in [Filter Network Traffic](https://attack.mitre.org/mitigations/M0937) mitigation."
+    },
+    {
+      "id": "M0930",
+      "name": "Network Segmentation",
+      "description": "Architect sections of the network to isolate critical systems, functions, or resources. Use physical and logical segmentation to prevent access to potentially sensitive systems and information. Use a DMZ to contain any internet-facing services that should not be exposed from the internal network.  Restrict network access to only required systems and services. In addition, prevent systems from other networks or business functions (e.g., enterprise) from accessing critical process control systems. For example, in IEC 62443, systems within the same secure level should be grouped into a zone, and access to that zone is restricted by a conduit, or mechanism to restrict data flows between zones by segmenting the network. (Citation: IEC February 2019) (Citation: IEC August 2013)"
+    },
+    {
+      "id": "M0937",
+      "name": "Filter Network Traffic",
+      "description": "Use network appliances to filter ingress or egress traffic and perform protocol-based filtering. Configure software on endpoints to filter network traffic.   Perform inline allow/denylisting of network messages based on the application layer (OSI Layer 7) protocol, especially for automation protocols. Application allowlists are beneficial when there are well-defined communication sequences, types, rates, or patterns needed during expected system operations. Application denylists may be needed if all acceptable communication sequences cannot be defined, but instead a set of known malicious uses can be denied (e.g., excessive communication  attempts, shutdown messages, invalid commands).  Devices performing these functions are often referred to as deep-packet inspection (DPI) firewalls, context-aware firewalls, or firewalls blocking specific automation/SCADA protocol aware firewalls. (Citation: Centre for the Protection of National Infrastructure February 2005)"
+    },
+    {
+      "id": "M0813",
+      "name": "Software Process and Device Authentication",
+      "description": "Require the authentication of devices and software processes where appropriate. Devices that connect remotely to other systems should require strong authentication to prevent spoofing of communications. Furthermore, software processes should also require authentication when accessing APIs."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S1072",
+        "name": "Industroyer2"
+      },
+      {
+        "id": "S1157",
+        "name": "Fuxnet"
+      },
+      {
+        "id": "S0604",
+        "name": "Industroyer"
+      }
+    ],
+    "tools": [],
+    "campaigns": []
+  },
+  "procedure_examples": [
+    {
+      "source_id": "S1072",
+      "source_name": "Industroyer2",
+      "source_type": "malware",
+      "description": "[Industroyer2](https://attack.mitre.org/software/S1072) can iterate across a device’s IOAs to modify the ON/OFF value of a given IO state.(Citation: Industroyer2 Mandiant April 2022)(Citation: Industroyer2 Forescout July 2022)"
+    },
+    {
+      "source_id": "S1157",
+      "source_name": "Fuxnet",
+      "source_type": "malware",
+      "description": "[Fuxnet](https://attack.mitre.org/software/S1157) repeatedly wrote arbitrary data over the Meter-Bus channel from impacted devices to connected sensors to render sensor data acquisition useless.(Citation: Claroty Fuxnet 2024)"
+    },
+    {
+      "source_id": "S0604",
+      "source_name": "Industroyer",
+      "source_type": "malware",
+      "description": "The [Industroyer](https://attack.mitre.org/software/S0604) IEC 104 module has 3 modes available to perform its attack. These modes are range, shift, and sequence. The range mode operates in 2 stages. The first stage of range mode gathers Information Object Addresses (IOA) and sends select and execute packets to switch the state. The second stage of range mode has an infinite loop where it will switch the state of all of the previously discovered IOAs. Shift mode is similar to range mode, but instead of staying within the same range, it will add a shift value to the default range values. (Citation: Anton Cherepanov, ESET June 2017)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0806",
+      "description": null
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Application Log",
+      "Network Traffic",
+      "Operational Databases"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

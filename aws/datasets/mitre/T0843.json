@@ -1,0 +1,173 @@
+{
+  "metadata": {
+    "technique_id": "T0843",
+    "technique_name": "Program Download",
+    "domain": "ics",
+    "version": "1.1",
+    "last_modified": "2026-05-12T15:12:00.713Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Lateral Movement"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may perform a program download to transfer a user program to a controller. \n\nVariations of program download, such as online edit and program append, allow a controller to continue running during the transfer and reconfiguration process without interruption to process control. However, before starting a full program download (i.e., download all) a controller may need to go into a stop state. This can have negative consequences on the physical process, especially if the controller is not able to fulfill a time-sensitive action. Adversaries may choose to avoid a download all in favor of an online edit or program append to avoid disrupting the physical process. An adversary may need to use the technique Detect Operating Mode or Change Operating Mode to make sure the controller is in the proper mode to accept a program download.\n\nThe granularity of control to transfer a user program in whole or parts is dictated by the management protocol (e.g., S7CommPlus, TriStation) and underlying controller API. Thus, program download is a high-level term for the suite of vendor-specific API calls used to configure a controllers user program memory space.  \n\n[Modify Controller Tasking](https://attack.mitre.org/techniques/T0821) and [Modify Program](https://attack.mitre.org/techniques/T0889) represent the configuration changes that are transferred to a controller via a program download.",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0752",
+        "name": "Detection of Program Download"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1884",
+        "name": "Analytic 1884",
+        "description": "Monitor device alarms for program downloads, although not all devices produce such alarms.\nMonitor for protocol functions related to program download or modification. Program downloads may be observable in ICS automation protocols and remote management protocols.\nConsult asset management systems to understand expected program versions.\nMonitor devices configuration logs which may contain alerts that indicate whether a program download has occurred. Devices may maintain application logs that indicate whether a full program download, online edit, or program append function has occurred."
+      }
+    ],
+    "log_sources": [
+      "Application Log",
+      "Asset",
+      "Network Traffic",
+      "Operational Databases"
+    ],
+    "data_components": [
+      "Application Log Content",
+      "Asset Inventory",
+      "Device Alarm",
+      "Network Traffic Content"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0813",
+      "name": "Software Process and Device Authentication",
+      "description": "Require the authentication of devices and software processes where appropriate. Devices that connect remotely to other systems should require strong authentication to prevent spoofing of communications. Furthermore, software processes should also require authentication when accessing APIs."
+    },
+    {
+      "id": "M0947",
+      "name": "Audit",
+      "description": "Perform audits or scans of systems, permissions, insecure software, insecure configurations, etc. to identify potential weaknesses. Perform periodic integrity checks of the device to validate the correctness of the firmware, software, programs, and configurations. Integrity checks, which typically include cryptographic hashes or digital signatures, should be compared to those obtained at known valid states, especially after events like device reboots, program downloads, or program restarts."
+    },
+    {
+      "id": "M0937",
+      "name": "Filter Network Traffic",
+      "description": "Use network appliances to filter ingress or egress traffic and perform protocol-based filtering. Configure software on endpoints to filter network traffic.   Perform inline allow/denylisting of network messages based on the application layer (OSI Layer 7) protocol, especially for automation protocols. Application allowlists are beneficial when there are well-defined communication sequences, types, rates, or patterns needed during expected system operations. Application denylists may be needed if all acceptable communication sequences cannot be defined, but instead a set of known malicious uses can be denied (e.g., excessive communication  attempts, shutdown messages, invalid commands).  Devices performing these functions are often referred to as deep-packet inspection (DPI) firewalls, context-aware firewalls, or firewalls blocking specific automation/SCADA protocol aware firewalls. (Citation: Centre for the Protection of National Infrastructure February 2005)"
+    },
+    {
+      "id": "M0807",
+      "name": "Network Allowlists",
+      "description": "Network allowlists can be implemented through either host-based files or system hosts files to specify what connections (e.g., IP address, MAC address, port, protocol) can be made from a device. Allowlist techniques that operate at the  application layer (e.g., DNP3, Modbus, HTTP) are addressed in [Filter Network Traffic](https://attack.mitre.org/mitigations/M0937) mitigation."
+    },
+    {
+      "id": "M0930",
+      "name": "Network Segmentation",
+      "description": "Architect sections of the network to isolate critical systems, functions, or resources. Use physical and logical segmentation to prevent access to potentially sensitive systems and information. Use a DMZ to contain any internet-facing services that should not be exposed from the internal network.  Restrict network access to only required systems and services. In addition, prevent systems from other networks or business functions (e.g., enterprise) from accessing critical process control systems. For example, in IEC 62443, systems within the same secure level should be grouped into a zone, and access to that zone is restricted by a conduit, or mechanism to restrict data flows between zones by segmenting the network. (Citation: IEC February 2019) (Citation: IEC August 2013)"
+    },
+    {
+      "id": "M0800",
+      "name": "Authorization Enforcement",
+      "description": "The device or system should restrict read, manipulate, or execute privileges to only authenticated users who require access based on approved security policies.  Role-based Access Control (RBAC) schemes can help reduce the overhead of assigning permissions to the large number of devices within an ICS. For example, IEC 62351 provides examples of roles used to support common system operations within the electric power sector  (Citation: International Electrotechnical Commission July 2020), while IEEE 1686 defines standard permissions for users of IEDs. (Citation: Institute of Electrical and Electronics Engineers January 2014)"
+    },
+    {
+      "id": "M0945",
+      "name": "Code Signing",
+      "description": "Enforce binary and application integrity with digital signature verification to prevent untrusted code from executing."
+    },
+    {
+      "id": "M0802",
+      "name": "Communication Authenticity",
+      "description": "When communicating over an untrusted network, utilize secure network protocols that both authenticate the message sender and can verify its integrity. This can be done either through message authentication codes (MACs) or digital signatures, to detect spoofed network messages and unauthorized connections."
+    },
+    {
+      "id": "M0801",
+      "name": "Access Management",
+      "description": "Access Management technologies can be used to enforce authorization polices and decisions, especially when existing field devices do not provide sufficient capabilities to support user identification and authentication. (Citation: McCarthy, J et al. July 2018) These technologies typically utilize an in-line network device or gateway system to prevent access to unauthenticated users, while also integrating with an authentication service to first verify user credentials. (Citation: Centre for the Protection of National Infrastructure November 2010)"
+    },
+    {
+      "id": "M0804",
+      "name": "Human User Authentication",
+      "description": "Require user authentication before allowing access to data or accepting commands to a device. While strong multi-factor authentication is preferable, it is not always feasible within ICS environments. Performing strong user authentication also requires additional security controls and processes which are often the target of related adversarial techniques (e.g., Valid Accounts, Default Credentials). Therefore, associated ATT&CK mitigations should be considered in addition to this, including [Multi-factor Authentication](https://attack.mitre.org/mitigations/M0932), [Account Use Policies](https://attack.mitre.org/mitigations/M0936), [Password Policies](https://attack.mitre.org/mitigations/M0927), [User Account Management](https://attack.mitre.org/mitigations/M0918), [Privileged Account Management](https://attack.mitre.org/mitigations/M0926), and [User Account Control](https://attack.mitre.org/mitigations/M1052)."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S1009",
+        "name": "Triton"
+      },
+      {
+        "id": "S1006",
+        "name": "PLC-Blaster"
+      },
+      {
+        "id": "S1045",
+        "name": "INCONTROLLER"
+      },
+      {
+        "id": "S0603",
+        "name": "Stuxnet"
+      }
+    ],
+    "tools": [],
+    "campaigns": []
+  },
+  "procedure_examples": [
+    {
+      "source_id": "S1009",
+      "source_name": "Triton",
+      "source_type": "malware",
+      "description": "[Triton](https://attack.mitre.org/software/S1009) leveraged the TriStation protocol to download programs onto Triconex Safety Instrumented System.(Citation: Jos Wetzels January 2018)"
+    },
+    {
+      "source_id": "S1006",
+      "source_name": "PLC-Blaster",
+      "source_type": "malware",
+      "description": "[PLC-Blaster](https://attack.mitre.org/software/S1006) utilizes the PLC communication and management API to load executable Program Organization Units. (Citation: Spenneberg, Ralf, Maik Brggemann, and Hendrik Schwartke March 2016)"
+    },
+    {
+      "source_id": "S1045",
+      "source_name": "INCONTROLLER",
+      "source_type": "malware",
+      "description": "[INCONTROLLER](https://attack.mitre.org/software/S1045) has used the CODESYS protocol to download programs to Schneider PLCs.(Citation: Wylie-22)(Citation: Brubaker-Incontroller) [INCONTROLLER](https://attack.mitre.org/software/S1045) has also modified program logic on Omron PLCs using either the program download or backup transfer functions available through the HTTP server.(Citation: Wylie-22) "
+    },
+    {
+      "source_id": "S0603",
+      "source_name": "Stuxnet",
+      "source_type": "malware",
+      "description": "[Stuxnet](https://attack.mitre.org/software/S0603)'s infection sequence consists of code blocks and data blocks that will be downloaded to the PLC to alter its behavior. (Citation: Nicolas Falliere, Liam O Murchu, Eric Chien February 2011)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0843",
+      "description": null
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Application Log",
+      "Asset",
+      "Network Traffic",
+      "Operational Databases"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

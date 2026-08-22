@@ -1,0 +1,122 @@
+{
+  "metadata": {
+    "technique_id": "T0801",
+    "technique_name": "Monitor Process State",
+    "domain": "ics",
+    "version": "1.0",
+    "last_modified": "2025-04-25T15:16:45.982Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Collection"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may gather information about the physical process state. This information may be used to gain more information about the process itself or used as a trigger for malicious actions. The sources of process state information may vary such as, OPC tags, historian data, specific PLC block information, or network traffic.",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0727",
+        "name": "Detection of Monitor Process State"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1860",
+        "name": "Analytic 1860",
+        "description": "Monitor ICS automation network protocols for functions related to reading an operational process state (e.g., “Read” function codes in protocols like DNP3 or Modbus). In some cases, there may be multiple ways to monitor an operational process’ state, one of which is typically used in the operational environment. Monitor for the operating mode being checked in unexpected ways.\nMonitor applications logs for any access attempts to operational databases (e.g., historians) or other sources of operational data within the ICS environment. These devices should be monitored for adversary collection using techniques relevant to the underlying technologies (e.g., Windows, Linux)."
+      }
+    ],
+    "log_sources": [
+      "Application Log",
+      "Network Traffic"
+    ],
+    "data_components": [
+      "Application Log Content",
+      "Network Traffic Content"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0816",
+      "name": "Mitigation Limited or Not Effective",
+      "description": "This type of attack technique cannot be easily mitigated with preventative controls since it is based on the abuse of system features."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S0603",
+        "name": "Stuxnet"
+      },
+      {
+        "id": "S1165",
+        "name": "FrostyGoop"
+      },
+      {
+        "id": "S1072",
+        "name": "Industroyer2"
+      },
+      {
+        "id": "S0604",
+        "name": "Industroyer"
+      }
+    ],
+    "tools": [],
+    "campaigns": []
+  },
+  "procedure_examples": [
+    {
+      "source_id": "S0603",
+      "source_name": "Stuxnet",
+      "source_type": "malware",
+      "description": "[Stuxnet](https://attack.mitre.org/software/S0603) examines fields recorded by the DP_RECV monitor to determine if the target system is in a particular state of operation. (Citation: Nicolas Falliere, Liam O Murchu, Eric Chien February 2011)"
+    },
+    {
+      "source_id": "S1165",
+      "source_name": "FrostyGoop",
+      "source_type": "malware",
+      "description": "[FrostyGoop](https://attack.mitre.org/software/S1165) can read data from holding registers via Modbus communication.(Citation: Dragos FROSTYGOOP 2024)"
+    },
+    {
+      "source_id": "S1072",
+      "source_name": "Industroyer2",
+      "source_type": "malware",
+      "description": "[Industroyer2](https://attack.mitre.org/software/S1072) uses a General Interrogation command to monitor the device’s Information Object Addresses (IOAs) and their IO state values.(Citation: Industroyer2 Forescout July 2022)"
+    },
+    {
+      "source_id": "S0604",
+      "source_name": "Industroyer",
+      "source_type": "malware",
+      "description": "[Industroyer](https://attack.mitre.org/software/S0604)'s OPC and IEC 61850 protocol modules include the ability to send stVal requests to read the status of operational variables. (Citation: Anton Cherepanov, ESET June 2017)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0801",
+      "description": null
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Application Log",
+      "Network Traffic"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

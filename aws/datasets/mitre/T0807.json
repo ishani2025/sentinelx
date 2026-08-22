@@ -1,0 +1,177 @@
+{
+  "metadata": {
+    "technique_id": "T0807",
+    "technique_name": "Command-Line Interface",
+    "domain": "ics",
+    "version": "1.1",
+    "last_modified": "2026-05-12T15:12:00.623Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Execution"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may utilize command-line interfaces (CLIs) to interact with systems and execute commands. CLIs provide a means of interacting with computer systems and are a common feature across many types of platforms and devices within control systems environments. (Citation: Enterprise ATT&CK January 2018) Adversaries may also use CLIs to install and run new software, including malicious tools that may be installed over the course of an operation.\n\nCLIs are typically accessed locally, but can also be exposed via services, such as SSH, Telnet, and RDP.  Commands that are executed in the CLI execute with the current permissions level of the process running the terminal emulator, unless the command specifies a change in permissions context. Many controllers have CLI interfaces for management purposes.",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0760",
+        "name": "Detection of Command-Line Interface"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1892",
+        "name": "Analytic 1892",
+        "description": "On Windows and Unix systems monitor executed commands and arguments that may use shell commands for execution. Shells may be common on administrator, developer, or power user systems depending on job function.\n\nOn network device and embedded system CLIs consider reviewing command history if unauthorized or suspicious commands were used to modify device configuration.\nMonitor logs from installed applications (e.g., historian logs) for unexpected commands or abuse of system features.\nMonitor for processes spawning from known command shell applications (e.g., PowerShell, Bash). Benign activity will need to be allow-listed. This information can be useful in gaining additional insight to adversaries' actions through how they use native processes or custom tools."
+      }
+    ],
+    "log_sources": [
+      "Application Log",
+      "Command",
+      "Process"
+    ],
+    "data_components": [
+      "Application Log Content",
+      "Command Execution",
+      "Process Creation"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0938",
+      "name": "Execution Prevention",
+      "description": "Block execution of code on a system through application control, and/or script blocking."
+    },
+    {
+      "id": "M0942",
+      "name": "Disable or Remove Feature or Program",
+      "description": "Remove or deny access to unnecessary and potentially vulnerable software to prevent abuse by adversaries."
+    }
+  ],
+  "relationships": {
+    "groups": [
+      {
+        "id": "G0034",
+        "name": "Sandworm Team"
+      }
+    ],
+    "malware": [
+      {
+        "id": "S0604",
+        "name": "Industroyer"
+      },
+      {
+        "id": "S0603",
+        "name": "Stuxnet"
+      },
+      {
+        "id": "S1165",
+        "name": "FrostyGoop"
+      }
+    ],
+    "tools": [],
+    "campaigns": [
+      {
+        "id": "C0030",
+        "name": "Triton Safety Instrumented System Attack"
+      },
+      {
+        "id": "C0063",
+        "name": "2025 Poland Wiper Attacks"
+      },
+      {
+        "id": "C0025",
+        "name": "2016 Ukraine Electric Power Attack"
+      },
+      {
+        "id": "C0034",
+        "name": "2022 Ukraine Electric Power Attack"
+      }
+    ]
+  },
+  "procedure_examples": [
+    {
+      "source_id": "G0034",
+      "source_name": "Sandworm Team",
+      "source_type": "intrusion-set",
+      "description": "[Sandworm Team](https://attack.mitre.org/groups/G0034) uses the MS-SQL server xp_cmdshell command, and PowerShell to execute commands. (Citation: Dragos October 2018)"
+    },
+    {
+      "source_id": "C0030",
+      "source_name": "Triton Safety Instrumented System Attack",
+      "source_type": "campaign",
+      "description": "In the [Triton Safety Instrumented System Attack](https://attack.mitre.org/campaigns/C0030), [TEMP.Veles](https://attack.mitre.org/groups/G0088)’ tool took one option from the command line, which was a single IP address of the target Triconex device.(Citation: FireEye TRITON Dec 2017)"
+    },
+    {
+      "source_id": "S0604",
+      "source_name": "Industroyer",
+      "source_type": "malware",
+      "description": "The name of the [Industroyer](https://attack.mitre.org/software/S0604) payload DLL is supplied by the attackers via a command line parameter supplied in one of the main backdoors execute a shell command commands. (Citation: Anton Cherepanov, ESET June 2017)"
+    },
+    {
+      "source_id": "S0603",
+      "source_name": "Stuxnet",
+      "source_type": "malware",
+      "description": "[Stuxnet](https://attack.mitre.org/software/S0603) will store and execute SQL code that will extract and execute Stuxnet from the saved CAB file using xp_cmdshell with the following command: `set @s = master..xp _ cmdshell extrac32 /y +@t+ +@t+x; exec(@s);` (Citation: Nicolas Falliere, Liam O Murchu, Eric Chien February 2011)"
+    },
+    {
+      "source_id": "C0063",
+      "source_name": "2025 Poland Wiper Attacks",
+      "source_type": "campaign",
+      "description": "During the [2025 Poland Wiper Attacks](https://attack.mitre.org/campaigns/C0063), the adversaries executed PowerShell commands on the Human Machine Interface (HMI) to make configuration changes that enabled administrative shares and created a new firewall rule to enable traffic over port 445 as well as conducted network reconnaissance activities.(Citation: CERT Polska)\n\nDuring the [2025 Poland Wiper Attacks](https://attack.mitre.org/campaigns/C0063), the adversaries executed PowerShell commands on the domain controller that collected and exfiltrated the SAM and SYSTEM registry hives and the Active Directory database (ntds.dit).(Citation: CERT Polska)\n\nDuring the [2025 Poland Wiper Attacks](https://attack.mitre.org/campaigns/C0063), the adversaries logged into the Mikronika RTUs via SSH, with root privileges, and executed Linux commands to delete all the files on the system resulting in device failure.(Citation: CERT Polska)\n"
+    },
+    {
+      "source_id": "S1165",
+      "source_name": "FrostyGoop",
+      "source_type": "malware",
+      "description": "[FrostyGoop](https://attack.mitre.org/software/S1165) is compiled for Windows systems and leverages a Windows-based command line interface.(Citation: Dragos FROSTYGOOP 2024) Modbus interaction functionality is based off a publicly available Github repository for command line input.(Citation: Nozomi BUSTLEBERM 2024)"
+    },
+    {
+      "source_id": "C0025",
+      "source_name": "2016 Ukraine Electric Power Attack",
+      "source_type": "campaign",
+      "description": "During the [2016 Ukraine Electric Power Attack](https://attack.mitre.org/campaigns/C0025), [Sandworm Team](https://attack.mitre.org/groups/G0034) supplied the name of the payload DLL to [Industroyer](https://attack.mitre.org/software/S0604) via a command line parameter.(Citation: ESET Industroyer)"
+    },
+    {
+      "source_id": "C0034",
+      "source_name": "2022 Ukraine Electric Power Attack",
+      "source_type": "campaign",
+      "description": "During the [2022 Ukraine Electric Power Attack](https://attack.mitre.org/campaigns/C0034), [Sandworm Team](https://attack.mitre.org/groups/G0034) leveraged the SCIL-API on the MicroSCADA platform to execute commands through the `scilc.exe` binary.(Citation: Mandiant-Sandworm-Ukraine-2022)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0807",
+      "description": null
+    },
+    {
+      "source_name": "Enterprise ATT&CK January 2018",
+      "url": "https://attack.mitre.org/wiki/Technique/T1059",
+      "description": "Enterprise ATT&CK 2018, January 11 Command-Line Interface Retrieved. 2018/05/17 "
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Application Log",
+      "Command",
+      "Process"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

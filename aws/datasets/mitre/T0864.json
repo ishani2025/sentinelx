@@ -1,0 +1,117 @@
+{
+  "metadata": {
+    "technique_id": "T0864",
+    "technique_name": "Transient Cyber Asset",
+    "domain": "ics",
+    "version": "1.2",
+    "last_modified": "2025-04-15T19:58:21.226Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Initial Access"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may target devices that are transient across ICS networks and external networks. Normally, transient assets are brought into an environment by authorized personnel and do not remain in that environment on a permanent basis. (Citation: North American Electric Reliability Corporation June 2021) Transient assets are commonly needed to support management functions and may be more common in systems where a remotely managed asset is not feasible, external connections for remote access do not exist, or 3rd party contractor/vendor access is required. \n\nAdversaries may take advantage of transient assets in different ways. For instance, adversaries may target a transient asset when it is connected to an external network and then leverage its trusted access in another environment to launch an attack. They may also take advantage of installed applications and libraries that are used by legitimate end-users to interact with control system devices. \n\nTransient assets, in some cases, may not be deployed with a secure configuration leading to weaknesses that could allow an adversary to propagate malicious executable code, e.g., the transient asset may be infected by malware and when connected to an ICS environment the malware propagates onto other systems. ",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0744",
+        "name": "Detection of Transient Cyber Asset"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1877",
+        "name": "Analytic 1877",
+        "description": "Monitor for network traffic originating from unknown/unexpected hardware devices. Local network traffic metadata (such as source MAC addressing) may be helpful in identifying transient assets.\nNetworking devices such as switches may log when new client devices connect (e.g., SNMP notifications). Monitor for any logs documenting changes to network connection status to determine when a new connection has occurred, including the resulting addresses (e.g., IP, MAC) of devices on that network."
+      }
+    ],
+    "log_sources": [
+      "Application Log",
+      "Network Traffic"
+    ],
+    "data_components": [
+      "Application Log Content",
+      "Network Traffic Flow"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0941",
+      "name": "Encrypt Sensitive Information",
+      "description": "Protect sensitive data-at-rest with strong encryption."
+    },
+    {
+      "id": "M0947",
+      "name": "Audit",
+      "description": "Perform audits or scans of systems, permissions, insecure software, insecure configurations, etc. to identify potential weaknesses. Perform periodic integrity checks of the device to validate the correctness of the firmware, software, programs, and configurations. Integrity checks, which typically include cryptographic hashes or digital signatures, should be compared to those obtained at known valid states, especially after events like device reboots, program downloads, or program restarts."
+    },
+    {
+      "id": "M0949",
+      "name": "Antivirus/Antimalware",
+      "description": "Use signatures or heuristics to detect malicious software.  Within industrial control environments, antivirus/antimalware installations should be limited to assets that are not involved in critical or real-time operations. To minimize the impact to system availability, all products should first be validated within a representative test environment before deployment to production systems. (Citation: NCCIC August 2018)"
+    },
+    {
+      "id": "M0930",
+      "name": "Network Segmentation",
+      "description": "Architect sections of the network to isolate critical systems, functions, or resources. Use physical and logical segmentation to prevent access to potentially sensitive systems and information. Use a DMZ to contain any internet-facing services that should not be exposed from the internal network.  Restrict network access to only required systems and services. In addition, prevent systems from other networks or business functions (e.g., enterprise) from accessing critical process control systems. For example, in IEC 62443, systems within the same secure level should be grouped into a zone, and access to that zone is restricted by a conduit, or mechanism to restrict data flows between zones by segmenting the network. (Citation: IEC February 2019) (Citation: IEC August 2013)"
+    },
+    {
+      "id": "M0951",
+      "name": "Update Software",
+      "description": "Perform regular software updates to mitigate exploitation risk. Software updates may need to be scheduled around operational down times."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [],
+    "tools": [],
+    "campaigns": [
+      {
+        "id": "C0020",
+        "name": "Maroochy Water Breach"
+      }
+    ]
+  },
+  "procedure_examples": [
+    {
+      "source_id": "C0020",
+      "source_name": "Maroochy Water Breach",
+      "source_type": "campaign",
+      "description": "In the [Maroochy Water Breach](https://attack.mitre.org/campaigns/C0020), the adversary utilized a computer, possibly stolen, with proprietary engineering software to communicate with a wastewater system.(Citation: Marshall Abrams July 2008)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0864",
+      "description": null
+    },
+    {
+      "source_name": "North American Electric Reliability Corporation June 2021",
+      "url": "https://www.nerc.com/pa/Stand/Glossary%20of%20Terms/Glossary_of_Terms.pdf",
+      "description": "North American Electric Reliability Corporation 2021, June 28 Glossary of Terms Used in NERC Reliability Standards Retrieved. 2021/10/11 "
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Application Log",
+      "Network Traffic"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

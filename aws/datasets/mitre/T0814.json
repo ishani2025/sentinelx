@@ -1,0 +1,167 @@
+{
+  "metadata": {
+    "technique_id": "T0814",
+    "technique_name": "Denial of Service",
+    "domain": "ics",
+    "version": "1.1",
+    "last_modified": "2025-04-15T19:58:10.656Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Inhibit Response Function"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may perform Denial-of-Service (DoS) attacks to disrupt expected device functionality. Examples of DoS attacks include overwhelming the target device with a high volume of requests in a short time period and sending the target device a request it does not know how to handle. Disrupting device state may temporarily render it unresponsive, possibly lasting until a reboot can occur. When placed in this state, devices may be unable to send and receive requests, and may not perform expected response functions in reaction to other events in the environment. \n\nSome ICS devices are particularly sensitive to DoS events, and may become unresponsive in reaction to even a simple ping sweep. Adversaries may also attempt to execute a Permanent Denial-of-Service (PDoS) against certain devices, such as in the case of the BrickerBot malware. (Citation: ICS-CERT April 2017) \n\nAdversaries may exploit a software vulnerability to cause a denial of service by taking advantage of a programming error in a program, service, or within the operating system software or kernel itself to execute adversary-controlled code. Vulnerabilities may exist in software that can be used to cause a denial of service condition. \n\nAdversaries may have prior knowledge about industrial protocols or control devices used in the environment through [Remote System Information Discovery](https://attack.mitre.org/techniques/T0888). There are examples of adversaries remotely causing a [Device Restart/Shutdown](https://attack.mitre.org/techniques/T0816) by exploiting a vulnerability that induces uncontrolled resource consumption. (Citation: ICS-CERT August 2018) (Citation: Common Weakness Enumeration January 2019) (Citation: MITRE March 2018) ",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0723",
+        "name": "Detection of Denial of Service"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1856",
+        "name": "Analytic 1856",
+        "description": "Monitor and analyze traffic patterns and packet inspection associated to protocol(s) that do not follow the expected protocol standards and traffic flows (e.g., extraneous packets that do not belong to established flows, gratuitous or anomalous traffic patterns, anomalous syntax, or structure). Consider correlation with process monitoring and command line to detect anomalous processes execution and command line arguments associated to traffic patterns (e.g., monitor anomalies in use of files that do not normally initiate connections for respective protocol(s)).\nMonitor network data for uncommon data flows. Processes utilizing the network that do not normally have network communication or have never been seen before are suspicious.\nMonitor for application logging, messaging, and/or other artifacts that may result from  Denial of Service (DoS) attacks which degrade or block the availability of services to users. In addition to network level detections, endpoint logging and instrumentation can be useful for detection.\nMonitor operational data for indicators of temporary data loss which may indicate a Denial of Service. This will not directly detect the technique’s execution, but instead may provide additional evidence that the technique has been used and may complement other detections."
+      }
+    ],
+    "log_sources": [
+      "Application Log",
+      "Network Traffic",
+      "Operational Databases"
+    ],
+    "data_components": [
+      "Application Log Content",
+      "Network Traffic Content",
+      "Network Traffic Flow",
+      "Process History/Live Data"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0815",
+      "name": "Watchdog Timers",
+      "description": "Utilize watchdog timers to ensure devices can quickly detect whether a system is unresponsive."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S0604",
+        "name": "Industroyer"
+      },
+      {
+        "id": "S1006",
+        "name": "PLC-Blaster"
+      },
+      {
+        "id": "S1157",
+        "name": "Fuxnet"
+      },
+      {
+        "id": "S0093",
+        "name": "Backdoor.Oldrea"
+      }
+    ],
+    "tools": [],
+    "campaigns": [
+      {
+        "id": "C0031",
+        "name": "Unitronics Defacement Campaign"
+      },
+      {
+        "id": "C0028",
+        "name": "2015 Ukraine Electric Power Attack"
+      }
+    ]
+  },
+  "procedure_examples": [
+    {
+      "source_id": "C0031",
+      "source_name": "Unitronics Defacement Campaign",
+      "source_type": "campaign",
+      "description": "During the [Unitronics Defacement Campaign](https://attack.mitre.org/campaigns/C0031), the [CyberAv3ngers](https://attack.mitre.org/groups/G1027) defaced controllers’ [Human-Machine Interface (HMI)](https://attack.mitre.org/assets/A0002), which prevented multiple entities from being able to operate their devices normally.(Citation: CISA AA23-335A IRGC-Affiliated December 2023)(Citation: CISA Unitronics November 2023)(Citation: Jamie Tarabay and Katrina Manson December 2023)(Citation: Frank Bajak and Marc Levy December 2023) Additionally, the [CyberAv3ngers](https://attack.mitre.org/groups/G1027) caused a communications failure in a remote pumping station.(Citation: WPXI Aliquippa Water November 2023)"
+    },
+    {
+      "source_id": "S0604",
+      "source_name": "Industroyer",
+      "source_type": "malware",
+      "description": "The [Industroyer](https://attack.mitre.org/software/S0604) SIPROTEC DoS module exploits the CVE-2015-5374 vulnerability in order to render a Siemens SIPROTEC device unresponsive. Once this vulnerability is successfully exploited, the target device stops responding to any commands until it is rebooted manually. (Citation: Anton Cherepanov, ESET June 2017) Once the tool is executed it sends specifically crafted packets to port 50,000 of the target IP addresses using UDP. The UDP packet contains the following 18 byte payload: 0x11 49 00 00 00 00 00 00 00 00 00 00 00 00 00 00 28 9E. (Citation: Anton Cherepanov, ESET June 2017)"
+    },
+    {
+      "source_id": "S1006",
+      "source_name": "PLC-Blaster",
+      "source_type": "malware",
+      "description": "The execution on the PLC can be stopped by violating the cycle time limit. The [PLC-Blaster](https://attack.mitre.org/software/S1006) implements an endless loop triggering an error condition within the PLC with the impact of a DoS. (Citation: Spenneberg, Ralf, Maik Brggemann, and Hendrik Schwartke March 2016)"
+    },
+    {
+      "source_id": "C0028",
+      "source_name": "2015 Ukraine Electric Power Attack",
+      "source_type": "campaign",
+      "description": "During the [2015 Ukraine Electric Power Attack](https://attack.mitre.org/campaigns/C0028), power company phone line operators were hit with a denial of service attack so that they couldn’t field customers’ calls about outages. Operators were also denied service to their downstream devices when their serial-to-ethernet converters had their firmware overwritten, which bricked the devices. (Citation: Ukraine15 - EISAC - 201603)"
+    },
+    {
+      "source_id": "S1157",
+      "source_name": "Fuxnet",
+      "source_type": "malware",
+      "description": "[Fuxnet](https://attack.mitre.org/software/S1157) shut down remote access services such as SSH, HTTP, telnet, and SNMP to a device along with deleting the routing table for routing devices to inhibit system accessibility and communication.(Citation: Claroty Fuxnet 2024)"
+    },
+    {
+      "source_id": "S0093",
+      "source_name": "Backdoor.Oldrea",
+      "source_type": "malware",
+      "description": "The [Backdoor.Oldrea](https://attack.mitre.org/software/S0093) payload has caused multiple common OPC platforms to intermittently crash. This could cause a denial of service effect on applications reliant on OPC communications. (Citation: ICS-CERT August 2018)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0814",
+      "description": null
+    },
+    {
+      "source_name": "Common Weakness Enumeration January 2019",
+      "url": "http://cwe.mitre.org/data/definitions/400.html",
+      "description": "Common Weakness Enumeration 2019, January 03 CWE-400: Uncontrolled Resource Consumption Retrieved. 2019/03/14 "
+    },
+    {
+      "source_name": "ICS-CERT April 2017",
+      "url": "https://www.us-cert.gov/ics/alerts/ICS-ALERT-17-102-01A",
+      "description": "ICS-CERT 2017, April 18 CS Alert (ICS-ALERT-17-102-01A) BrickerBot Permanent Denial-of-Service Attack Retrieved. 2019/10/24 "
+    },
+    {
+      "source_name": "ICS-CERT August 2018",
+      "url": "https://ics-cert.us-cert.gov/advisories/ICSA-15-202-01",
+      "description": "ICS-CERT 2018, August 27 Advisory (ICSA-15-202-01) - Siemens SIPROTEC Denial-of-Service Vulnerability Retrieved. 2019/03/14 "
+    },
+    {
+      "source_name": "MITRE March 2018",
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2015-5374",
+      "description": "MITRE 2018, March 22 CVE-2015-5374 Retrieved. 2019/03/14 "
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Application Log",
+      "Network Traffic",
+      "Operational Databases"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

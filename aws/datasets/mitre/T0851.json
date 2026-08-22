@@ -1,0 +1,100 @@
+{
+  "metadata": {
+    "technique_id": "T0851",
+    "technique_name": "Rootkit",
+    "domain": "ics",
+    "version": "1.1",
+    "last_modified": "2025-04-16T21:26:13.542Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Evasion",
+      "Inhibit Response Function"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may deploy rootkits to hide the presence of programs, files, network connections, services, drivers, and other system components. Rootkits are programs that hide the existence of malware by intercepting and modifying operating-system API calls that supply system information. Rootkits or rootkit-enabling functionality may reside at the user or kernel level in the operating system, or lower. (Citation: Enterprise ATT&CK January 2018)   \n\nFirmware rootkits that affect the operating system yield nearly full control of the system. While firmware rootkits are normally developed for the main processing board, they can also be developed for the I/O that is attached to an asset. Compromise of this firmware allows the modification of all of the process variables and functions the module engages in. This may result in commands being disregarded and false information being fed to the main device. By tampering with device processes, an adversary may inhibit its expected response functions and possibly enable [Impact](https://attack.mitre.org/tactics/TA0105).",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0780",
+        "name": "Detection of Rootkit"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1912",
+        "name": "Analytic 1912",
+        "description": "Monitor for changes made to firmware for unexpected modifications to settings and/or data that may be used by rootkits to hide the presence of programs, files, network connections, services, drivers, and other system components. Asset management systems should be consulted to understand known-good firmware versions and configurations."
+      }
+    ],
+    "log_sources": [
+      "Firmware"
+    ],
+    "data_components": [
+      "Firmware Modification"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0945",
+      "name": "Code Signing",
+      "description": "Enforce binary and application integrity with digital signature verification to prevent untrusted code from executing."
+    },
+    {
+      "id": "M0947",
+      "name": "Audit",
+      "description": "Perform audits or scans of systems, permissions, insecure software, insecure configurations, etc. to identify potential weaknesses. Perform periodic integrity checks of the device to validate the correctness of the firmware, software, programs, and configurations. Integrity checks, which typically include cryptographic hashes or digital signatures, should be compared to those obtained at known valid states, especially after events like device reboots, program downloads, or program restarts."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S0603",
+        "name": "Stuxnet"
+      }
+    ],
+    "tools": [],
+    "campaigns": []
+  },
+  "procedure_examples": [
+    {
+      "source_id": "S0603",
+      "source_name": "Stuxnet",
+      "source_type": "malware",
+      "description": "One of [Stuxnet](https://attack.mitre.org/software/S0603)'s rootkits is contained entirely in the fake s7otbxdx.dll. In order to continue existing undetected on the PLC it needs to account for at least the following situations: read requests for its own malicious code blocks, read requests for infected blocks (OB1, OB35, DP_RECV), and write requests that could overwrite Stuxnets own code. Stuxnet contains code to monitor and intercept these types of requests. The rootkit modifies these requests so that Stuxnets PLC code is not discovered or damaged. (Citation: Langer Stuxnet)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0851",
+      "description": null
+    },
+    {
+      "source_name": "Enterprise ATT&CK January 2018",
+      "url": "https://attack.mitre.org/wiki/Technique/T1014",
+      "description": "Enterprise ATT&CK 2018, January 11 Rootkit Retrieved. 2018/05/16 "
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Firmware"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "metadata": {
+    "technique_id": "T0829",
+    "technique_name": "Loss of View",
+    "domain": "ics",
+    "version": "1.0",
+    "last_modified": "2026-05-12T15:12:00.621Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Impact"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may cause a sustained or permanent loss of view where the ICS equipment will require local, hands-on operator intervention; for instance, a restart or manual operation. By causing a sustained reporting or visibility loss, the adversary can effectively hide the present state of operations. This loss of view can occur without affecting the physical processes themselves. (Citation: Corero) (Citation: Michael J. Assante and Robert M. Lee) (Citation: Tyson Macaulay)",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0763",
+        "name": "Detection of Loss of View"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1895",
+        "name": "Analytic 1895",
+        "description": "No standard detection method currently exists for this technique."
+      }
+    ],
+    "log_sources": [],
+    "data_components": []
+  },
+  "mitigations": [
+    {
+      "id": "M0811",
+      "name": "Redundancy of Service",
+      "description": "Redundancy could be provided for both critical ICS devices and services, such as back-up devices or hot-standbys."
+    },
+    {
+      "id": "M0810",
+      "name": "Out-of-Band Communications Channel",
+      "description": "Have alternative methods to support communication requirements during communication failures and data integrity attacks. (Citation: National Institute of Standards and Technology April 2013) (Citation: Defense Advanced Research Projects Agency)"
+    },
+    {
+      "id": "M0953",
+      "name": "Data Backup",
+      "description": "Take and store data backups from end user systems and critical servers. Ensure backup and storage systems are hardened and kept separate from the corporate network to prevent compromise.   Maintain and exercise incident response plans  (Citation: Department of Homeland Security October 2009), including the management of  'gold-copy' back-up images and configurations for key systems to enable quick recovery and response from adversarial activities that impact control, view, or availability."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S0607",
+        "name": "KillDisk"
+      },
+      {
+        "id": "S1157",
+        "name": "Fuxnet"
+      },
+      {
+        "id": "S0372",
+        "name": "LockerGoga"
+      },
+      {
+        "id": "S0604",
+        "name": "Industroyer"
+      }
+    ],
+    "tools": [],
+    "campaigns": [
+      {
+        "id": "C0063",
+        "name": "2025 Poland Wiper Attacks"
+      },
+      {
+        "id": "C0031",
+        "name": "Unitronics Defacement Campaign"
+      },
+      {
+        "id": "C0041",
+        "name": "FrostyGoop Incident"
+      }
+    ]
+  },
+  "procedure_examples": [
+    {
+      "source_id": "S0607",
+      "source_name": "KillDisk",
+      "source_type": "malware",
+      "description": "[KillDisk](https://attack.mitre.org/software/S0607) erases the master boot record (MBR) and system logs, leaving the system unusable. (Citation: Booz Allen Hamilton)"
+    },
+    {
+      "source_id": "C0063",
+      "source_name": "2025 Poland Wiper Attacks",
+      "source_type": "campaign",
+      "description": "During the [2025 Poland Wiper Attacks](https://attack.mitre.org/campaigns/C0063), the adversaries wiped devices and also damaged Mikronika RTUs, Hitachi Relion Protection and Control Relays (IEDs), and HMI workstations resulting in a loss of communications and view between the facility and the distribution system operators (DSO).(Citation: CERT Polska)(Citation: Dragos ELECTRUM JAN 2026)"
+    },
+    {
+      "source_id": "C0031",
+      "source_name": "Unitronics Defacement Campaign",
+      "source_type": "campaign",
+      "description": "During the [Unitronics Defacement Campaign](https://attack.mitre.org/campaigns/C0031), the [CyberAv3ngers](https://attack.mitre.org/groups/G1027) replaced the existing graphic on the [Programmable Logic Controller (PLC)](https://attack.mitre.org/assets/A0003) [Human-Machine Interface (HMI)](https://attack.mitre.org/assets/A0002) with their own, thereby preventing PLC owners and operators from viewing PLC information on the HMI.(Citation: CISA AA23-335A IRGC-Affiliated December 2023)(Citation: Jamie Tarabay and Katrina Manson December 2023) "
+    },
+    {
+      "source_id": "S1157",
+      "source_name": "Fuxnet",
+      "source_type": "malware",
+      "description": "[Fuxnet](https://attack.mitre.org/software/S1157) impaired sensor communication to impacted devices resulting in a loss of view condition for overall system monitoring.(Citation: Claroty Fuxnet 2024)"
+    },
+    {
+      "source_id": "S0372",
+      "source_name": "LockerGoga",
+      "source_type": "malware",
+      "description": "Some of Norsk Hydro's production systems were impacted by a [LockerGoga](https://attack.mitre.org/software/S0372) infection. This resulted in a loss of view which forced the company to switch to manual operations. (Citation: Kevin Beaumont) (Citation: Hydro)"
+    },
+    {
+      "source_id": "S0604",
+      "source_name": "Industroyer",
+      "source_type": "malware",
+      "description": "[Industroyer](https://attack.mitre.org/software/S0604)'s data wiper component removes the registry image path throughout the system and overwrites all files, rendering the system unusable. (Citation: Anton Cherepanov, ESET June 2017)"
+    },
+    {
+      "source_id": "C0041",
+      "source_name": "FrostyGoop Incident",
+      "source_type": "campaign",
+      "description": "During [FrostyGoop Incident](https://attack.mitre.org/campaigns/C0041), the adversary initiated a firmware downgrade on victim devices to a version lacking monitoring.(Citation: Dragos FROSTYGOOP 2024)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0829",
+      "description": null
+    },
+    {
+      "source_name": "Corero",
+      "url": "https://www.corero.com/resources/files/whitepapers/cns_whitepaper_ics.pdf",
+      "description": "Corero   Industrial Control System (ICS) Security Retrieved. 2019/11/04 "
+    },
+    {
+      "source_name": "Michael J. Assante and Robert M. Lee",
+      "url": "https://icscsi.org/library/Documents/White_Papers/SANS%20-%20ICS%20Cyber%20Kill%20Chain.pdf",
+      "description": "Michael J. Assante and Robert M. Lee SANS Industrial Control System (ICS) Security; The Industrial Control System Cyber Kill Chain Retrieved 2024/11/25"
+    },
+    {
+      "source_name": "Tyson Macaulay",
+      "url": "https://books.google.com/books?id=oXIYBAAAQBAJ&pg=PA249&lpg=PA249&dq=loss+denial+manipulation+of+view&source=bl&ots=dV1uQ8IUff&sig=ACfU3U2NIwGjhg051D_Ytw6npyEk9xcf4w&hl=en&sa=X&ved=2ahUKEwj2wJ7y4tDlAhVmplkKHSTaDnQQ6AEwAHoECAgQAQ#v=onepage&q=loss%20denial%20manipulation%20of%20view&f=false",
+      "description": "Tyson Macaulay Michael J. Assante and Robert M. Lee Corero   Industrial Control System (ICS) Security Retrieved. 2019/11/04  The Industrial Control System Cyber Kill Chain Retrieved. 2019/11/04  RIoT Control: Understanding and Managing Risks and the Internet of Things Retrieved. 2019/11/04 "
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

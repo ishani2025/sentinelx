@@ -1,0 +1,123 @@
+{
+  "metadata": {
+    "technique_id": "T0802",
+    "technique_name": "Automated Collection",
+    "domain": "ics",
+    "version": "1.1",
+    "last_modified": "2025-04-15T19:58:24.843Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Collection"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may automate collection of industrial environment information using tools or scripts. This automated collection may leverage native control protocols and tools available in the control systems environment. For example, the OPC protocol may be used to enumerate and gather information. Access to a system or interface with these native protocols may allow collection and enumeration of other attached, communicating servers and devices.",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0734",
+        "name": "Detection of Automated Collection"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1867",
+        "name": "Analytic 1867",
+        "description": "Monitor for any suspicious attempts to enable script execution on a system. If scripts are not commonly used on a system, but enabled, scripts running out of cycle from patching or other administrator functions are suspicious. Scripts should be captured from the file system when possible, to determine their actions and intent.\nMonitor executed commands and arguments for actions that could be taken to collect internal data.\nMonitor for unexpected files (e.g., .pdf, .docx, .jpg) viewed for collecting internal data.\nMonitor for information collection on assets that may indicate deviations from standard operational tools. Examples include unexpected industrial automation protocol functions, new high volume communication sessions, or broad collection across many hosts within the network. "
+      }
+    ],
+    "log_sources": [
+      "Command",
+      "File",
+      "Network Traffic",
+      "Script"
+    ],
+    "data_components": [
+      "Command Execution",
+      "File Access",
+      "Network Traffic Content",
+      "Script Execution"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0807",
+      "name": "Network Allowlists",
+      "description": "Network allowlists can be implemented through either host-based files or system hosts files to specify what connections (e.g., IP address, MAC address, port, protocol) can be made from a device. Allowlist techniques that operate at the  application layer (e.g., DNP3, Modbus, HTTP) are addressed in [Filter Network Traffic](https://attack.mitre.org/mitigations/M0937) mitigation."
+    },
+    {
+      "id": "M0930",
+      "name": "Network Segmentation",
+      "description": "Architect sections of the network to isolate critical systems, functions, or resources. Use physical and logical segmentation to prevent access to potentially sensitive systems and information. Use a DMZ to contain any internet-facing services that should not be exposed from the internal network.  Restrict network access to only required systems and services. In addition, prevent systems from other networks or business functions (e.g., enterprise) from accessing critical process control systems. For example, in IEC 62443, systems within the same secure level should be grouped into a zone, and access to that zone is restricted by a conduit, or mechanism to restrict data flows between zones by segmenting the network. (Citation: IEC February 2019) (Citation: IEC August 2013)"
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S1072",
+        "name": "Industroyer2"
+      },
+      {
+        "id": "S0093",
+        "name": "Backdoor.Oldrea"
+      },
+      {
+        "id": "S0604",
+        "name": "Industroyer"
+      }
+    ],
+    "tools": [],
+    "campaigns": []
+  },
+  "procedure_examples": [
+    {
+      "source_id": "S1072",
+      "source_name": "Industroyer2",
+      "source_type": "malware",
+      "description": "[Industroyer2](https://attack.mitre.org/software/S1072) leverages a hardcoded list of remote-station IP addresses to iteratively initiate communications and collect information across multiple priority IEC-104 priority levels.(Citation: Industroyer2 Forescout July 2022)"
+    },
+    {
+      "source_id": "S0093",
+      "source_name": "Backdoor.Oldrea",
+      "source_type": "malware",
+      "description": "Using OPC, a component of [Backdoor.Oldrea](https://attack.mitre.org/software/S0093) gathers any details about connected devices and sends them back to the C2 for the attackers to analyze. (Citation: Daavid Hentunen, Antti Tikkanen June 2014)"
+    },
+    {
+      "source_id": "S0604",
+      "source_name": "Industroyer",
+      "source_type": "malware",
+      "description": "[Industroyer](https://attack.mitre.org/software/S0604) automatically collects protocol object data to learn about control devices in the environment. (Citation: Anton Cherepanov, ESET June 2017)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0802",
+      "description": null
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Command",
+      "File",
+      "Network Traffic",
+      "Script"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

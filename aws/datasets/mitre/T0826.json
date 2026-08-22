@@ -1,0 +1,144 @@
+{
+  "metadata": {
+    "technique_id": "T0826",
+    "technique_name": "Loss of Availability",
+    "domain": "ics",
+    "version": "1.0",
+    "last_modified": "2025-04-15T19:59:00.088Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Impact"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may attempt to disrupt essential components or systems to prevent owner and operator from delivering products or services. (Citation: Corero) (Citation: Michael J. Assante and Robert M. Lee) (Citation: Tyson Macaulay) \n\nAdversaries may leverage malware to delete or encrypt critical data on HMIs, workstations, or databases.\n\nIn the 2021 Colonial Pipeline ransomware incident, pipeline operations were temporally halted on May 7th and were not fully restarted until May 12th. (Citation: Colonial Pipeline Company May 2021)",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0729",
+        "name": "Detection of Loss of Availability"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1862",
+        "name": "Analytic 1862",
+        "description": "No standard detection method currently exists for this technique."
+      }
+    ],
+    "log_sources": [],
+    "data_components": []
+  },
+  "mitigations": [
+    {
+      "id": "M0810",
+      "name": "Out-of-Band Communications Channel",
+      "description": "Have alternative methods to support communication requirements during communication failures and data integrity attacks. (Citation: National Institute of Standards and Technology April 2013) (Citation: Defense Advanced Research Projects Agency)"
+    },
+    {
+      "id": "M0811",
+      "name": "Redundancy of Service",
+      "description": "Redundancy could be provided for both critical ICS devices and services, such as back-up devices or hot-standbys."
+    },
+    {
+      "id": "M0953",
+      "name": "Data Backup",
+      "description": "Take and store data backups from end user systems and critical servers. Ensure backup and storage systems are hardened and kept separate from the corporate network to prevent compromise.   Maintain and exercise incident response plans  (Citation: Department of Homeland Security October 2009), including the management of  'gold-copy' back-up images and configurations for key systems to enable quick recovery and response from adversarial activities that impact control, view, or availability."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S0608",
+        "name": "Conficker"
+      }
+    ],
+    "tools": [],
+    "campaigns": [
+      {
+        "id": "C0031",
+        "name": "Unitronics Defacement Campaign"
+      },
+      {
+        "id": "C0028",
+        "name": "2015 Ukraine Electric Power Attack"
+      },
+      {
+        "id": "C0041",
+        "name": "FrostyGoop Incident"
+      }
+    ]
+  },
+  "procedure_examples": [
+    {
+      "source_id": "C0031",
+      "source_name": "Unitronics Defacement Campaign",
+      "source_type": "campaign",
+      "description": "During the [Unitronics Defacement Campaign](https://attack.mitre.org/campaigns/C0031), the [CyberAv3ngers](https://attack.mitre.org/groups/G1027) caused multiple businesses to halt operations due to the unavailability of the [Programmable Logic Controller (PLC)](https://attack.mitre.org/assets/A0003) and [Human-Machine Interface (HMI)](https://attack.mitre.org/assets/A0002). These victims covered multiple sectors.(Citation: Jamie Tarabay and Katrina Manson December 2023)"
+    },
+    {
+      "source_id": "S0608",
+      "source_name": "Conficker",
+      "source_type": "malware",
+      "description": "A [Conficker](https://attack.mitre.org/software/S0608) infection at a nuclear power plant forced the facility to temporarily shutdown. (Citation: Catalin Cimpanu April 2016)"
+    },
+    {
+      "source_id": "C0028",
+      "source_name": "2015 Ukraine Electric Power Attack",
+      "source_type": "campaign",
+      "description": "During the [2015 Ukraine Electric Power Attack](https://attack.mitre.org/campaigns/C0028), [Sandworm Team](https://attack.mitre.org/groups/G0034) opened the breakers at the infected sites, shutting the power off for thousands of businesses and households for around 6 hours. (Citation: Ukraine15 - EISAC - 201603)(Citation: Booz Allen Hamilton)"
+    },
+    {
+      "source_id": "C0041",
+      "source_name": "FrostyGoop Incident",
+      "source_type": "campaign",
+      "description": "During [FrostyGoop Incident](https://attack.mitre.org/campaigns/C0041), the adversary modified victim control system parameters resulting in the loss of heating services to impacted district heating customers.(Citation: Dragos FROSTYGOOP 2024)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0826",
+      "description": null
+    },
+    {
+      "source_name": "Colonial Pipeline Company May 2021",
+      "url": "https://www.colpipe.com/news/press-releases/media-statement-colonial-pipeline-system-disruption",
+      "description": "Colonial Pipeline Company 2021, May Media Statement Update: Colonial Pipeline System Disruption Retrieved. 2021/10/08 "
+    },
+    {
+      "source_name": "Corero",
+      "url": "https://www.corero.com/resources/files/whitepapers/cns_whitepaper_ics.pdf",
+      "description": "Corero   Industrial Control System (ICS) Security Retrieved. 2019/11/04 "
+    },
+    {
+      "source_name": "Michael J. Assante and Robert M. Lee",
+      "url": "https://icscsi.org/library/Documents/White_Papers/SANS%20-%20ICS%20Cyber%20Kill%20Chain.pdf",
+      "description": "Michael J. Assante and Robert M. Lee SANS Industrial Control System (ICS) Security; The Industrial Control System Cyber Kill Chain Retrieved 2024/11/25"
+    },
+    {
+      "source_name": "Tyson Macaulay",
+      "url": "https://books.google.com/books?id=oXIYBAAAQBAJ&pg=PA249&lpg=PA249&dq=loss+denial+manipulation+of+view&source=bl&ots=dV1uQ8IUff&sig=ACfU3U2NIwGjhg051D_Ytw6npyEk9xcf4w&hl=en&sa=X&ved=2ahUKEwj2wJ7y4tDlAhVmplkKHSTaDnQQ6AEwAHoECAgQAQ#v=onepage&q=loss%20denial%20manipulation%20of%20view&f=false",
+      "description": "Tyson Macaulay Michael J. Assante and Robert M. Lee Corero   Industrial Control System (ICS) Security Retrieved. 2019/11/04  The Industrial Control System Cyber Kill Chain Retrieved. 2019/11/04  RIoT Control: Understanding and Managing Risks and the Internet of Things Retrieved. 2019/11/04 "
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

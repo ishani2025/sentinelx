@@ -1,0 +1,179 @@
+{
+  "metadata": {
+    "technique_id": "T0867",
+    "technique_name": "Lateral Tool Transfer",
+    "domain": "ics",
+    "version": "1.1",
+    "last_modified": "2025-04-16T21:26:20.126Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Lateral Movement"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may transfer tools or other files from one system to another to stage adversary tools or other files over the course of an operation. (Citation: Enterprise ATT&CK) Copying of files may also be performed laterally between internal victim systems to support Lateral Movement with remote Execution using inherent file sharing protocols such as file sharing over SMB to connected network shares. (Citation: Enterprise ATT&CK)\n\nIn control systems environments, malware may use SMB and other file sharing protocols to move laterally through industrial networks.",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0745",
+        "name": "Detection of Lateral Tool Transfer"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1878",
+        "name": "Analytic 1878",
+        "description": "Monitor for unexpected network share access, such as files transferred between shares within a network using protocols such as Server Message Block (SMB).\nMonitor for alike file hashes or characteristics (ex: filename) that are created on multiple hosts. \nMonitor for file creation in conjunction with other techniques (e.g., file transfers using [Remote Services](https://attack.mitre.org/techniques/T0886)).\nMonitor for unusual processes with internal network connections creating files on-system which may be suspicious. \nMonitor executed commands and arguments for abnormal usage of utilities and command-line arguments that may be used in support of remote transfer of files.\nMonitor newly constructed processes that assist in lateral tool transfers, such as file transfer programs.\nMonitor for network traffic originating from unknown/unexpected hosts. Local network traffic metadata (such as source MAC addressing) as well as usage of network management protocols such as DHCP may be helpful in identifying hardware."
+      }
+    ],
+    "log_sources": [
+      "Command",
+      "File",
+      "Network Share",
+      "Network Traffic",
+      "Process"
+    ],
+    "data_components": [
+      "Command Execution",
+      "File Creation",
+      "File Metadata",
+      "Network Share Access",
+      "Network Traffic Content",
+      "Network Traffic Flow",
+      "Process Creation"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0931",
+      "name": "Network Intrusion Prevention",
+      "description": "Use intrusion detection signatures to block traffic at network boundaries.  In industrial control environments, network intrusion prevention should be configured so it will not disrupt protocols and communications responsible for real-time functions related to control or safety."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S0603",
+        "name": "Stuxnet"
+      },
+      {
+        "id": "S0368",
+        "name": "NotPetya"
+      },
+      {
+        "id": "S1045",
+        "name": "INCONTROLLER"
+      },
+      {
+        "id": "S0366",
+        "name": "WannaCry"
+      },
+      {
+        "id": "S0606",
+        "name": "Bad Rabbit"
+      }
+    ],
+    "tools": [],
+    "campaigns": [
+      {
+        "id": "C0025",
+        "name": "2016 Ukraine Electric Power Attack"
+      },
+      {
+        "id": "C0028",
+        "name": "2015 Ukraine Electric Power Attack"
+      },
+      {
+        "id": "C0030",
+        "name": "Triton Safety Instrumented System Attack"
+      }
+    ]
+  },
+  "procedure_examples": [
+    {
+      "source_id": "S0603",
+      "source_name": "Stuxnet",
+      "source_type": "malware",
+      "description": "[Stuxnet](https://attack.mitre.org/software/S0603) sends an SQL statement that creates a table and inserts a binary value into the table. The binary value is a hex string representation of the main Stuxnet DLL as an executable file (formed using resource 210) and an updated configuration data block. (Citation: Nicolas Falliere, Liam O Murchu, Eric Chien February 2011)"
+    },
+    {
+      "source_id": "C0025",
+      "source_name": "2016 Ukraine Electric Power Attack",
+      "source_type": "campaign",
+      "description": "During the [2016 Ukraine Electric Power Attack](https://attack.mitre.org/campaigns/C0025), [Sandworm Team](https://attack.mitre.org/groups/G0034) used a VBS script to facilitate lateral tool transfer. The VBS script was used to copy ICS-specific payloads with the following command: `cscript C:\\Backinfo\\ufn.vbs C:\\Backinfo\\101.dll C:\\Delta\\101.dll`(Citation: Dragos Crashoverride 2018)"
+    },
+    {
+      "source_id": "S0368",
+      "source_name": "NotPetya",
+      "source_type": "malware",
+      "description": "[NotPetya](https://attack.mitre.org/software/S0368) can move laterally through industrial networks by means of the SMB service. (Citation: Joe Slowik April 2019)"
+    },
+    {
+      "source_id": "S1045",
+      "source_name": "INCONTROLLER",
+      "source_type": "malware",
+      "description": "[INCONTROLLER](https://attack.mitre.org/software/S1045) can use a Telnet session to load a malware implant on Omron PLCs.(Citation: CISA-AA22-103A)(Citation: Wylie-22) "
+    },
+    {
+      "source_id": "C0028",
+      "source_name": "2015 Ukraine Electric Power Attack",
+      "source_type": "campaign",
+      "description": "During the [2015 Ukraine Electric Power Attack](https://attack.mitre.org/campaigns/C0028), [Sandworm Team](https://attack.mitre.org/groups/G0034) moved their tools laterally within the ICS network. (Citation: Booz Allen Hamilton)"
+    },
+    {
+      "source_id": "C0030",
+      "source_name": "Triton Safety Instrumented System Attack",
+      "source_type": "campaign",
+      "description": "In the [Triton Safety Instrumented System Attack](https://attack.mitre.org/campaigns/C0030), [TEMP.Veles](https://attack.mitre.org/groups/G0088) made attempts on multiple victim machines to transfer and execute the WMImplant tool.(Citation: FireEye TEMP.Veles 2018)"
+    },
+    {
+      "source_id": "S0366",
+      "source_name": "WannaCry",
+      "source_type": "malware",
+      "description": "[WannaCry](https://attack.mitre.org/software/S0366) can move laterally through industrial networks by means of the SMB service. (Citation: Joe Slowik April 2019)"
+    },
+    {
+      "source_id": "S0606",
+      "source_name": "Bad Rabbit",
+      "source_type": "malware",
+      "description": "[Bad Rabbit](https://attack.mitre.org/software/S0606) can move laterally through industrial networks by means of the SMB service. (Citation: Joe Slowik April 2019)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0867",
+      "description": null
+    },
+    {
+      "source_name": "Enterprise ATT&CK",
+      "url": "https://attack.mitre.org/techniques/T1570/",
+      "description": "Enterprise ATT&CK Enterprise ATT&CK   Lateral Tool Transfer Retrieved. 2019/10/27  Lateral Tool Transfer Retrieved. 2019/10/27 "
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Command",
+      "File",
+      "Network Share",
+      "Network Traffic",
+      "Process"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

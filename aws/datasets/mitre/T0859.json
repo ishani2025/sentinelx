@@ -1,0 +1,216 @@
+{
+  "metadata": {
+    "technique_id": "T0859",
+    "technique_name": "Valid Accounts",
+    "domain": "ics",
+    "version": "1.1",
+    "last_modified": "2026-05-12T15:12:00.717Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Persistence",
+      "Lateral Movement"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may steal the credentials of a specific user or service account using credential access techniques. In some cases, default credentials for control system devices may be publicly available. Compromised credentials may be used to bypass access controls placed on various resources on hosts and within the network, and may even be used for persistent access to remote systems. Compromised and default credentials may also grant an adversary increased privilege to specific systems and devices or access to restricted areas of the network. Adversaries may choose not to use malware or tools, in conjunction with the legitimate access those credentials provide, to make it harder to detect their presence or to control devices and send legitimate commands in an unintended way. \n\nAdversaries may also create accounts, sometimes using predefined account names and passwords, to provide a means of backup access for persistence. (Citation: Booz Allen Hamilton) \n\nThe overlap of credentials and permissions across a network of systems is of concern because the adversary may be able to pivot across accounts and systems to reach a high level of access (i.e., domain or enterprise administrator)  and possibly between the enterprise and operational technology environments. Adversaries may be able to leverage valid credentials from one system to gain access to another system.",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0724",
+        "name": "Detection of Valid Accounts"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1857",
+        "name": "Analytic 1857",
+        "description": "Monitor for an authentication attempt by a user that may obtain and abuse credentials of existing accounts as a means of gaining Initial Access, Persistence, Privilege Escalation, or Defense Evasion.\nMonitor for logon behavior that may abuse credentials of existing accounts as a means of gaining Lateral Movement or Persistence. Correlate other security systems with login information (e.g., a user has an active login session but has not entered the building or does not have VPN access). \nMonitor for suspicious account behavior across systems that share accounts, either user, admin, or service accounts. Examples: one account logged into multiple systems simultaneously; multiple accounts logged into the same machine simultaneously; accounts logged in at odd times or outside of business hours. Activity may be from interactive login sessions or process ownership from accounts being used to execute binaries on a remote system as a particular account."
+      }
+    ],
+    "log_sources": [
+      "Logon Session",
+      "User Account"
+    ],
+    "data_components": [
+      "Logon Session Creation",
+      "Logon Session Metadata",
+      "User Account Authentication"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0801",
+      "name": "Access Management",
+      "description": "Access Management technologies can be used to enforce authorization polices and decisions, especially when existing field devices do not provide sufficient capabilities to support user identification and authentication. (Citation: McCarthy, J et al. July 2018) These technologies typically utilize an in-line network device or gateway system to prevent access to unauthenticated users, while also integrating with an authentication service to first verify user credentials. (Citation: Centre for the Protection of National Infrastructure November 2010)"
+    },
+    {
+      "id": "M0926",
+      "name": "Privileged Account Management",
+      "description": "Manage the creation, modification, use, and permissions associated to privileged accounts, including SYSTEM and root."
+    },
+    {
+      "id": "M0918",
+      "name": "User Account Management",
+      "description": "Manage the creation, modification, use, and permissions associated to user accounts."
+    },
+    {
+      "id": "M0937",
+      "name": "Filter Network Traffic",
+      "description": "Use network appliances to filter ingress or egress traffic and perform protocol-based filtering. Configure software on endpoints to filter network traffic.   Perform inline allow/denylisting of network messages based on the application layer (OSI Layer 7) protocol, especially for automation protocols. Application allowlists are beneficial when there are well-defined communication sequences, types, rates, or patterns needed during expected system operations. Application denylists may be needed if all acceptable communication sequences cannot be defined, but instead a set of known malicious uses can be denied (e.g., excessive communication  attempts, shutdown messages, invalid commands).  Devices performing these functions are often referred to as deep-packet inspection (DPI) firewalls, context-aware firewalls, or firewalls blocking specific automation/SCADA protocol aware firewalls. (Citation: Centre for the Protection of National Infrastructure February 2005)"
+    },
+    {
+      "id": "M0932",
+      "name": "Multi-factor Authentication",
+      "description": "Use two or more pieces of evidence to authenticate to a system; such as username and password in addition to a token from a physical smart card or token generator.  Within industrial control environments assets such as low-level controllers, workstations, and HMIs have real-time operational control and safety requirements which may restrict the use of multi-factor."
+    },
+    {
+      "id": "M0927",
+      "name": "Password Policies",
+      "description": "Set and enforce secure password policies for accounts."
+    },
+    {
+      "id": "M0913",
+      "name": "Application Developer Guidance",
+      "description": "This mitigation describes any guidance or training given to developers of applications to avoid introducing security weaknesses that an adversary may be able to take advantage of."
+    },
+    {
+      "id": "M0947",
+      "name": "Audit",
+      "description": "Perform audits or scans of systems, permissions, insecure software, insecure configurations, etc. to identify potential weaknesses. Perform periodic integrity checks of the device to validate the correctness of the firmware, software, programs, and configurations. Integrity checks, which typically include cryptographic hashes or digital signatures, should be compared to those obtained at known valid states, especially after events like device reboots, program downloads, or program restarts."
+    },
+    {
+      "id": "M0936",
+      "name": "Account Use Policies",
+      "description": "Configure features related to account use like login attempt lockouts, specific login times, etc."
+    },
+    {
+      "id": "M0915",
+      "name": "Active Directory Configuration",
+      "description": "Configure Active Directory to prevent use of certain techniques; use security identifier (SID) Filtering, etc."
+    }
+  ],
+  "relationships": {
+    "groups": [
+      {
+        "id": "G1000",
+        "name": "ALLANITE"
+      },
+      {
+        "id": "G0049",
+        "name": "OilRig"
+      }
+    ],
+    "malware": [
+      {
+        "id": "S1045",
+        "name": "INCONTROLLER"
+      },
+      {
+        "id": "S0089",
+        "name": "BlackEnergy"
+      }
+    ],
+    "tools": [],
+    "campaigns": [
+      {
+        "id": "C0028",
+        "name": "2015 Ukraine Electric Power Attack"
+      },
+      {
+        "id": "C0063",
+        "name": "2025 Poland Wiper Attacks"
+      },
+      {
+        "id": "C0025",
+        "name": "2016 Ukraine Electric Power Attack"
+      },
+      {
+        "id": "C0030",
+        "name": "Triton Safety Instrumented System Attack"
+      }
+    ]
+  },
+  "procedure_examples": [
+    {
+      "source_id": "G1000",
+      "source_name": "ALLANITE",
+      "source_type": "intrusion-set",
+      "description": "[ALLANITE](https://attack.mitre.org/groups/G1000) utilized credentials collected through phishing and watering hole attacks. (Citation: Dragos)"
+    },
+    {
+      "source_id": "C0028",
+      "source_name": "2015 Ukraine Electric Power Attack",
+      "source_type": "campaign",
+      "description": "During the [2015 Ukraine Electric Power Attack](https://attack.mitre.org/campaigns/C0028), [Sandworm Team](https://attack.mitre.org/groups/G0034) used valid accounts to laterally move through VPN connections and dual-homed systems. Sandworm Team used the credentials of valid accounts to interact with client applications and access employee workstations hosting HMI applications.  (Citation: Ukraine15 - EISAC - 201603)(Citation: Booz Allen Hamilton)"
+    },
+    {
+      "source_id": "S1045",
+      "source_name": "INCONTROLLER",
+      "source_type": "malware",
+      "description": "[INCONTROLLER](https://attack.mitre.org/software/S1045)  can brute force password-based authentication to Schneider PLCs over  the CODESYS protocol (UDP port 1740).(Citation: CISA-AA22-103A)\n\n [INCONTROLLER](https://attack.mitre.org/software/S1045)  can perform brute force guessing of passwords to OPC UA servers using a predefined list of passwords.(Citation: CISA-AA22-103A)(Citation: Wylie-22) "
+    },
+    {
+      "source_id": "C0063",
+      "source_name": "2025 Poland Wiper Attacks",
+      "source_type": "campaign",
+      "description": "During the [2025 Poland Wiper Attacks](https://attack.mitre.org/campaigns/C0063), the adversaries used valid accounts to access Hitatchi RTUs, Mikronika RTUs, Hitachi Relion Protection and Control Relays, Mikronika HMI Computers, and Moxa NPort Serial Device Servers.(Citation: CERT Polska)"
+    },
+    {
+      "source_id": "C0025",
+      "source_name": "2016 Ukraine Electric Power Attack",
+      "source_type": "campaign",
+      "description": "During the [2016 Ukraine Electric Power Attack](https://attack.mitre.org/campaigns/C0025), [Sandworm Team](https://attack.mitre.org/groups/G0034) used valid accounts to laterally move through VPN connections and dual-homed systems.(Citation: Dragos Crashoverride 2018)"
+    },
+    {
+      "source_id": "C0030",
+      "source_name": "Triton Safety Instrumented System Attack",
+      "source_type": "campaign",
+      "description": "In the [Triton Safety Instrumented System Attack](https://attack.mitre.org/campaigns/C0030), [TEMP.Veles](https://attack.mitre.org/groups/G0088) used valid credentials when laterally moving through RDP jump boxes into the ICS environment.(Citation: FireEye TRITON 2018)"
+    },
+    {
+      "source_id": "S0089",
+      "source_name": "BlackEnergy",
+      "source_type": "malware",
+      "description": "[BlackEnergy](https://attack.mitre.org/software/S0089) utilizes valid user and administrator credentials, in addition to creating new administrator accounts to maintain presence. (Citation: Booz Allen Hamilton)\n"
+    },
+    {
+      "source_id": "G0049",
+      "source_name": "OilRig",
+      "source_type": "intrusion-set",
+      "description": "[OilRig](https://attack.mitre.org/groups/G0049) utilized stolen credentials to gain access to victim machines.(Citation: Dragos)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0859",
+      "description": null
+    },
+    {
+      "source_name": "Booz Allen Hamilton",
+      "url": "https://www.boozallen.com/content/dam/boozallen/documents/2016/09/ukraine-report-when-the-lights-went-out.pdf",
+      "description": "Booz Allen Hamilton. (2016). When The Lights Went Out. Retrieved December 18, 2024."
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Logon Session",
+      "User Account"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "metadata": {
+    "technique_id": "T0846.003",
+    "technique_name": "Multicast Discovery",
+    "domain": "ics",
+    "version": "1.0",
+    "last_modified": "2026-05-12T15:12:00.636Z",
+    "platforms": [],
+    "tactics": [
+      "Discovery"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may perform multicast discovery requests which is when one system or device sends messages to all systems and devices in a pre-defined group on a network (or subnet) and then waits for a response. If a response is received that means the system or device that responded is live and can communicate over that protocol.  Multicast discovery tends to be stealthier than broadcast discovery because every system or device on the network (or subnet) is not being messaged. \n\nOne common OT protocol that has a multicast discovery mechanism is the Process Field Network (PROFINET) Discovery and Configuration Protocol (DCP) with its Identify All requests.(Citation: Cisco Active Discovery)\n",
+    "is_subtechnique": true,
+    "parent_technique": "T0846"
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0909",
+        "name": "Detection of Multicast Discovery"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN2052",
+        "name": "Analytic 2052",
+        "description": "Monitor for anomalies related to discovery related ICS functions, including devices that have not previously used these functions or for functions being sent to many outstations.\n\nMonitor for new ICS protocol connections to existing assets or for device scanning (i.e., a host connecting to many devices) over ICS and enterprise protocols (e.g., ICMP, DCOM, WinRM). For added context on adversary enterprise procedures and background see [Remote System Discovery](https://attack.mitre.org/techniques/T1018).\n"
+      }
+    ],
+    "log_sources": [
+      "Network Traffic",
+      "Traffic"
+    ],
+    "data_components": [
+      "Network Traffic Content",
+      "Network Traffic Flow"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0814",
+      "name": "Static Network Configuration",
+      "description": "Configure hosts and devices to use static network configurations when possible, protocols that require dynamic discovery/addressing (e.g., ARP, DHCP, DNS) can be used to manipulate network message forwarding and enable various AiTM attacks. This mitigation may not always be usable due to limited device features or challenges introduced with different network configurations."
+    },
+    {
+      "id": "M0930",
+      "name": "Network Segmentation",
+      "description": "Architect sections of the network to isolate critical systems, functions, or resources. Use physical and logical segmentation to prevent access to potentially sensitive systems and information. Use a DMZ to contain any internet-facing services that should not be exposed from the internal network.  Restrict network access to only required systems and services. In addition, prevent systems from other networks or business functions (e.g., enterprise) from accessing critical process control systems. For example, in IEC 62443, systems within the same secure level should be grouped into a zone, and access to that zone is restricted by a conduit, or mechanism to restrict data flows between zones by segmenting the network. (Citation: IEC February 2019) (Citation: IEC August 2013)"
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S1045",
+        "name": "INCONTROLLER"
+      }
+    ],
+    "tools": [],
+    "campaigns": []
+  },
+  "procedure_examples": [
+    {
+      "source_id": "S1045",
+      "source_name": "INCONTROLLER",
+      "source_type": "malware",
+      "description": "[INCONTROLLER](https://attack.mitre.org/software/S1045) can perform a UDP multicast scan of UDP port 27127 to identify Schneider PLCs that use that port for the NetManage protocol.(Citation: Dragos-Pipedream)(Citation: Wylie-22)\n"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0846/003",
+      "description": null
+    },
+    {
+      "source_name": "Cisco Active Discovery",
+      "url": "https://www.cisco.com/c/en/us/td/docs/security/cyber_vision/publications/Active-Discovery/Release-4-3-0/b_Cisco_Cyber_Vision_Active_Discovery_Configuration_Guide.pdf",
+      "description": "Cisco Systems, Inc.. (2024, March 5). Cisco Cyber Vision Active Discovery Configuration Guide, Release 4.3.0. Retrieved April 23, 2026."
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Network Traffic",
+      "Traffic"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

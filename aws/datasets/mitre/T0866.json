@@ -1,0 +1,168 @@
+{
+  "metadata": {
+    "technique_id": "T0866",
+    "technique_name": "Exploitation of Remote Services",
+    "domain": "ics",
+    "version": "1.0",
+    "last_modified": "2025-04-16T21:26:16.054Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Initial Access",
+      "Lateral Movement"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may exploit a software vulnerability to take advantage of a programming error in a program, service, or within the operating system software or kernel itself to enable remote service abuse. A common goal for post-compromise exploitation of remote services is for initial access into and lateral movement throughout the ICS environment to enable access to targeted systems. (Citation: Enterprise ATT&CK)\n\nICS asset owners and operators have been affected by ransomware (or disruptive malware masquerading as ransomware) migrating from enterprise IT to ICS environments: WannaCry, NotPetya, and BadRabbit. In each of these cases, self-propagating (wormable) malware initially infected IT networks, but through exploit (particularly the SMBv1-targeting MS17-010 vulnerability) spread to industrial networks, producing significant impacts. (Citation: Joe Slowik April 2019)",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0767",
+        "name": "Detection of Exploitation of Remote Services"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1899",
+        "name": "Analytic 1899",
+        "description": "Detecting software exploitation may be difficult depending on the tools available. Software exploits may not always succeed or may cause the exploited process to become unstable or crash, which may be recorded in the application log.\nUse deep packet inspection to look for artifacts of common exploit traffic, such as known payloads."
+      }
+    ],
+    "log_sources": [
+      "Application Log",
+      "Network Traffic"
+    ],
+    "data_components": [
+      "Application Log Content",
+      "Network Traffic Content"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0916",
+      "name": "Vulnerability Scanning",
+      "description": "Vulnerability scanning is used to find potentially exploitable software vulnerabilities to remediate them."
+    },
+    {
+      "id": "M0942",
+      "name": "Disable or Remove Feature or Program",
+      "description": "Remove or deny access to unnecessary and potentially vulnerable software to prevent abuse by adversaries."
+    },
+    {
+      "id": "M0950",
+      "name": "Exploit Protection",
+      "description": "Use capabilities to detect and block conditions that may lead to or be indicative of a software exploit occurring."
+    },
+    {
+      "id": "M0919",
+      "name": "Threat Intelligence Program",
+      "description": "A threat intelligence program helps an organization generate their own threat intelligence information and track trends to inform defensive priorities to mitigate risk."
+    },
+    {
+      "id": "M0930",
+      "name": "Network Segmentation",
+      "description": "Architect sections of the network to isolate critical systems, functions, or resources. Use physical and logical segmentation to prevent access to potentially sensitive systems and information. Use a DMZ to contain any internet-facing services that should not be exposed from the internal network.  Restrict network access to only required systems and services. In addition, prevent systems from other networks or business functions (e.g., enterprise) from accessing critical process control systems. For example, in IEC 62443, systems within the same secure level should be grouped into a zone, and access to that zone is restricted by a conduit, or mechanism to restrict data flows between zones by segmenting the network. (Citation: IEC February 2019) (Citation: IEC August 2013)"
+    },
+    {
+      "id": "M0948",
+      "name": "Application Isolation and Sandboxing",
+      "description": "Restrict the execution of code to a virtual environment on or in-transit to an endpoint system."
+    },
+    {
+      "id": "M0926",
+      "name": "Privileged Account Management",
+      "description": "Manage the creation, modification, use, and permissions associated to privileged accounts, including SYSTEM and root."
+    },
+    {
+      "id": "M0951",
+      "name": "Update Software",
+      "description": "Perform regular software updates to mitigate exploitation risk. Software updates may need to be scheduled around operational down times."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S0606",
+        "name": "Bad Rabbit"
+      },
+      {
+        "id": "S0368",
+        "name": "NotPetya"
+      },
+      {
+        "id": "S0603",
+        "name": "Stuxnet"
+      },
+      {
+        "id": "S0366",
+        "name": "WannaCry"
+      }
+    ],
+    "tools": [],
+    "campaigns": []
+  },
+  "procedure_examples": [
+    {
+      "source_id": "S0606",
+      "source_name": "Bad Rabbit",
+      "source_type": "malware",
+      "description": "[Bad Rabbit](https://attack.mitre.org/software/S0606) initially infected IT networks, but by means of an exploit (particularly the SMBv1-targeting MS17-010 vulnerability) spread to industrial networks. (Citation: Joe Slowik April 2019)"
+    },
+    {
+      "source_id": "S0368",
+      "source_name": "NotPetya",
+      "source_type": "malware",
+      "description": "[NotPetya](https://attack.mitre.org/software/S0368) initially infected IT networks, but by means of an exploit (particularly the SMBv1-targeting MS17-010 vulnerability) spread to industrial networks. (Citation: Joe Slowik April 2019)"
+    },
+    {
+      "source_id": "S0603",
+      "source_name": "Stuxnet",
+      "source_type": "malware",
+      "description": "[Stuxnet](https://attack.mitre.org/software/S0603) executes malicious SQL commands in the WinCC database server to propagate to remote systems. The malicious SQL commands include xp_cmdshell, sp_dumpdbilog, and sp_addextendedproc. (Citation: Nicolas Falliere, Liam O Murchu, Eric Chien February 2011)"
+    },
+    {
+      "source_id": "S0366",
+      "source_name": "WannaCry",
+      "source_type": "malware",
+      "description": "[WannaCry](https://attack.mitre.org/software/S0366) initially infected IT networks, but by means of an exploit (particularly the SMBv1-targeting MS17-010 vulnerability) spread to industrial networks. (Citation: Joe Slowik April 2019)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0866",
+      "description": null
+    },
+    {
+      "source_name": "Enterprise ATT&CK",
+      "url": "https://attack.mitre.org/techniques/T1210/",
+      "description": "Enterprise ATT&CK   Exploitation of Remote Services Retrieved. 2019/10/27 "
+    },
+    {
+      "source_name": "Joe Slowik April 2019",
+      "url": "https://dragos.com/blog/industry-news/implications-of-it-ransomware-for-ics-environments/",
+      "description": "Joe Slowik 2019, April 10 Implications of IT Ransomware for ICS Environments Retrieved. 2019/10/27 "
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Application Log",
+      "Network Traffic"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

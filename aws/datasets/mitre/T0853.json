@@ -1,0 +1,171 @@
+{
+  "metadata": {
+    "technique_id": "T0853",
+    "technique_name": "Scripting",
+    "domain": "ics",
+    "version": "1.0",
+    "last_modified": "2025-04-16T21:26:12.511Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Execution"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may use scripting languages to execute arbitrary code in the form of a pre-written script or in the form of user-supplied code to an interpreter. Scripting languages are programming languages that differ from compiled languages, in that scripting languages use an interpreter, instead of a compiler. These interpreters read and compile part of the source code just before it is executed, as opposed to compilers, which compile each and every line of code to an executable file. Scripting allows software developers to run their code on any system where the interpreter exists. This way, they can distribute one package, instead of precompiling executables for many different systems. Scripting languages, such as Python, have their interpreters shipped as a default with many Linux distributions. \n\nIn addition to being a useful tool for developers and administrators, scripting language interpreters may be abused by the adversary to execute code in the target environment. Due to the nature of scripting languages, this allows for weaponized code to be deployed to a target easily, and leaves open the possibility of on-the-fly scripting to perform a task.",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0735",
+        "name": "Detection of Scripting"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1868",
+        "name": "Analytic 1868",
+        "description": "Monitor command-line arguments for script execution and subsequent behavior. Actions may be related to network and system information Discovery, Collection, or other scriptable post-compromise behaviors and could be used as indicators of detection leading back to the source script. Scripts are likely to perform actions with various effects on a system that may generate events, depending on the types of monitoring used. \nMonitor log files for process execution through command-line and scripting activities. This information can be useful in gaining additional insight to adversaries' actions through how they use native processes or custom tools. Also monitor for loading of modules associated with specific languages.\nMonitor contextual data about a running process, which may include information such as environment variables, image name, user/owner, or other information that may reveal abuse of system features. \nMonitor for events associated with scripting execution, such as the loading of modules associated with scripting languages (e.g., JScript.dll, vbscript.dll).\nMonitor for any attempts to enable scripts running on a system would be considered suspicious. If scripts are not commonly used on a system, but enabled, scripts running out of cycle from patching or other administrator functions are suspicious. Scripts should be captured from the file system when possible to determine their actions and intent."
+      }
+    ],
+    "log_sources": [
+      "Command",
+      "Module",
+      "Process",
+      "Script"
+    ],
+    "data_components": [
+      "Command Execution",
+      "Module Load",
+      "Process Creation",
+      "Process Metadata",
+      "Script Execution"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0938",
+      "name": "Execution Prevention",
+      "description": "Block execution of code on a system through application control, and/or script blocking."
+    },
+    {
+      "id": "M0948",
+      "name": "Application Isolation and Sandboxing",
+      "description": "Restrict the execution of code to a virtual environment on or in-transit to an endpoint system."
+    },
+    {
+      "id": "M0942",
+      "name": "Disable or Remove Feature or Program",
+      "description": "Remove or deny access to unnecessary and potentially vulnerable software to prevent abuse by adversaries."
+    }
+  ],
+  "relationships": {
+    "groups": [
+      {
+        "id": "G0064",
+        "name": "APT33"
+      },
+      {
+        "id": "G0049",
+        "name": "OilRig"
+      }
+    ],
+    "malware": [
+      {
+        "id": "S1009",
+        "name": "Triton"
+      },
+      {
+        "id": "S0496",
+        "name": "REvil"
+      }
+    ],
+    "tools": [],
+    "campaigns": [
+      {
+        "id": "C0030",
+        "name": "Triton Safety Instrumented System Attack"
+      },
+      {
+        "id": "C0034",
+        "name": "2022 Ukraine Electric Power Attack"
+      },
+      {
+        "id": "C0025",
+        "name": "2016 Ukraine Electric Power Attack"
+      }
+    ]
+  },
+  "procedure_examples": [
+    {
+      "source_id": "C0030",
+      "source_name": "Triton Safety Instrumented System Attack",
+      "source_type": "campaign",
+      "description": "In the [Triton Safety Instrumented System Attack](https://attack.mitre.org/campaigns/C0030), [TEMP.Veles](https://attack.mitre.org/groups/G0088) used a publicly available PowerShell-based tool, WMImplant.(Citation: FireEye TEMP.Veles 2018)"
+    },
+    {
+      "source_id": "C0034",
+      "source_name": "2022 Ukraine Electric Power Attack",
+      "source_type": "campaign",
+      "description": "During the [2022 Ukraine Electric Power Attack](https://attack.mitre.org/campaigns/C0034), [Sandworm Team](https://attack.mitre.org/groups/G0034) utilizes a Visual Basic script `lun.vbs` to execute `n.bat` which then executed the MicroSCADA `scilc.exe` command.(Citation: Mandiant-Sandworm-Ukraine-2022)"
+    },
+    {
+      "source_id": "S1009",
+      "source_name": "Triton",
+      "source_type": "malware",
+      "description": "[Triton](https://attack.mitre.org/software/S1009) communicates with Triconex controllers using a custom component framework written entirely in Python. The modules that implement the TriStation communication protocol and other supporting components are found in a separate file -- library.zip -- the main script that employs this functionality is compiled into a standalone py2exe Windows executable -- trilog.exe  which includes a Python environment. (Citation: DHS CISA February 2019)"
+    },
+    {
+      "source_id": "G0064",
+      "source_name": "APT33",
+      "source_type": "intrusion-set",
+      "description": "[APT33](https://attack.mitre.org/groups/G0064) utilized PowerShell scripts to establish command and control and install files for execution. (Citation: Symantec March 2019) (Citation: Dragos)"
+    },
+    {
+      "source_id": "C0025",
+      "source_name": "2016 Ukraine Electric Power Attack",
+      "source_type": "campaign",
+      "description": "During the [2016 Ukraine Electric Power Attack](https://attack.mitre.org/campaigns/C0025), [Sandworm Team](https://attack.mitre.org/groups/G0034) utilized VBS and batch scripts for file movement and as wrappers for PowerShell execution.(Citation: Dragos Crashoverride 2018)"
+    },
+    {
+      "source_id": "G0049",
+      "source_name": "OilRig",
+      "source_type": "intrusion-set",
+      "description": "[OilRig](https://attack.mitre.org/groups/G0049) has embedded a macro within spearphishing attachments that has been made up of both a VBScript and a PowerShell script.(Citation: Robert Falcone, Bryan Lee May 2016)"
+    },
+    {
+      "source_id": "S0496",
+      "source_name": "REvil",
+      "source_type": "malware",
+      "description": "[REvil](https://attack.mitre.org/software/S0496) utilizes JavaScript, WScript, and PowerShell scripts to execute. The malicious JavaScript attachment has an obfuscated PowerShell script that executes the malware. (Citation: Tom Fakterman August 2019)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0853",
+      "description": null
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Command",
+      "Module",
+      "Process",
+      "Script"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "metadata": {
+    "technique_id": "T0882",
+    "technique_name": "Theft of Operational Information",
+    "domain": "ics",
+    "version": "1.0",
+    "last_modified": "2026-05-12T15:12:00.709Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Impact"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may steal operational information on a production environment as a direct mission outcome for personal gain or to inform future operations. This information may include design documents, schedules, rotational data, or similar artifacts that provide insight on operations.    In the Bowman Dam incident, adversaries probed systems for operational data. (Citation: Mark Thompson March 2016) (Citation: Danny Yadron December 2015)",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0732",
+        "name": "Detection of Theft of Operational Information"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1865",
+        "name": "Analytic 1865",
+        "description": "No standard detection method currently exists for this technique."
+      }
+    ],
+    "log_sources": [],
+    "data_components": []
+  },
+  "mitigations": [
+    {
+      "id": "M0922",
+      "name": "Restrict File and Directory Permissions",
+      "description": "Restrict access by setting directory and file permissions that are not specific to users or privileged accounts."
+    },
+    {
+      "id": "M0809",
+      "name": "Operational Information Confidentiality",
+      "description": "Deploy mechanisms to protect the confidentiality of information related to operational processes, facility locations, device configurations, programs, or databases that may have information that can be used to infer organizational trade-secrets, recipes, and other intellectual property (IP)."
+    },
+    {
+      "id": "M0803",
+      "name": "Data Loss Prevention",
+      "description": "Data Loss Prevention (DLP) technologies can be used to help identify adversarial attempts to exfiltrate operational information, such as engineering plans, trade secrets, recipes, intellectual property, or process telemetry. DLP functionality may be built into other security products such as firewalls or standalone suites running on the network and host-based agents. DLP may be configured to prevent the transfer of information through corporate resources such as email, web, and physical media such as USB for host-based solutions."
+    },
+    {
+      "id": "M0941",
+      "name": "Encrypt Sensitive Information",
+      "description": "Protect sensitive data-at-rest with strong encryption."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S1000",
+        "name": "ACAD/Medre.A"
+      },
+      {
+        "id": "S0496",
+        "name": "REvil"
+      },
+      {
+        "id": "S0038",
+        "name": "Duqu"
+      },
+      {
+        "id": "S0143",
+        "name": "Flame"
+      }
+    ],
+    "tools": [],
+    "campaigns": [
+      {
+        "id": "C0063",
+        "name": "2025 Poland Wiper Attacks"
+      }
+    ]
+  },
+  "procedure_examples": [
+    {
+      "source_id": "S1000",
+      "source_name": "ACAD/Medre.A",
+      "source_type": "malware",
+      "description": "[ACAD/Medre.A](https://attack.mitre.org/software/S1000) can collect AutoCad files with drawings. These drawings may contain operational information. (Citation: ESET)\n"
+    },
+    {
+      "source_id": "S0496",
+      "source_name": "REvil",
+      "source_type": "malware",
+      "description": "[REvil](https://attack.mitre.org/software/S0496) sends exfiltrated data from the victims system using HTTPS POST messages sent to the C2 system. (Citation: McAfee Labs October 2019) (Citation: SecureWorks September 2019)"
+    },
+    {
+      "source_id": "S0038",
+      "source_name": "Duqu",
+      "source_type": "malware",
+      "description": "[Duqu](https://attack.mitre.org/software/S0038)'s purpose is to gather intelligence data and assets from entities such as industrial infrastructure and system manufacturers, amongst others not in the industrial sector, in order to more easily conduct a future attack against another third party.(Citation: Symantec)"
+    },
+    {
+      "source_id": "S0143",
+      "source_name": "Flame",
+      "source_type": "malware",
+      "description": "[Flame](https://attack.mitre.org/software/S0143) can collect AutoCAD design data and visio diagrams as well as other documents that may contain operational information. (Citation: Kevin Savage and Branko Spasojevic)"
+    },
+    {
+      "source_id": "C0063",
+      "source_name": "2025 Poland Wiper Attacks",
+      "source_type": "campaign",
+      "description": "During the [2025 Poland Wiper Attacks](https://attack.mitre.org/campaigns/C0063), the adversaries stole sensitive operational information that was used to plan the attack on the operational technology systems.(Citation: CERT Polska)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0882",
+      "description": null
+    },
+    {
+      "source_name": "Danny Yadron December 2015",
+      "url": "https://www.wsj.com/articles/iranian-hackers-infiltrated-new-york-dam-in-2013-1450662559",
+      "description": "Danny Yadron 2015, December 20 Iranian Hackers Infiltrated New York Dam in 2013 Retrieved. 2019/11/07 "
+    },
+    {
+      "source_name": "Mark Thompson March 2016",
+      "url": "https://time.com/4270728/iran-cyber-attack-dam-fbi/",
+      "description": "Mark Thompson 2016, March 24 Iranian Cyber Attack on New York Dam Shows Future of War Retrieved. 2019/11/07 "
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

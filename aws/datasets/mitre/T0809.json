@@ -1,0 +1,152 @@
+{
+  "metadata": {
+    "technique_id": "T0809",
+    "technique_name": "Data Destruction",
+    "domain": "ics",
+    "version": "1.0",
+    "last_modified": "2026-05-12T15:12:00.630Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Inhibit Response Function"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may perform data destruction over the course of an operation. The adversary may drop or create malware, tools, or other non-native files on a target system to accomplish this, potentially leaving behind traces of malicious activities. Such non-native files and other data may be removed over the course of an intrusion to maintain a small footprint or as a standard part of the post-intrusion cleanup process. (Citation: Enterprise ATT&CK January 2018)\n\nData destruction may also be used to render operator interfaces unable to respond and to disrupt response functions from occurring as expected. An adversary may also destroy data backups that are vital to recovery after an incident.\n\nStandard file deletion commands are available on most operating system and device interfaces to perform cleanup, but adversaries may use other tools as well. Two examples are Windows Sysinternals SDelete and Active@ Killdisk.",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0758",
+        "name": "Detection of Data Destruction"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1890",
+        "name": "Analytic 1890",
+        "description": "Monitor for changes made to a large quantity of files for unexpected modifications in both user directories and directories used to store programs and OS components (e.g., C:\\Windows\\System32). \nMonitor for newly executed processes of binaries that could be involved in data destruction activity, such as SDelete.\nMonitor for unexpected deletion of files.\nMonitor executed commands and arguments for binaries that could be involved in data destruction activity, such as SDelete."
+      }
+    ],
+    "log_sources": [
+      "Command",
+      "File",
+      "Process"
+    ],
+    "data_components": [
+      "Command Execution",
+      "File Deletion",
+      "File Modification",
+      "Process Creation"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0922",
+      "name": "Restrict File and Directory Permissions",
+      "description": "Restrict access by setting directory and file permissions that are not specific to users or privileged accounts."
+    },
+    {
+      "id": "M0953",
+      "name": "Data Backup",
+      "description": "Take and store data backups from end user systems and critical servers. Ensure backup and storage systems are hardened and kept separate from the corporate network to prevent compromise.   Maintain and exercise incident response plans  (Citation: Department of Homeland Security October 2009), including the management of  'gold-copy' back-up images and configurations for key systems to enable quick recovery and response from adversarial activities that impact control, view, or availability."
+    },
+    {
+      "id": "M0926",
+      "name": "Privileged Account Management",
+      "description": "Manage the creation, modification, use, and permissions associated to privileged accounts, including SYSTEM and root."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S0604",
+        "name": "Industroyer"
+      },
+      {
+        "id": "S0607",
+        "name": "KillDisk"
+      },
+      {
+        "id": "S1045",
+        "name": "INCONTROLLER"
+      },
+      {
+        "id": "S1157",
+        "name": "Fuxnet"
+      }
+    ],
+    "tools": [],
+    "campaigns": [
+      {
+        "id": "C0063",
+        "name": "2025 Poland Wiper Attacks"
+      }
+    ]
+  },
+  "procedure_examples": [
+    {
+      "source_id": "C0063",
+      "source_name": "2025 Poland Wiper Attacks",
+      "source_type": "campaign",
+      "description": "During the [2025 Poland Wiper Attacks](https://attack.mitre.org/campaigns/C0063), the adversaries used DynoWiper and built-in commands to destroy data on Mikronika RTUs, Hitachi Relion Protection and Control Relays (IEDs), and HMI workstations.(Citation: CERT Polska)\n\nDuring the [2025 Poland Wiper Attacks](https://attack.mitre.org/campaigns/C0063), the adversaries used LazyWiper to destroy data at a manufacturing sector company.(Citation: CERT Polska)"
+    },
+    {
+      "source_id": "S0604",
+      "source_name": "Industroyer",
+      "source_type": "malware",
+      "description": "[Industroyer](https://attack.mitre.org/software/S0604) has a destructive wiper that overwrites all ICS configuration files across the hard drives and all mapped network drives specifically targeting ABB PCM600 configuration files. (Citation: Dragos Inc. June 2017)"
+    },
+    {
+      "source_id": "S0607",
+      "source_name": "KillDisk",
+      "source_type": "malware",
+      "description": "[KillDisk](https://attack.mitre.org/software/S0607) is able to delete system files to make the system unbootable and targets 35 different types of files for deletion. (Citation: Anton Cherepanov)"
+    },
+    {
+      "source_id": "S1045",
+      "source_name": "INCONTROLLER",
+      "source_type": "malware",
+      "description": "[INCONTROLLER](https://attack.mitre.org/software/S1045) can wipe the memory of Omron PLCs and reset settings through the remote HTTP service.(Citation: Brubaker-Incontroller)(Citation: Dragos-Pipedream)(Citation: Wylie-22) "
+    },
+    {
+      "source_id": "S1157",
+      "source_name": "Fuxnet",
+      "source_type": "malware",
+      "description": "[Fuxnet](https://attack.mitre.org/software/S1157) physically destroyed NAND memory chips on impacted devices through repeated bit-flip operations.(Citation: Claroty Fuxnet 2024)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0809",
+      "description": null
+    },
+    {
+      "source_name": "Enterprise ATT&CK January 2018",
+      "url": "https://attack.mitre.org/wiki/Technique/T1107",
+      "description": "Enterprise ATT&CK 2018, January 11 File Deletion Retrieved. 2018/05/17 "
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Command",
+      "File",
+      "Process"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

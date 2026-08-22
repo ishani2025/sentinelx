@@ -1,0 +1,135 @@
+{
+  "metadata": {
+    "technique_id": "T0821",
+    "technique_name": "Modify Controller Tasking",
+    "domain": "ics",
+    "version": "1.2",
+    "last_modified": "2025-04-16T21:26:10.230Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Execution"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may modify the tasking of a controller to allow for the execution of their own programs. This can allow an adversary to manipulate the execution flow and behavior of a controller. \n\nAccording to 61131-3, the association of a Task with a Program Organization Unit (POU) defines a task association. (Citation: IEC February 2013) An adversary may modify these associations or create new ones to manipulate the execution flow of a controller. Modification of controller tasking can be accomplished using a Program Download in addition to other types of program modification such as online edit and program append.\n\nTasks have properties, such as interval, frequency and priority to meet the requirements of program execution. Some controller vendors implement tasks with implicit, pre-defined properties whereas others allow for these properties to be formulated explicitly. An adversary may associate their program with tasks that have a higher priority or execute associated programs more frequently. For instance, to ensure cyclic execution of their program on a Siemens controller, an adversary may add their program to the task, Organization Block 1 (OB1).",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0741",
+        "name": "Detection of Modify Controller Tasking"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1874",
+        "name": "Analytic 1874",
+        "description": "Monitor asset application logs for information that indicate task parameters have changed.\nMonitor device alarms that indicate controller task parameters have changed, although not all devices produce such alarms.\n \n[Program Download](https://attack.mitre.org/techniques/T0843) may be used to enable this technique. Monitor for program downloads which may be noticeable via operational alarms. Asset management systems should be consulted to understand expected program versions.\nEngineering and asset management software will often maintain a copy of the expected program loaded on a controller and may also record any changes made to controller programs and tasks. Data from these platforms can be used to identify modified controller tasking."
+      }
+    ],
+    "log_sources": [
+      "Application Log",
+      "Asset",
+      "Operational Databases"
+    ],
+    "data_components": [
+      "Application Log Content",
+      "Device Alarm",
+      "Software"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0800",
+      "name": "Authorization Enforcement",
+      "description": "The device or system should restrict read, manipulate, or execute privileges to only authenticated users who require access based on approved security policies.  Role-based Access Control (RBAC) schemes can help reduce the overhead of assigning permissions to the large number of devices within an ICS. For example, IEC 62351 provides examples of roles used to support common system operations within the electric power sector  (Citation: International Electrotechnical Commission July 2020), while IEEE 1686 defines standard permissions for users of IEDs. (Citation: Institute of Electrical and Electronics Engineers January 2014)"
+    },
+    {
+      "id": "M0804",
+      "name": "Human User Authentication",
+      "description": "Require user authentication before allowing access to data or accepting commands to a device. While strong multi-factor authentication is preferable, it is not always feasible within ICS environments. Performing strong user authentication also requires additional security controls and processes which are often the target of related adversarial techniques (e.g., Valid Accounts, Default Credentials). Therefore, associated ATT&CK mitigations should be considered in addition to this, including [Multi-factor Authentication](https://attack.mitre.org/mitigations/M0932), [Account Use Policies](https://attack.mitre.org/mitigations/M0936), [Password Policies](https://attack.mitre.org/mitigations/M0927), [User Account Management](https://attack.mitre.org/mitigations/M0918), [Privileged Account Management](https://attack.mitre.org/mitigations/M0926), and [User Account Control](https://attack.mitre.org/mitigations/M1052)."
+    },
+    {
+      "id": "M0947",
+      "name": "Audit",
+      "description": "Perform audits or scans of systems, permissions, insecure software, insecure configurations, etc. to identify potential weaknesses. Perform periodic integrity checks of the device to validate the correctness of the firmware, software, programs, and configurations. Integrity checks, which typically include cryptographic hashes or digital signatures, should be compared to those obtained at known valid states, especially after events like device reboots, program downloads, or program restarts."
+    },
+    {
+      "id": "M0945",
+      "name": "Code Signing",
+      "description": "Enforce binary and application integrity with digital signature verification to prevent untrusted code from executing."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S1006",
+        "name": "PLC-Blaster"
+      },
+      {
+        "id": "S1009",
+        "name": "Triton"
+      },
+      {
+        "id": "S0603",
+        "name": "Stuxnet"
+      }
+    ],
+    "tools": [],
+    "campaigns": []
+  },
+  "procedure_examples": [
+    {
+      "source_id": "S1006",
+      "source_name": "PLC-Blaster",
+      "source_type": "malware",
+      "description": "[PLC-Blaster](https://attack.mitre.org/software/S1006)'s code is stored in OB9999. The original code on the target is untouched. The OB is automatically detected by the PLC and executed. (Citation: Spenneberg, Ralf, Maik Brggemann, and Hendrik Schwartke March 2016)"
+    },
+    {
+      "source_id": "S1009",
+      "source_name": "Triton",
+      "source_type": "malware",
+      "description": "[Triton](https://attack.mitre.org/software/S1009)'s argument-setting and inject.bin shellcode are added to the program table on the Tricon so that they are executed by the firmware once each cycle. (Citation: DHS CISA February 2019) (Citation: Jos Wetzels January 2018)"
+    },
+    {
+      "source_id": "S0603",
+      "source_name": "Stuxnet",
+      "source_type": "malware",
+      "description": "[Stuxnet](https://attack.mitre.org/software/S0603) infects OB1 so that its malicious code sequence is executed at the start of a cycle. It also infects OB35. OB35 acts as a watchdog, and on certain conditions, it can stop the execution of OB1. (Citation: Nicolas Falliere, Liam O Murchu, Eric Chien February 2011)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0821",
+      "description": null
+    },
+    {
+      "source_name": "IEC February 2013",
+      "url": "https://webstore.iec.ch/publication/4552",
+      "description": "IEC 2013, February 20 IEC 61131-3:2013  Programmable controllers - Part 3: Programming languages Retrieved. 2019/10/22 "
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Application Log",
+      "Asset",
+      "Operational Databases"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "metadata": {
+    "technique_id": "T0842",
+    "technique_name": "Network Sniffing",
+    "domain": "ics",
+    "version": "1.0",
+    "last_modified": "2025-04-16T21:26:13.380Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Discovery"
+    ]
+  },
+  "technique": {
+    "description": "Network sniffing is the practice of using a network interface on a computer system to monitor or capture information (Citation: Enterprise ATT&CK January 2018) regardless of whether it is the specified destination for the information. \n\nAn adversary may attempt to sniff the traffic to gain information about the target. This information can vary in the level of importance. Relatively unimportant information is general communications to and from machines.  Relatively important information would be login information. User credentials may be sent over an unencrypted protocol, such as Telnet, that can be captured and obtained through network packet analysis. \n\nIn addition, ARP and Domain Name Service (DNS) poisoning can be used to capture credentials to websites, proxies, and internal systems by redirecting traffic to an adversary.",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0800",
+        "name": "Detection of Network Sniffing"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1932",
+        "name": "Analytic 1932",
+        "description": "Monitor for newly executed processes that can aid in sniffing network traffic to capture information about an environment.\nMonitor executed commands and arguments for actions that aid in sniffing network traffic to capture information about an environment."
+      }
+    ],
+    "log_sources": [
+      "Command",
+      "Process"
+    ],
+    "data_components": [
+      "Command Execution",
+      "Process Creation"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0926",
+      "name": "Privileged Account Management",
+      "description": "Manage the creation, modification, use, and permissions associated to privileged accounts, including SYSTEM and root."
+    },
+    {
+      "id": "M0930",
+      "name": "Network Segmentation",
+      "description": "Architect sections of the network to isolate critical systems, functions, or resources. Use physical and logical segmentation to prevent access to potentially sensitive systems and information. Use a DMZ to contain any internet-facing services that should not be exposed from the internal network.  Restrict network access to only required systems and services. In addition, prevent systems from other networks or business functions (e.g., enterprise) from accessing critical process control systems. For example, in IEC 62443, systems within the same secure level should be grouped into a zone, and access to that zone is restricted by a conduit, or mechanism to restrict data flows between zones by segmenting the network. (Citation: IEC February 2019) (Citation: IEC August 2013)"
+    },
+    {
+      "id": "M0932",
+      "name": "Multi-factor Authentication",
+      "description": "Use two or more pieces of evidence to authenticate to a system; such as username and password in addition to a token from a physical smart card or token generator.  Within industrial control environments assets such as low-level controllers, workstations, and HMIs have real-time operational control and safety requirements which may restrict the use of multi-factor."
+    },
+    {
+      "id": "M0808",
+      "name": "Encrypt Network Traffic",
+      "description": "Utilize strong cryptographic techniques and protocols to prevent eavesdropping on network communications."
+    },
+    {
+      "id": "M0814",
+      "name": "Static Network Configuration",
+      "description": "Configure hosts and devices to use static network configurations when possible, protocols that require dynamic discovery/addressing (e.g., ARP, DHCP, DNS) can be used to manipulate network message forwarding and enable various AiTM attacks. This mitigation may not always be usable due to limited device features or challenges introduced with different network configurations."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S1010",
+        "name": "VPNFilter"
+      },
+      {
+        "id": "S1045",
+        "name": "INCONTROLLER"
+      },
+      {
+        "id": "S0603",
+        "name": "Stuxnet"
+      }
+    ],
+    "tools": [],
+    "campaigns": []
+  },
+  "procedure_examples": [
+    {
+      "source_id": "S1010",
+      "source_name": "VPNFilter",
+      "source_type": "malware",
+      "description": "The [VPNFilter](https://attack.mitre.org/software/S1010) packet sniffer looks for basic authentication as well as monitors ICS traffic, and is specific to the TP-LINK R600-VPN. The malware uses a raw socket to look for connections to a pre-specified IP address, only looking at TCP packets that are 150 bytes or larger. Packets that are not on port 502, are scanned for BasicAuth, and that information is logged. This may have allowed credential harvesting from communications between devices accessing a modbus-enabled HMI. (Citation: William Largent June 2018) (Citation: Carl Hurd March 2019)"
+    },
+    {
+      "source_id": "S1045",
+      "source_name": "INCONTROLLER",
+      "source_type": "malware",
+      "description": "[INCONTROLLER](https://attack.mitre.org/software/S1045) can deploy Tcpdump to sniff network traffic and collect PCAP files.(Citation: Wylie-22) "
+    },
+    {
+      "source_id": "S0603",
+      "source_name": "Stuxnet",
+      "source_type": "malware",
+      "description": "DP_RECV is the name of a standard function block used by network coprocessors. It is used to receive network frames on the Profibus  a standard industrial network bus used for distributed I/O. The original block is copied to FC1869, and then replaced by a malicious block. Each time the function is used to receive a packet, the malicious [Stuxnet](https://attack.mitre.org/software/S0603) block takes control: it will call the original DP_RECV in FC1869 and then perform postprocessing on the packet data. The replaced DP_RECV block (later on referred to as the DP_RECV monitor) is meant to monitor data sent by the frequency converter drives to the 315-2 CPU via CP 342-5 Profibus communication modules. (Citation: Nicolas Falliere, Liam O Murchu, Eric Chien February 2011)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0842",
+      "description": null
+    },
+    {
+      "source_name": "Enterprise ATT&CK January 2018",
+      "url": "https://attack.mitre.org/wiki/Technique/T1040",
+      "description": "Enterprise ATT&CK 2018, January 11 Network Sniffing Retrieved. 2018/05/17 "
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Command",
+      "Process"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

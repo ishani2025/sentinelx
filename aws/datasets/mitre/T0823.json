@@ -1,0 +1,108 @@
+{
+  "metadata": {
+    "technique_id": "T0823",
+    "technique_name": "Graphical User Interface",
+    "domain": "ics",
+    "version": "1.1",
+    "last_modified": "2026-05-12T15:12:00.707Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Execution"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may attempt to gain access to a machine via a Graphical User Interface (GUI) to enhance execution capabilities. Access to a GUI allows a user to interact with a computer in a more visual manner than a CLI. A GUI allows users to move a cursor and click on interface objects, with a mouse and keyboard as the main input devices, as opposed to just using the keyboard.\n\nIf physical access is not an option, then access might be possible via protocols such as VNC on Linux-based and Unix-based operating systems, and RDP on Windows operating systems. An adversary can use this access to execute programs and applications on the target machine.",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0772",
+        "name": "Detection of Graphical User Interface"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1904",
+        "name": "Analytic 1904",
+        "description": "Monitor for newly executed processes related to services specifically designed to accept remote graphical connections, such as RDP and VNC. [Remote Services](https://attack.mitre.org/techniques/T0886) and [Valid Accounts](https://attack.mitre.org/techniques/T0859) may be used to access a host’s GUI.\nMonitor executed commands and arguments related to services specifically designed to accept remote graphical connections, such as RDP and VNC. [Remote Services](https://attack.mitre.org/techniques/T0886) and [Valid Accounts](https://attack.mitre.org/techniques/T0859) may be used to access a host’s GUI.\nMonitor DLL file events, specifically creation of these binary files as well as the loading of DLLs into processes associated with remote graphical connections, such as RDP and VNC. [Remote Services](https://attack.mitre.org/techniques/T0886) may be used to access a host’s GUI.\nMonitor for user accounts logged into systems they would not normally access or abnormal access patterns, such as multiple systems over a relatively short period of time. Correlate use of login activity related to remote services with unusual behavior or other malicious or suspicious activity. [Remote Services](https://attack.mitre.org/techniques/T0886) may be used to access a host’s GUI."
+      }
+    ],
+    "log_sources": [
+      "Command",
+      "Logon Session",
+      "Module",
+      "Process"
+    ],
+    "data_components": [
+      "Command Execution",
+      "Logon Session Creation",
+      "Module Load",
+      "Process Creation"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0816",
+      "name": "Mitigation Limited or Not Effective",
+      "description": "This type of attack technique cannot be easily mitigated with preventative controls since it is based on the abuse of system features."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [],
+    "tools": [],
+    "campaigns": [
+      {
+        "id": "C0028",
+        "name": "2015 Ukraine Electric Power Attack"
+      },
+      {
+        "id": "C0063",
+        "name": "2025 Poland Wiper Attacks"
+      }
+    ]
+  },
+  "procedure_examples": [
+    {
+      "source_id": "C0028",
+      "source_name": "2015 Ukraine Electric Power Attack",
+      "source_type": "campaign",
+      "description": "During the [2015 Ukraine Electric Power Attack](https://attack.mitre.org/campaigns/C0028), [Sandworm Team](https://attack.mitre.org/groups/G0034) utilized HMI GUIs in the SCADA environment to open breakers. (Citation: Ukraine15 - EISAC - 201603)"
+    },
+    {
+      "source_id": "C0063",
+      "source_name": "2025 Poland Wiper Attacks",
+      "source_type": "campaign",
+      "description": "During the [2025 Poland Wiper Attacks](https://attack.mitre.org/campaigns/C0063), the adversaries used a graphical user interface (GUI) via the Remote Desktop Protocol (RDP) to access the Mikronika HMI and to execute commands.(Citation: CERT Polska)\n\nDuring the [2025 Poland Wiper Attacks](https://attack.mitre.org/campaigns/C0063), the adversaries used a graphical user interface (GUI) to connect to the domain controller via the Remote Desktop Protocol (RDP) to collect and exfiltrate data and attempt to destroy data on the system.(Citation: CERT Polska)\n"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0823",
+      "description": null
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Command",
+      "Logon Session",
+      "Module",
+      "Process"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

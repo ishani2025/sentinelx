@@ -1,0 +1,117 @@
+{
+  "metadata": {
+    "technique_id": "T0819",
+    "technique_name": "Exploit Public-Facing Application",
+    "domain": "ics",
+    "version": "1.0",
+    "last_modified": "2025-04-16T21:26:13.044Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Initial Access"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may leverage weaknesses to exploit internet-facing software for initial access into an industrial network. Internet-facing software may be user applications, underlying networking implementations, an assets operating system, weak defenses, etc. Targets of this technique may be intentionally exposed for the purpose of remote management and visibility.\n\nAn adversary may seek to target public-facing applications as they may provide direct access into an ICS environment or the ability to move into the ICS network. Publicly exposed applications may be found through online tools that scan the internet for open ports and services. Version numbers for the exposed application may provide adversaries an ability to target specific known vulnerabilities. Exposed control protocol or remote access ports found in Commonly Used Port may be of interest by adversaries.",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0740",
+        "name": "Detection of Exploit Public-Facing Application"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1873",
+        "name": "Analytic 1873",
+        "description": "Detecting software exploitation may be difficult depending on the tools available. Software exploits may not always succeed or may cause the exploited process to become unstable or crash. Web Application Firewalls may detect improper inputs attempting exploitation.\nUse deep packet inspection to look for artifacts of common exploit traffic, such as known payloads."
+      }
+    ],
+    "log_sources": [
+      "Application Log",
+      "Network Traffic"
+    ],
+    "data_components": [
+      "Application Log Content",
+      "Network Traffic Content"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0951",
+      "name": "Update Software",
+      "description": "Perform regular software updates to mitigate exploitation risk. Software updates may need to be scheduled around operational down times."
+    },
+    {
+      "id": "M0916",
+      "name": "Vulnerability Scanning",
+      "description": "Vulnerability scanning is used to find potentially exploitable software vulnerabilities to remediate them."
+    },
+    {
+      "id": "M0950",
+      "name": "Exploit Protection",
+      "description": "Use capabilities to detect and block conditions that may lead to or be indicative of a software exploit occurring."
+    },
+    {
+      "id": "M0926",
+      "name": "Privileged Account Management",
+      "description": "Manage the creation, modification, use, and permissions associated to privileged accounts, including SYSTEM and root."
+    },
+    {
+      "id": "M0948",
+      "name": "Application Isolation and Sandboxing",
+      "description": "Restrict the execution of code to a virtual environment on or in-transit to an endpoint system."
+    },
+    {
+      "id": "M0930",
+      "name": "Network Segmentation",
+      "description": "Architect sections of the network to isolate critical systems, functions, or resources. Use physical and logical segmentation to prevent access to potentially sensitive systems and information. Use a DMZ to contain any internet-facing services that should not be exposed from the internal network.  Restrict network access to only required systems and services. In addition, prevent systems from other networks or business functions (e.g., enterprise) from accessing critical process control systems. For example, in IEC 62443, systems within the same secure level should be grouped into a zone, and access to that zone is restricted by a conduit, or mechanism to restrict data flows between zones by segmenting the network. (Citation: IEC February 2019) (Citation: IEC August 2013)"
+    }
+  ],
+  "relationships": {
+    "groups": [
+      {
+        "id": "G0034",
+        "name": "Sandworm Team"
+      }
+    ],
+    "malware": [],
+    "tools": [],
+    "campaigns": []
+  },
+  "procedure_examples": [
+    {
+      "source_id": "G0034",
+      "source_name": "Sandworm Team",
+      "source_type": "intrusion-set",
+      "description": "[Sandworm Team](https://attack.mitre.org/groups/G0034) actors exploited vulnerabilities in GE's Cimplicity HMI and Advantech/Broadwin WebAccess HMI software which had been directly exposed to the internet. (Citation: ICS-CERT December 2014) (Citation: ICS CERT September 2018)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0819",
+      "description": null
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Application Log",
+      "Network Traffic"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

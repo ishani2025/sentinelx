@@ -1,0 +1,127 @@
+{
+  "metadata": {
+    "technique_id": "T0840",
+    "technique_name": "Network Connection Enumeration",
+    "domain": "ics",
+    "version": "1.2",
+    "last_modified": "2026-05-12T15:12:00.723Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Discovery"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may perform network connection enumeration to discover information about device communication patterns. If an adversary can inspect the state of a network connection with tools, such as Netstat(Citation: Netstat), in conjunction with [System Firmware](https://attack.mitre.org/techniques/T0857), then they can determine the role of certain devices on the network  (Citation: MITRE). The adversary can also use [Network Sniffing](https://attack.mitre.org/techniques/T0842) to watch network traffic for details about the source, destination, protocol, and content.",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0770",
+        "name": "Detection of Network Connection Enumeration"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1902",
+        "name": "Analytic 1902",
+        "description": "Monitor executed commands and arguments that may look for details about the network configuration and settings, such as IP and/or MAC addresses, of systems they access or through information discovery of remote systems. Also monitor executed commands and arguments that may attempt to get a listing of network connections to or from the compromised system they are currently accessing or from remote systems by querying for information over the network. Information may also be acquired through Windows system management tools such as [Windows Management Instrumentation](https://attack.mitre.org/techniques/T1047) and [PowerShell](https://attack.mitre.org/techniques/T1059/001).\nMonitor for executed processes (such as ipconfig/ifconfig and arp) with arguments that may look for details about the network configuration and settings, such as IP and/or MAC addresses. Also monitor for executed processes that may attempt to get a listing of network connections to or from the compromised system they are currently accessing or from remote systems by querying for information over the network.\nMonitor for any suspicious attempts to enable script execution on a system. If scripts are not commonly used on a system, but enabled, scripts running out of cycle from patching or other administrator functions are suspicious. Scripts should be captured from the file system when possible to determine their actions and intent.\nMonitor for API calls (such as GetAdaptersInfo() and GetIpNetTable()) that may gather details about the network configuration and settings, such as IP and/or MAC addresses. Also monitor for API calls that may attempt to get a listing of network connections to or from the compromised system they are currently accessing or from remote systems by querying for information over the network. For added context on adversary procedures and background see [System Network Configuration Discovery](https://attack.mitre.org/techniques/T1016) and [System Network Connections Discovery](https://attack.mitre.org/techniques/T1049)."
+      }
+    ],
+    "log_sources": [
+      "Command",
+      "Process",
+      "Script"
+    ],
+    "data_components": [
+      "Command Execution",
+      "OS API Execution",
+      "Process Creation",
+      "Script Execution"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0816",
+      "name": "Mitigation Limited or Not Effective",
+      "description": "This type of attack technique cannot be easily mitigated with preventative controls since it is based on the abuse of system features."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S0605",
+        "name": "EKANS"
+      },
+      {
+        "id": "S0604",
+        "name": "Industroyer"
+      }
+    ],
+    "tools": [],
+    "campaigns": [
+      {
+        "id": "C0063",
+        "name": "2025 Poland Wiper Attacks"
+      }
+    ]
+  },
+  "procedure_examples": [
+    {
+      "source_id": "S0605",
+      "source_name": "EKANS",
+      "source_type": "malware",
+      "description": "[EKANS](https://attack.mitre.org/software/S0605) performs a DNS lookup of an internal domain name associated with its target network to identify if it was deployed on the intended system. (Citation: Ben Hunter and Fred Gutierrez July 2020)"
+    },
+    {
+      "source_id": "C0063",
+      "source_name": "2025 Poland Wiper Attacks",
+      "source_type": "campaign",
+      "description": "During the [2025 Poland Wiper Attacks](https://attack.mitre.org/campaigns/C0063), the adversaries used `netstat` to enumerate network connections on the Mikronika HMI computers.(Citation: CERT Polska)"
+    },
+    {
+      "source_id": "S0604",
+      "source_name": "Industroyer",
+      "source_type": "malware",
+      "description": "[Industroyer](https://attack.mitre.org/software/S0604) contains an IEC 61850 module that enumerates all connected network adapters to determine their TCP/IP subnet masks. (Citation: Anton Cherepanov, ESET June 2017)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0840",
+      "description": null
+    },
+    {
+      "source_name": "MITRE",
+      "url": "https://attack.mitre.org/wiki/Technique/T1049",
+      "description": "MITRE   System Network Connections Discovery Retrieved. 2018/05/31 "
+    },
+    {
+      "source_name": "Netstat",
+      "url": "https://en.wikipedia.org/wiki/Netstat",
+      "description": "Wikipedia. (n.d.). Netstat. Retrieved May 23, 2022."
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Command",
+      "Process",
+      "Script"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}

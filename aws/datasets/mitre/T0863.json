@@ -1,0 +1,172 @@
+{
+  "metadata": {
+    "technique_id": "T0863",
+    "technique_name": "User Execution",
+    "domain": "ics",
+    "version": "1.1",
+    "last_modified": "2025-04-15T19:58:15.054Z",
+    "platforms": [
+      "None"
+    ],
+    "tactics": [
+      "Execution"
+    ]
+  },
+  "technique": {
+    "description": "Adversaries may rely on a targeted organizations user interaction for the execution of malicious code. User interaction may consist of installing applications, opening email attachments, or granting higher permissions to documents. \n\nAdversaries may embed malicious code or visual basic code into files such as Microsoft Word and Excel documents or software installers. (Citation: Booz Allen Hamilton) Execution of this code requires that the user enable scripting or write access within the document. Embedded code may not always be noticeable to the user especially in cases of trojanized software. (Citation: Daavid Hentunen, Antti Tikkanen June 2014) \n\nA Chinese spearphishing campaign running from December 9, 2011 through February 29, 2012 delivered malware through spearphishing attachments which required user action to achieve execution. (Citation: CISA AA21-201A Pipeline Intrusion July 2021)",
+    "is_subtechnique": false,
+    "parent_technique": null
+  },
+  "detection": {
+    "description": null,
+    "detection_strategies": [
+      {
+        "id": "DET0791",
+        "name": "Detection of User Execution"
+      }
+    ],
+    "analytics": [
+      {
+        "id": "AN1923",
+        "name": "Analytic 1923",
+        "description": "Monitor for newly executed processes that depend on user interaction, especially for applications that can embed programmatic capabilities (e.g., Microsoft Office products with scripts, installers, zip files). This includes compression applications, such as those for zip files, that can be used to [Deobfuscate/Decode Files or Information](https://attack.mitre.org/techniques/T1140) in payloads. For added context on adversary procedures and background see [User Execution](https://attack.mitre.org/techniques/T1204) and applicable sub-techniques.\nMonitor for application logging, messaging, and/or other artifacts that may rely upon specific actions by a user in order to gain execution.\nMonitor for newly constructed web-based network connections that are sent to malicious or suspicious destinations (e.g., destinations attributed to phishing campaigns). Consider correlation with process monitoring and command line to detect anomalous processes execution and command line arguments (e.g., monitor anomalies in use of files that do not normally initiate network connections or unusual connections initiated by regsvr32.exe, rundll.exe, SCF, HTA, MSI, DLLs, or msiexec.exe). \nAnti-virus can potentially detect malicious documents and files that are downloaded and executed on the user's computer. Endpoint sensing or network sensing can potentially detect malicious events once the file is opened (such as a Microsoft Word document or PDF reaching out to the internet or spawning PowerShell).\nMonitor for newly executed processes that depend on user interaction, especially for applications that can embed programmatic capabilities (e.g., Microsoft Office products with scripts, installers, zip files). This includes compression applications, such as those for zip files, that can be used to [Deobfuscate/Decode Files or Information](https://attack.mitre.org/techniques/T1140) in payloads.\nMonitor and analyze traffic patterns and packet inspection associated with web-based network connections that are sent to malicious or suspicious destinations (e.g., destinations attributed to phishing campaigns). Consider correlation with process monitoring and command line to detect anomalous processes execution and command line arguments (e.g., monitor anomalies in use of files that do not normally initiate network connections or unusual connections initiated by regsvr32.exe, rundll.exe, SCF, HTA, MSI, DLLs, or msiexec.exe)."
+      }
+    ],
+    "log_sources": [
+      "Application Log",
+      "Command",
+      "File",
+      "Network Traffic",
+      "Process"
+    ],
+    "data_components": [
+      "Application Log Content",
+      "Command Execution",
+      "File Access",
+      "Network Connection Creation",
+      "Network Traffic Content",
+      "Process Creation"
+    ]
+  },
+  "mitigations": [
+    {
+      "id": "M0938",
+      "name": "Execution Prevention",
+      "description": "Block execution of code on a system through application control, and/or script blocking."
+    },
+    {
+      "id": "M0921",
+      "name": "Restrict Web-Based Content",
+      "description": "Restrict use of certain websites, block downloads/attachments, block Javascript, restrict browser extensions, etc."
+    },
+    {
+      "id": "M0917",
+      "name": "User Training",
+      "description": "Train users to be aware of access or manipulation attempts by an adversary to reduce the risk of successful spearphishing, social engineering, and other techniques that involve user interaction."
+    },
+    {
+      "id": "M0931",
+      "name": "Network Intrusion Prevention",
+      "description": "Use intrusion detection signatures to block traffic at network boundaries.  In industrial control environments, network intrusion prevention should be configured so it will not disrupt protocols and communications responsible for real-time functions related to control or safety."
+    },
+    {
+      "id": "M0949",
+      "name": "Antivirus/Antimalware",
+      "description": "Use signatures or heuristics to detect malicious software.  Within industrial control environments, antivirus/antimalware installations should be limited to assets that are not involved in critical or real-time operations. To minimize the impact to system availability, all products should first be validated within a representative test environment before deployment to production systems. (Citation: NCCIC August 2018)"
+    },
+    {
+      "id": "M0945",
+      "name": "Code Signing",
+      "description": "Enforce binary and application integrity with digital signature verification to prevent untrusted code from executing."
+    }
+  ],
+  "relationships": {
+    "groups": [],
+    "malware": [
+      {
+        "id": "S0496",
+        "name": "REvil"
+      },
+      {
+        "id": "S0093",
+        "name": "Backdoor.Oldrea"
+      },
+      {
+        "id": "S0603",
+        "name": "Stuxnet"
+      },
+      {
+        "id": "S0606",
+        "name": "Bad Rabbit"
+      }
+    ],
+    "tools": [],
+    "campaigns": []
+  },
+  "procedure_examples": [
+    {
+      "source_id": "S0496",
+      "source_name": "REvil",
+      "source_type": "malware",
+      "description": "[REvil](https://attack.mitre.org/software/S0496) initially executes when the user clicks on a JavaScript file included in the phishing emails .zip attachment. (Citation: Tom Fakterman August 2019)"
+    },
+    {
+      "source_id": "S0093",
+      "source_name": "Backdoor.Oldrea",
+      "source_type": "malware",
+      "description": "Execution of [Backdoor.Oldrea](https://attack.mitre.org/software/S0093) relies on a user opening a trojanized installer attached to an email. (Citation: Daavid Hentunen, Antti Tikkanen June 2014) (Citation: Kyle Wilhoit)"
+    },
+    {
+      "source_id": "S0603",
+      "source_name": "Stuxnet",
+      "source_type": "malware",
+      "description": "[Stuxnet](https://attack.mitre.org/software/S0603) infects DLL's associated with the WinCC Simatic manager which are responsible for opening project files. If a user opens an uninfected project file using a compromised manager, the file will be infected with Stuxnet code. If an infected project is opened with the Simatic manager, the modified data file will trigger a search for the `xyz.dll` file. If the `xyz.dll` file is not found in any of the specified locations, the malicious DLL will be loaded and executed by the manager. (Citation: Nicolas Falliere, Liam O Murchu, Eric Chien February 2011)"
+    },
+    {
+      "source_id": "S0606",
+      "source_name": "Bad Rabbit",
+      "source_type": "malware",
+      "description": "[Bad Rabbit](https://attack.mitre.org/software/S0606) is disguised as an Adobe Flash installer. When the file is opened it starts locking the infected computer. (Citation: Orkhan Mamedov, Fedor Sinitsyn, Anton Ivanov October 2017)"
+    }
+  ],
+  "references": [
+    {
+      "source_name": "mitre-attack",
+      "url": "https://attack.mitre.org/techniques/T0863",
+      "description": null
+    },
+    {
+      "source_name": "Booz Allen Hamilton",
+      "url": "https://www.boozallen.com/content/dam/boozallen/documents/2016/09/ukraine-report-when-the-lights-went-out.pdf",
+      "description": "Booz Allen Hamilton. (2016). When The Lights Went Out. Retrieved December 18, 2024."
+    },
+    {
+      "source_name": "Daavid Hentunen, Antti Tikkanen June 2014",
+      "url": "https://www.f-secure.com/weblog/archives/00002718.html",
+      "description": "Daavid Hentunen, Antti Tikkanen 2014, June 23 Havex Hunts For ICS/SCADA Systems Retrieved. 2019/04/01 "
+    },
+    {
+      "source_name": "CISA AA21-201A Pipeline Intrusion July 2021",
+      "url": "https://us-cert.cisa.gov/sites/default/files/publications/AA21-201A_Chinese_Gas_Pipeline_Intrusion_Campaign_2011_to_2013%20(1).pdf",
+      "description": "Department of Justice (DOJ), DHS Cybersecurity & Infrastructure Security Agency (CISA) 2021, July 20 Chinese Gas Pipeline Intrusion Campaign, 2011 to 2013 Retrieved. 2021/10/08 "
+    }
+  ],
+  "investigation": {
+    "what_to_check": [],
+    "possible_logs": [
+      "Application Log",
+      "Command",
+      "File",
+      "Network Traffic",
+      "Process"
+    ],
+    "recommended_queries": [],
+    "severity": null,
+    "confidence_hints": []
+  },
+  "response": {
+    "containment": [],
+    "eradication": [],
+    "recovery": []
+  }
+}
